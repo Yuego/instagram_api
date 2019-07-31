@@ -1,0 +1,7 @@
+
+*.pyc
+
+instagram_api.egg-info/
+
+dist/
+build/

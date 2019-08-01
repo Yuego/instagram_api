@@ -1,0 +1,5 @@
+
+
+
+class EndpointException(Exception):
+    pass

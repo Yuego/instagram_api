@@ -16,9 +16,9 @@ setup(
     packages=['instagram_api'],
     zip_safe=False,
     install_requires=[
-        "requests==2.11.1",
-        "requests-toolbelt==0.7.0",
-        "moviepy==0.2.3.2"
+        "requests>=2.20.0",
+        "requests-toolbelt>=0.8.0",
+        "moviepy>=0.2.3.2"
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

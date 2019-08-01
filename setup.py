@@ -15,11 +15,7 @@ setup(
     license='MIT',
     packages=['instagram_api'],
     zip_safe=False,
-    install_requires=[
-        "requests>=2.20.0",
-        "requests-toolbelt>=0.8.0",
-        "moviepy>=0.2.3.2"
-    ],
+    install_requires=list(open('./requirements.txt', 'r').readlines()),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

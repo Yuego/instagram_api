@@ -95,4 +95,9 @@ class PropertyMapperMeta(type):
                     f'Property: {prop_name}. Only simple types supported and subclasses of PropertyMapperBase'
                 )
 
+            if prop_name in attrs:
+                raise ValueError(
+                    f'Class `{name}` already has `{prop_name}` attribute!'
+                )
+
         return super().__new__(cls, name, bases, attrs)

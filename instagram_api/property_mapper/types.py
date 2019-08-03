@@ -4,4 +4,7 @@ __all__ = ['timestamp']
 
 
 def timestamp(timestamp: int):
-    return datetime.utcfromtimestamp(timestamp)
+    if timestamp:
+        return datetime.utcfromtimestamp(timestamp)
+    else:
+        return None

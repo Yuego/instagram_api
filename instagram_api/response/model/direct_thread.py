@@ -3,7 +3,7 @@ from instagram_api.property_mapper import PropertyMapperBase
 from .action_badge import ActionBadge
 from .direct_thread_item import DirectThreadItem
 from .permanent_item import PermanentItem
-from .unpredictable import DirectThreadLastSeenAtUnpredictableContainer
+# from .unpredictable import DirectThreadLastSeenAtUnpredictableContainer
 from .user import User
 
 __all__ = ['DirectThread']
@@ -24,7 +24,7 @@ class DirectThread(PropertyMapperBase):
         'pending': bool,
         'valued_request': bool,
         'thread_type': str,
-        'viewer_id': str,
+        'viewer_id': int,
         'thread_title': str,
         'pending_score': str,
         'vc_muted': bool,
@@ -33,10 +33,10 @@ class DirectThread(PropertyMapperBase):
         'reshare_receive_count': int,
         'expiring_media_send_count': int,
         'expiring_media_receive_count': int,
-        'inviter': 'User',
+        'inviter': User,
         'has_older': bool,
         'has_newer': bool,
-        'last_seen_at': DirectThreadLastSeenAtUnpredictableContainer,
+        # 'last_seen_at': DirectThreadLastSeenAtUnpredictableContainer,
         'newest_cursor': str,
         'oldest_cursor': str,
         'is_spam': bool,

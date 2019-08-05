@@ -18,7 +18,7 @@ class Comment(PropertyMapperBase):
         'created_at_utc': timestamp,
 
         'bit_flags': int,
-        'user': 'User',
+        'user': User,
         'pk': str,
         'media_id': str,
         'text': str,
@@ -34,7 +34,7 @@ class Comment(PropertyMapperBase):
 
         'child_comment_count': int,
 
-        'preview_child_comments': [Comment],
+        'preview_child_comments': ['self'],
 
         'other_preview_users': [User],
         'inline_composer_display_condition': str,

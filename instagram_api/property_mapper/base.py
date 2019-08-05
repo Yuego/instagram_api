@@ -22,9 +22,6 @@ class PropertyMapperBase(metaclass=PropertyMapperMeta):
 
             prop_type = self.JSON_PROPERTY_MAP.get(data_key, None)
 
-            if prop_type is None:
-                continue
-
             if isinstance(prop_type, (list, tuple)):
                 list_prop_type = prop_type[0]
 
@@ -70,6 +67,12 @@ class PropertyMapperBase(metaclass=PropertyMapperMeta):
                         f' Allowed are: {_allowed}'
                     )
 
+            elif prop_type is None:
+                self.__attr_dict[data_key] = data_value
+
+            elif inspect.isfunction(prop_type):
+                self.__attr_dict[data_key] = prop_type(data_value)
+
             elif issubclass(prop_type, self._allowed_types):
                 if issubclass(prop_type, base_allowed_types):
                     if isinstance(data_value, prop_type):
@@ -86,17 +89,11 @@ class PropertyMapperBase(metaclass=PropertyMapperMeta):
                         raise WrongType(
                             f'{data_value} isn`t allowed for attribute {data_key} of {_cn}. Allowed `dict`.'
                         )
-                elif prop_type is None:
-                    self.__attr_dict[data_key] = data_value
-
                 else:
                     raise UnsupportedType(
                         f'{data_value} isn`t allowed for attribute {data_key} of {_cn}. '
                         f'Allowed are: {_allowed}'
                     )
-
-            elif inspect.isfunction(prop_type):
-                self.__attr_dict[data_key] = prop_type(data_value)
 
     def __init__(self, data):
         self.parse_json_data(data=data)

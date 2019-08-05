@@ -41,6 +41,8 @@ class PropertyMapperMeta(type):
         attrs[map_attr_name] = property_map
         attrs['_allowed_types'] = property_types
 
+        new_class = super().__new__(cls, name, bases, attrs)
+
         for prop_name, prop_type in property_map.items():
 
             if isinstance(prop_type, dict):
@@ -51,7 +53,11 @@ class PropertyMapperMeta(type):
 
                 else:
                     list_item_type = prop_type[0]
-                    if (
+
+                    if list_item_type == 'self':
+                        attrs[map_attr_name][prop_name] = [new_class]
+
+                    elif (
                         not issubclass(list_item_type, property_types)
                         and not isinstance(list_item_type, cls)
                         and not inspect.isfunction(list_item_type)
@@ -69,7 +75,11 @@ class PropertyMapperMeta(type):
                     )
 
                 for set_item_type in prop_type:
-                    if (
+                    new_prop_types = []
+                    if set_item_type == 'self':
+                        new_prop_types.append(new_class)
+
+                    elif (
                         not issubclass(set_item_type, property_types)
                         and not isinstance(set_item_type, cls)
                         and not inspect.isfunction(set_item_type)
@@ -79,6 +89,14 @@ class PropertyMapperMeta(type):
                             f' Typeset can contain only simple types, functions '
                             f'or another PropertyMapperBase objects'
                         )
+                    else:
+                        new_prop_types.append(set_item_type)
+
+                attrs[map_attr_name][prop_name] = set(new_prop_types)
+            elif prop_type == 'self':
+                prop_type = new_class
+                attrs[map_attr_name][prop_name] = prop_type
+
             elif inspect.isfunction(prop_type):
                 pass
 
@@ -100,4 +118,4 @@ class PropertyMapperMeta(type):
                     f'Class `{name}` already has `{prop_name}` attribute!'
                 )
 
-        return super().__new__(cls, name, bases, attrs)
+        return new_class

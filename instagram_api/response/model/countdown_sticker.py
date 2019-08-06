@@ -5,7 +5,7 @@ __all__ = ['CountdownSticker']
 
 class CountdownSticker(PropertyMapperBase):
     JSON_PROPERTY_MAP = {
-        'countdown_id': str,
+        'countdown_id': int,
         'end_ts': str,
         'text': str,
         'text_color': str,

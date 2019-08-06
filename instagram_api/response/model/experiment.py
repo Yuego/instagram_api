@@ -11,6 +11,6 @@ class Experiment(PropertyMapperBase):
         'group': str,
         'additional_params': None,
         'params': [Param],
-        'logging_id': str,
+        'logging_id': int,
         'expired': bool,
     }

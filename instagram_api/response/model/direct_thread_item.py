@@ -52,7 +52,7 @@ class DirectThreadItem(PropertyMapperBase):
         'media_share': Item,
         'preview_medias': [Item],
         'media': DirectThreadItemMedia,
-        'user_id': str,
+        'user_id': int,
         'timestamp': timestamp,
         'client_context': str,
         'hide_in_thread': None,

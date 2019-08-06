@@ -14,7 +14,7 @@ class Broadcast(PropertyMapperBase):
         'published_time': str,
         'broadcast_message': str,
         'muted': None,
-        'media_id': str,
+        'media_id': int,
         'id': str,
         'rtmp_playback_url': str,
         'dash_abr_playback_url': str,

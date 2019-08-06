@@ -10,13 +10,13 @@ class Headline(PropertyMapperBase):
     JSON_PROPERTY_MAP = {
         'content_type': None,
         'user': User,
-        'user_id': str,
+        'user_id': int,
         'pk': str,
         'text': str,
         'type': None,
         'created_at': timestamp,
         'created_at_utc': str,
-        'media_id': str,
+        'media_id': int,
         'bit_flags': int,
         'status': None,
     }

@@ -20,7 +20,7 @@ class Comment(PropertyMapperBase):
         'bit_flags': int,
         'user': User,
         'pk': str,
-        'media_id': str,
+        'media_id': int,
         'text': str,
         'content_type': str,
 
@@ -30,7 +30,7 @@ class Comment(PropertyMapperBase):
         'has_translation': bool,
         'did_report_as_spam': bool,
 
-        'parent_comment_id': str,
+        'parent_comment_id': int,
 
         'child_comment_count': int,
 

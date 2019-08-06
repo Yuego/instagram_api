@@ -14,8 +14,8 @@ class ReelShare(PropertyMapperBase):
         'text': str,
         'type': str,
         'is_reel_persisted': bool,
-        'reel_owner_id': str,
+        'reel_owner_id': int,
         'reel_type': str,
         'media': Item,
-        'mentioned_user_id': str,
+        'mentioned_user_id': int,
     }

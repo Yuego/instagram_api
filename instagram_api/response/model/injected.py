@@ -19,11 +19,11 @@ class Injected(PropertyMapperBase):
         'ad_title': str,
         'about_ad_params': str,
         'direct_share': bool,
-        'ad_id': str,
+        'ad_id': int,
         'display_viewability_eligible': bool,
         'fb_page_url': str,
         'hide_reasons_v2': [HideReason],
         'hide_flow_type': int,
         'cookies': [str],
-        'lead_gen_form_id': str,
+        'lead_gen_form_id': int,
     }

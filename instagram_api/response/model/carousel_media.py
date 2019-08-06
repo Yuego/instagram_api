@@ -31,7 +31,7 @@ class CarouselMedia(PropertyMapperBase):
         'original_width': int,
 
         'media_type': int,
-        'dynamic_item_id': str,
+        'dynamic_item_id': int,
         'usertags': Usertag,
         'preview': str,
         'headline': Headline,

@@ -15,7 +15,7 @@ class Product(PropertyMapperBase):
         'price': str,
         'current_price': str,
         'full_price': str,
-        'product_id': str,
+        'product_id': int,
         'has_viewer_saved': bool,
         'description': str,
         'main_image': ProductImage,

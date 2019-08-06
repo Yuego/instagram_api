@@ -11,5 +11,5 @@ class CatalogNode(PropertyMapperBase):
         'name': str,
         'description': str,
         'main_image_with_safe_fallback': None,
-        'retailer_id': str,
+        'retailer_id': int,
     }

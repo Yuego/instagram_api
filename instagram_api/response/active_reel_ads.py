@@ -7,6 +7,6 @@ __all__ = ['ActiveReelAdsResponse']
 class ActiveReelAdsResponse(Response):
     JSON_PROPERTY_MAP = {
         'reels': [Reel],
-        'next_max_id': int,
+        'next_max_id': str,
         'more_available': bool,
     }

@@ -7,6 +7,6 @@ __all__ = ['ActiveFeedAdsResponse']
 class ActiveFeedAdsResponse(Response):
     JSON_PROPERTY_MAP = {
         'feed_items': [FeedItem],
-        'next_max_id': int,
+        'next_max_id': str,
         'more_available': bool,
     }

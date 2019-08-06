@@ -6,5 +6,5 @@ __all__ = ['BlockedReelsResponse']
 
 class BlockedReelsResponse(Response, BlockedReels):
     JSON_PROPERTY_MAP = {
-        'next_max_id': int,
+        'next_max_id': str,
     }

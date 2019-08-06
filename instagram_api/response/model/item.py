@@ -102,7 +102,7 @@ class Item(PropertyMapperBase):
         'comments_disabled': None,
         'reel_mentions': [ReelMention],
         'story_cta': [StoryCta],
-        'next_max_id': int,
+        'next_max_id': str,
         'carousel_media': [CarouselMedia],
         'carousel_media_type': int,
         'carousel_media_count': int,

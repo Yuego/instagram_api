@@ -2,7 +2,7 @@ from instagram_api.property_mapper import PropertyMapperBase
 
 from .phone_verification_settings import PhoneVerificationSettings
 
-__all__ = ['phone_verification_settings']
+__all__ = ['TwoFactorInfo']
 
 
 class TwoFactorInfo(PropertyMapperBase):

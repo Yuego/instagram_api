@@ -95,6 +95,16 @@ class PropertyMapperBase(metaclass=PropertyMapperMeta):
                         f'Allowed are: {_allowed}'
                     )
 
+    def _setattr(self, attr: str, value):
+        """
+        Internal usage only
+
+        :param attr:
+        :param value:
+        :return:
+        """
+        self.__attr_dict[attr] = value
+
     def __init__(self, data):
         self.parse_json_data(data=data)
 

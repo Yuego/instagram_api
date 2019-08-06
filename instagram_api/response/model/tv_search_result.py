@@ -1,16 +1,16 @@
 from instagram_api.property_mapper import PropertyMapperBase
 
-from .tv_channel import TVChannel
+from .tv_channel import TvChannel
 from .user import User
 
-__all__ = ['TVSearchResult']
+__all__ = ['TvSearchResult']
 
 
-class TVSearchResult(PropertyMapperBase):
+class TvSearchResult(PropertyMapperBase):
     JSON_PROPERTY_MAP = {
         'type': str,
         'User': User,
-        'channel': TVChannel,
+        'channel': TvChannel,
         'num_results': int,
         'rank_token': str,
     }

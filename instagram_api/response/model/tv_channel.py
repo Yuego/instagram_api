@@ -3,10 +3,10 @@ from instagram_api.property_mapper import PropertyMapperBase
 from .item import Item
 from .user import User
 
-__all__ = ['TVChannel']
+__all__ = ['TvChannel']
 
 
-class TVChannel(PropertyMapperBase):
+class TvChannel(PropertyMapperBase):
     JSON_PROPERTY_MAP = {
         'type': str,
         'title': str,

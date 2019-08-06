@@ -5,7 +5,7 @@ __all__ = ['AndroidLinks']
 
 class AndroidLinks(PropertyMapperBase):
     JSON_PROPERTY_MAP = {
-        'linkType': 'int',
+        'linkType': int,
         'webUri': str,
         'androidClass': str,
         'package': str,

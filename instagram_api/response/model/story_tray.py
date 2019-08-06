@@ -1,9 +1,9 @@
 from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
+from instagram_api.property_mapper.types import timestamp, LazyType
 
 from .cover_media import CoverMedia
 from .dismiss_card import DismissCard
-from .item import Item
+# from .item import Item
 from .location import Location
 from .owner import Owner
 from .user import User
@@ -14,7 +14,7 @@ __all__ = ['StoryTray']
 class StoryTray(PropertyMapperBase):
     JSON_PROPERTY_MAP = {
         'id': int,
-        'items': [Item],
+        'items': [LazyType('model.item.Item')],
         'user': User,
         'can_reply': None,
         'expiring_at': timestamp,

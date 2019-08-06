@@ -57,6 +57,9 @@ class PropertyMapperMeta(type):
                     if list_item_type == 'self':
                         attrs[map_attr_name][prop_name] = [new_class]
 
+                    elif isinstance(list_item_type, LazyType):
+                        pass
+
                     elif (
                         not issubclass(list_item_type, property_types)
                         and not isinstance(list_item_type, cls)
@@ -74,8 +77,9 @@ class PropertyMapperMeta(type):
                         f'Typeset must contain more than 1 item'
                     )
 
+                new_prop_types = []
                 for set_item_type in prop_type:
-                    new_prop_types = []
+
                     if set_item_type == 'self':
                         new_prop_types.append(new_class)
 
@@ -101,6 +105,9 @@ class PropertyMapperMeta(type):
                 pass
 
             elif prop_type is None:
+                pass
+
+            elif isinstance(prop_type, LazyType):
                 pass
 
             elif not inspect.isclass(prop_type):

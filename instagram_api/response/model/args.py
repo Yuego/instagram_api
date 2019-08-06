@@ -27,7 +27,7 @@ class Args(PropertyMapperBase):
         'actions': [str],
         'latest_reel_media': str,
         'comment_id': int,
-        'request_count': '',
+        'request_count': None,
         'inline_follow': InlineFollow,
         'comment_ids': [int],
         'second_profile_id': int,

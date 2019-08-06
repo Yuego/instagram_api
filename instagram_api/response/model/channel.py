@@ -1,6 +1,5 @@
 from instagram_api.property_mapper import PropertyMapperBase
-
-from .item import Item
+from instagram_api.property_mapper.types import LazyType
 
 __all__ = ['Channel']
 
@@ -12,6 +11,6 @@ class Channel(PropertyMapperBase):
         'title': None,
         'header': None,
         'media_count': int,
-        'media': Item,
+        'media': LazyType('model.item.Item'),
         'context': None,
     }

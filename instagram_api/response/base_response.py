@@ -6,8 +6,6 @@ from .model import UnknownMessage
 
 class Response(PropertyMapper):
 
-
-
     JSON_PROPERTY_MAP = {
         '_message': [UnknownMessage],
     }

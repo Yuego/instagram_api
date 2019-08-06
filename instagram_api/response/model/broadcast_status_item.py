@@ -1,9 +1,9 @@
 from instagram_api.property_mapper import PropertyMapperBase
 
-__all__ = ['BroadcastStatusitem']
+__all__ = ['BroadcastStatusItem']
 
 
-class BroadcastStatusitem(PropertyMapperBase):
+class BroadcastStatusItem(PropertyMapperBase):
     JSON_PROPERTY_MAP = {
         'broadcast_status': str,
         'has_reduced_visibility': bool,

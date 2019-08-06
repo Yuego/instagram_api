@@ -29,6 +29,7 @@ from .hashtag import Hashtag
 from .hidden_entities import HiddenEntities
 from .insights import Insights
 from .item import Item
+from .live_comment import LiveComment
 from .location import Location
 from .location_item import LocationItem
 from .media_insights import MediaInsights
@@ -36,6 +37,8 @@ from .megaphone import Megaphone
 from .phone_verification_settings import PhoneVerificationSettings
 from .post_live_item import PostLiveItem
 from .primary_country_info import PrimaryCountryInfo
+from .product import Product
+from .push_settings import PushSettings
 from .qp_extra_info import QPExtraInfo
 from .qp_data import QPData
 from .reel import Reel

@@ -4,6 +4,7 @@ from .aymf import Aymf
 from .blocked_reels import BlockedReels
 from .broadcast import Broadcast
 from .broadcast_question import BroadcastQuestion
+from .caption import Caption
 from .challenge import Challenge
 from .close_friends import CloseFriends
 from .collection import Collection
@@ -30,6 +31,7 @@ from .insights import Insights
 from .item import Item
 from .location import Location
 from .location_item import LocationItem
+from .media_insights import MediaInsights
 from .megaphone import Megaphone
 from .phone_verification_settings import PhoneVerificationSettings
 from .post_live_item import PostLiveItem
@@ -47,6 +49,8 @@ from .subscription import Subscription
 from .suggested_users import SuggestedUsers
 from .suggestion import Suggestion
 from .surface import Surface
+from .system_control import SystemControl
+from .trace_control import TraceControl
 from .two_factor_info import TwoFactorInfo
 from .unknown_message import UnknownMessage
 from .user import User

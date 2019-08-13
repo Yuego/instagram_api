@@ -48,16 +48,14 @@ class Device(DeviceInterface):
         assert len(parts) == 7, f'Device string `{device_string}` does not conform to the required device format'
 
         android_os = parts[0].split('/', 1)
-        assert (
-            LooseVersion(android_os) > LooseVersion(self.REQUIRED_ANDROID_VERSION),
+        assert LooseVersion(android_os[1]) > LooseVersion(self.REQUIRED_ANDROID_VERSION), (
             f'Device string `{device_string}` does not meet the minimum required Android version '
             f'`{self.REQUIRED_ANDROID_VERSION}` for Instagram'
         )
 
         resolution = parts[2].split('x', 1)
         pixel_count = int(resolution[0]) * int(resolution[1])
-        assert (
-            pixel_count >= 2073600,
+        assert pixel_count >= 2073600, (
             f'Device string `{device_string}` does not meet the minimum resolution requirement of 1920x1080'
         )
 

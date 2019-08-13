@@ -18,12 +18,15 @@ __all__ = ['RedisStorage']
 
 class RedisStorage(StorageBase):
 
+    # Easy mock Redis
+    redis_class = redis.StrictRedis
+
     _redis = None
 
     def open(self, config: dict):
         super(RedisStorage, self).open(config=config)
 
-        self._redis = redis.StrictRedis(**config)
+        self._redis = self.redis_class(**config)
 
     def close(self):
         self._redis = None

@@ -4,14 +4,17 @@ from .interface import StorageInterface
 
 __all__ = ['StorageBase']
 
+_default_prefix = '_ig'
+
 
 class StorageBase(StorageInterface):
 
-    _prefix: str = '_ig'
+    _prefix: str = _default_prefix
     _username: str = None
 
     def open(self, config: dict):
-        self._prefix = config.pop('prefix', 'ig_')
+        prefix = config.pop('prefix', _default_prefix) or _default_prefix
+        self._prefix = prefix or _default_prefix
 
     def _user_key(self, username: str, key: str):
         return f'{self._prefix}{username}_{key}'

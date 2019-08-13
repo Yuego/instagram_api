@@ -1,3 +1,4 @@
+from urllib3.response import HTTPResponse
 
 from instagram_api.property_mapper import PropertyMapper
 
@@ -9,7 +10,3 @@ class Response(PropertyMapper):
     JSON_PROPERTY_MAP = {
         '_message': [UnknownMessage],
     }
-
-    @property
-    def is_ok(self):
-        return getattr(self, 'status') == Response.STATUS_OK

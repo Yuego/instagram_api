@@ -14,7 +14,7 @@ class DirectThreadItemMedia(PropertyMapperBase):
 
     JSON_PROPERTY_MAP = {
         'media_type': int,
-        'image_versions2': Image_Versions2,
+        'image_versions2': ImageVersions2,
         'video_versions': [VideoVersions],
         'original_width': int,
         'original_height': int,

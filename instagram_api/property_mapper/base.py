@@ -105,6 +105,14 @@ class PropertyMapperBase(metaclass=PropertyMapperMeta):
         """
         self.__attr_dict[attr] = value
 
+    def _getattr(self, attr: str, default = None):
+        if attr in self.__attr_dict:
+            return self.__attr_dict[attr]
+        elif default:
+            return default
+        else:
+            raise AttributeError(f'{self.__class__.__name__} object has no attribute `{attr}`')
+
     def __init__(self, data):
         self.parse_json_data(data=data)
 
@@ -117,5 +125,8 @@ class PropertyMapperBase(metaclass=PropertyMapperMeta):
     def __getattr__(self, item):
         if item in self.__attr_dict:
             return self.__attr_dict[item]
+
+        if item in self.JSON_PROPERTY_MAP:
+            return None
 
         return super(PropertyMapperBase, self).__getattribute__(item)

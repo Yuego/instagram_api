@@ -8,7 +8,7 @@ __all__ = ['FeedAysf']
 class FeedAysf(PropertyMapperBase):
     JSON_PROPERTY_MAP = {
         'landing_site_type': None,
-        'uuid': 'string',
+        'uuid': str,
         'view_all_text': None,
         'feed_position': None,
         'landing_site_title': None,

@@ -1,3 +1,4 @@
+import json
 import pickle
 import requests
 
@@ -8,7 +9,7 @@ from http import cookies, client
 from urllib import request, error, parse
 from urllib.parse import urlparse
 
-from typing import Optional
+from typing import Optional, Union
 
 from instagram_api.instagram_base import InstagramInterface
 
@@ -25,7 +26,7 @@ class Client:
     _user_agent: str
     _verify_ssl: bool
 
-    _proxy: Optional[str, dict]
+    _proxy: Union[str, dict]
 
     # output_interface: Optional[str]
 
@@ -72,4 +73,6 @@ class Client:
         if reset_cookie_jar:
             self._ig.settings.set_cookies('')
 
-
+    @staticmethod
+    def api_body_decode(json_string: str) -> dict:
+        return json.loads(json_string, strict=False)

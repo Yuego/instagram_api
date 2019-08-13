@@ -1,6 +1,6 @@
 from setuptools import setup
 
-from .instagram_api.version import version
+from instagram_api.version import version
 
 setup(
     name='instagram_api',
@@ -13,9 +13,14 @@ setup(
     author='Artem Vlasov',
     author_email='root@proscript.ru',
     license='MIT',
-    packages=['instagram_api'],
+    packages=[
+        'instagram_api',
+    ],
     zip_safe=False,
-    install_requires=list(open('./requirements.txt', 'r').readlines()),
+    install_requires=list(open('./requirements/requirements.txt', 'r').readlines()),
+    test_requires=[
+        'tox',
+    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -23,7 +28,6 @@ setup(
         'Natural Language :: Russian',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Topic :: Software Development :: Libraries :: Python Modules',

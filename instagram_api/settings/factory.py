@@ -3,7 +3,7 @@ import importlib
 from instagram_api.exceptions.settings import SettingsException
 
 from .storage.interface import StorageInterface
-from .
+from .handler import StorageHandler
 """
 
 STORAGE = 'instagram_api.settings.storage.redis.RedisStorage
@@ -32,6 +32,8 @@ class StorageFactory:
             raise SettingsException(f'Storage class must inherit StorageInterface interface', response={})
 
         storage = storage_class()
+
+        return StorageHandler(storage, storage_config, callbacks)
 
 
 

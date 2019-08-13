@@ -20,12 +20,8 @@ class DeviceInterface(metaclass=ABCMeta):
         return self.get_user_agent()
 
     @abstractmethod
-    def get_fb_user_agent(self) -> str:
+    def get_fb_user_agent(self, app_name: str) -> str:
         raise NotImplementedError
-
-    @property
-    def fb_user_agent(self) -> str:
-        return self.get_user_agent()
 
     @abstractmethod
     def get_android_version(self) -> str:
@@ -60,6 +56,14 @@ class DeviceInterface(metaclass=ABCMeta):
         return self.get_resolution()
 
     @abstractmethod
+    def get_manufacturer(self) -> str:
+        raise NotImplementedError
+
+    @property
+    def manufacturer(self) -> str:
+        return self.get_manufacturer()
+
+    @abstractmethod
     def get_brand(self) -> str or None:
         raise NotImplementedError
 
@@ -74,6 +78,14 @@ class DeviceInterface(metaclass=ABCMeta):
     @property
     def model(self) -> str:
         return self.get_model()
+
+    @abstractmethod
+    def get_device(self) -> str:
+        raise NotImplementedError
+
+    @property
+    def device(self):
+        return self.get_device()
 
     @abstractmethod
     def get_cpu(self) -> str:

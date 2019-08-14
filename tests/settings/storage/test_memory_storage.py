@@ -40,7 +40,7 @@ def empty_jar(request):
 
 
 @pytest.mark.parametrize(('param', 'expected'), [
-    (None, '_ig'),
+    (None, ''),
     ('test', 'test'),
     ('another', 'another'),
 ])
@@ -50,9 +50,9 @@ def test_storage_open(param, expected, empty_storage: MemoryStorage):
     :param storage:
     :return:
     """
-    storage.open({'prefix': param})
+    empty_storage.open({'prefix': param})
 
-    assert storage._prefix == expected
+    assert empty_storage._prefix == expected
 
 
 def test_storage_close(storage: MemoryStorage):
@@ -71,37 +71,37 @@ def test_storage_close(storage: MemoryStorage):
     'user',
     'margo',
 ])
-def test_storage_open_close_user(username, storage):
+def test_storage_open_close_user(username, empty_storage):
     """
     Тест открытия/закрытия сессии юзера
 
     :param username:
-    :param storage:
+    :param empty_storage:
     :return:
     """
-    assert storage._username is None
+    assert empty_storage._username is None
 
-    storage.open_user(username)
+    empty_storage.open_user(username)
 
-    assert storage._username == username
+    assert empty_storage._username == username
 
-    storage.close_user()
+    empty_storage.close_user()
 
-    assert storage._username is None
+    assert empty_storage._username is None
 
 
-def test_storage_empty_username(storage, empty_jar):
+def test_storage_empty_username(empty_storage, empty_jar):
     with pytest.raises(SettingsException):
-        storage.load_user_settings()
-
-    with pytest.raises(SettingsException):
-        storage.save_user_settings({})
+        empty_storage.load_user_settings()
 
     with pytest.raises(SettingsException):
-        storage.load_user_cookies()
+        empty_storage.save_user_settings({})
 
     with pytest.raises(SettingsException):
-        storage.save_user_cookies(empty_jar)
+        empty_storage.load_user_cookies()
+
+    with pytest.raises(SettingsException):
+        empty_storage.save_user_cookies(empty_jar)
 
 
 @pytest.mark.parametrize(('username', 'settings'), [
@@ -142,4 +142,3 @@ def test_has_something_methods(storage, empty_jar):
     storage.save_user_cookies(empty_jar)
 
     assert storage.has_user_cookies() is True
-

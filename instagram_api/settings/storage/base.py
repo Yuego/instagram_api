@@ -1,3 +1,8 @@
+import json
+
+from abc import abstractmethod
+from http.cookiejar import CookieJar
+from requests.utils import dict_from_cookiejar, cookiejar_from_dict
 
 from instagram_api.exceptions.settings import SettingsException
 from .interface import StorageInterface
@@ -9,23 +14,42 @@ _default_prefix = '_ig'
 
 class StorageBase(StorageInterface):
 
+    cookie_jar_class = CookieJar
+
     _prefix: str = _default_prefix
     _username: str = None
 
     def open(self, config: dict):
-        prefix = config.pop('prefix', _default_prefix) or _default_prefix
-        self._prefix = prefix or _default_prefix
+        config = config or {}
+
+        prefix = config.pop('prefix', _default_prefix)
+
+        if prefix is None:
+            prefix = ''
+
+        self._prefix = prefix
 
     def _user_key(self, username: str, key: str):
         return f'{self._prefix}{username}_{key}'
 
+    @abstractmethod
     def _get_user_key(self, username: str, key: str):
         raise NotImplementedError
 
-    def _set_user_key(self, username: str, key: str, value):
+    @abstractmethod
+    def _set_user_key(self, username: str, key: str, value, trigger_key: str = None):
         raise NotImplementedError
 
+    @abstractmethod
     def _del_user_key(self, username: str, key: str):
+        raise NotImplementedError
+
+    @abstractmethod
+    def _pack_settings_dict(self, settings: dict) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def _unpack_settings_dict(self, settings: str) -> dict:
         raise NotImplementedError
 
     def open_user(self, username: str):
@@ -55,13 +79,42 @@ class StorageBase(StorageInterface):
         self._del_user_key(username, 'cookies')
 
     def load_user_settings(self):
-        return self._get_user_key(self._username, 'settings')
+        if self._username is None:
+            raise SettingsException(f'Empty username. You forgot to call `open_user`?', response={})
+
+        settings = self._get_user_key(self._username, 'settings')
+
+        if settings is None:
+            return None
+
+        return self._unpack_settings_dict(settings)
 
     def save_user_settings(self, settings: dict, trigger_key: str = None):
-        self._set_user_key(self._username, 'settings', settings)
+        if self._username is None:
+            raise SettingsException(f'Empty username. You forgot to call `open_user`?', response={})
+
+        packed_settings = self._pack_settings_dict(settings)
+
+        self._set_user_key(self._username, 'settings', packed_settings, trigger_key)
 
     def load_user_cookies(self):
-        return self._get_user_key(self._username, 'cookies')
+        if self._username is None:
+            raise SettingsException(f'Empty username. You forgot to call `open_user`?', response={})
 
-    def save_user_cookies(self, data: dict):
-        self._set_user_key(self._username, 'cookies', data)
+        jar_string = self._get_user_key(self._username, 'cookies')
+
+        if jar_string is None:
+            return None
+
+        jar_dict = json.loads(jar_string)
+
+        return cookiejar_from_dict(jar_dict, self.cookie_jar_class())
+
+    def save_user_cookies(self, jar: CookieJar):
+        if self._username is None:
+            raise SettingsException(f'Empty username. You forgot to call `open_user`?', response={})
+
+        jar_dict = dict_from_cookiejar(jar)
+        jar_string = json.dumps(jar_dict)
+
+        self._set_user_key(self._username, 'cookies', jar_string)

@@ -12,12 +12,18 @@ class MemoryStorage(StorageBase):
     def _get_user_key(self, username: str, key: str):
         return self._data.get(self._user_key(username, key), None)
 
-    def _set_user_key(self, username: str, key: str, value):
+    def _set_user_key(self, username: str, key: str, value, trigger_key: str = None):
         self._data[self._user_key(username, key)] = value
 
     def _del_user_key(self, username: str, key: str):
         key_name = self._user_key(username, key)
         return self._data.pop(key_name, None)
+
+    def _pack_settings_dict(self, settings: dict):
+        return settings
+
+    def _unpack_settings_dict(self, settings: str):
+        return settings
 
     def has_user(self, username: str):
         return self._user_key(username, 'settings') in self._data

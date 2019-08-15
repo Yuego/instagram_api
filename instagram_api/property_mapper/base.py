@@ -1,5 +1,7 @@
 import inspect
 
+from instagram_api.interfaces.response import ApiResponseInterface
+
 from .exceptions import UnsupportedType, WrongType
 from .meta import PropertyMapperMeta, base_allowed_types
 
@@ -118,7 +120,7 @@ class PropertyMapperBase(metaclass=PropertyMapperMeta):
 
     def __setattr__(self, key, value):
         if key in self.__attr_dict:
-            raise ValueError('Response data changing is not allowed')
+            raise ValueError('ApiResponse data changing is not allowed')
 
         super(PropertyMapperBase, self).__setattr__(key, value)
 

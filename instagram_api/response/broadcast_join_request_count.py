@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import User
 
 __all__ = ['BroadcastJoinRequestCountResponse']
 
 
-class BroadcastJoinRequestCountResponse(Response):
+class BroadcastJoinRequestCountResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'fetch_ts': int,
         'num_total_requests': int,

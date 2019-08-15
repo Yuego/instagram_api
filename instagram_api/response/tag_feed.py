@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Item, Section, StoryTray
 
 __all__ = ['TagFeedResponse']
 
 
-class TagFeedResponse(Response):
+class TagFeedResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'sections': [Section],
         'num_results': int,

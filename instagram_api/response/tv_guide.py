@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Badging, Composer, TvChannel
 
 __all__ = ['TvGuideResponse']
 
 
-class TvGuideResponse(Response):
+class TvGuideResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'channels': [TvChannel],
         'my_channel': TvChannel,

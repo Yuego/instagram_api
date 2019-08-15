@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['FriendshipsShowManyResponse']
 
 
-class FriendshipsShowManyResponse(Response):
+class FriendshipsShowManyResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'friendship_statuses': 'Model\UnpredictableKeys\FriendshipStatusUnpredictableContainer',
     }

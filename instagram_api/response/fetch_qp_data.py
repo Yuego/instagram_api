@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import QPExtraInfo, QPData
 
 __all__ = ['FetchQPDataResponse']
 
 
-class FetchQPDataResponse(Response):
+class FetchQPDataResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'request_status': str,
         'extra_info': [QPExtraInfo],

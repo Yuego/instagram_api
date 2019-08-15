@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import User
 
 __all__ = ['BlockedListResponse']
 
 
-class BlockedListResponse(Response):
+class BlockedListResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'blocked_list': [User],
         'next_max_id': str,

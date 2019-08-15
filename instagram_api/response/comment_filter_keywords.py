@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['CommentFilterKeywordsResponse']
 
 
-class CommentFilterKeywordsResponse(Response):
+class CommentFilterKeywordsResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'keywords': None,
     }

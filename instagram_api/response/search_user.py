@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import User
 
 __all__ = ['SearchUserResponse']
 
 
-class SearchUserResponse(Response):
+class SearchUserResponse(ApiResponse):
     JSON_PROPERTY_MAP = dict(
         has_more=bool,
         num_results=int,

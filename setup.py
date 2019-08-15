@@ -20,7 +20,7 @@ setup(
     install_requires=list(open('./requirements/requirements.txt', 'r').readlines()),
     test_requires=[
         'tox',
-    ],
+    ].extend(list(open('./requirements/requirements-dev.txt', 'r').readlines())),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

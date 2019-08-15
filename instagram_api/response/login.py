@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Challenge, PhoneVerificationSettings, TwoFactorInfo, User
 
 __all__ = ['LoginResponse']
 
 
-class LoginResponse(Response):
+class LoginResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'username': str,
         'has_anonymous_profile_picture': bool,

@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import UserList
 
 __all__ = ['FBSearchResponse']
 
 
-class FBSearchResponse(Response):
+class FBSearchResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'has_more': bool,
         'list': [UserList],

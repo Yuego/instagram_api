@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Collection
 
 __all__ = ['GetCollectionsListResponse']
 
 
-class GetCollectionsListResponse(Response):
+class GetCollectionsListResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'items': [Collection],
         'more_available': bool,

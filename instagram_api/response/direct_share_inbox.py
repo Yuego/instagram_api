@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['DirectShareInboxResponse']
 
 
-class DirectShareInboxResponse(Response):
+class DirectShareInboxResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'shares': None,
         'max_id': str,

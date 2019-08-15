@@ -1,5 +1,6 @@
 import inspect
 
+from abc import ABCMeta
 from .types import *
 
 __all__ = ['PropertyMapperMeta', 'base_allowed_types']
@@ -14,7 +15,7 @@ base_allowed_types = (
 map_attr_name = 'JSON_PROPERTY_MAP'
 
 
-class PropertyMapperMeta(type):
+class PropertyMapperMeta(ABCMeta):
 
     def __new__(cls, name, bases, attrs):
 

@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import SuggestedUsers
 
 __all__ = ['DiscoverPeopleResponse']
 
 
-class DiscoverPeopleResponse(Response):
+class DiscoverPeopleResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'more_available': bool,
         'max_id': str,

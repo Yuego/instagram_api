@@ -1,9 +1,12 @@
 from abc import ABCMeta, abstractmethod
 
+from instagram_api.utils.http import ClientCookieJar
+
 __all__ = ['StorageInterface']
 
 
 class StorageInterface(metaclass=ABCMeta):
+    cookie_jar_class: type(ClientCookieJar)
 
     @abstractmethod
     def open(self, config: dict):
@@ -38,11 +41,11 @@ class StorageInterface(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def load_user_cookies(self) -> str:
+    def load_user_cookies(self) -> ClientCookieJar:
         raise NotImplementedError
 
     @abstractmethod
-    def save_user_cookies(self, data: dict):
+    def save_user_cookies(self, jar: ClientCookieJar):
         raise NotImplementedError
 
     @abstractmethod

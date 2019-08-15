@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['SendConfirmEmailResponse']
 
 
-class SendConfirmEmailResponse(Response):
+class SendConfirmEmailResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'title': None,
         'is_email_legit': None,

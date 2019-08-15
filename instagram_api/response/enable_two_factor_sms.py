@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['EnableTwoFactorSMSResponse']
 
 
-class EnableTwoFactorSMSResponse(Response):
+class EnableTwoFactorSMSResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'backup_codes': None,
     }

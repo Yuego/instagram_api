@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Suggested
 
 __all__ = ['SuggestedSearchesResponse']
 
 
-class SuggestedSearchesResponse(Response):
+class SuggestedSearchesResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'suggested': [Suggested],
         'rank_token': str,

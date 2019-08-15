@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import GraphData
 
 __all__ = ['GraphQLResponse']
 
 
-class GraphQLResponse(Response):
+class GraphQLResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'data': GraphData,
     }

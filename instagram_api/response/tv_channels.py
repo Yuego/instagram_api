@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Item, User
 
 __all__ = ['TvChannelsResponse']
 
 
-class TvChannelsResponse(Response):
+class TvChannelsResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'type': str,
         'title': str,

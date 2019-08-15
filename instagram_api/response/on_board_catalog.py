@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['OnBoardCatalogResponse']
 
 
-class OnBoardCatalogResponse(Response):
+class OnBoardCatalogResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'shopping_onboarding_state': str,
         'current_catalog_id': str,

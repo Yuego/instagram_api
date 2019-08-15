@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Suggested
 
 __all__ = ['RecentSearchesResponse']
 
 
-class RecentSearchesResponse(Response):
+class RecentSearchesResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'recent': [Suggested],
     }

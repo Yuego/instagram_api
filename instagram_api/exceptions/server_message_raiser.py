@@ -3,9 +3,9 @@ from typing import Optional
 import re
 
 from collections import OrderedDict
-from urllib3.response import HTTPResponse
+from requests import Response as ServerResponse
 
-from instagram_api.response.base_response import Response
+from instagram_api.response.base_response import ApiResponse as ApiResponse
 
 from .account_disabled import AccountDisabledException
 from .bad_request import BadRequestException
@@ -96,15 +96,15 @@ class ServerMessageRaiser:
     def auto_raise(cls,
                    prefix_string: Optional[str],
                    server_message: str,
-                   server_response: Response = None,
-                   http_response: HTTPResponse = None):
+                   api_response: ApiResponse = None,
+                   http_response: ServerResponse = None):
 
         messages = [server_message]
         server_error_type = None
 
-        if isinstance(server_response, Response):
-            if server_response.error_type is not None:
-                server_error_type = server_response.error_type
+        if isinstance(api_response, ApiResponse):
+            if api_response.error_type is not None:
+                server_error_type = api_response.error_type
                 messages.append(server_error_type)
 
         exception_class = None
@@ -154,9 +154,9 @@ class ServerMessageRaiser:
         args = [message_text]
         kwargs = {}
 
-        if isinstance(server_response, Response) and issubclass(exception_class, InstagramException):
+        if isinstance(api_response, ApiResponse) and issubclass(exception_class, InstagramException):
             kwargs.update({
-                'response': server_response,
+                'response': api_response,
             })
 
         raise exception_class(*args, **kwargs)

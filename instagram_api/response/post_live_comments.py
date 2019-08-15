@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import LiveComment
 __all__ = ['PostLiveCommentsResponse']
 
 
-class PostLiveCommentsResponse(Response):
+class PostLiveCommentsResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'starting_offset': None,
         'ending_offset': None,

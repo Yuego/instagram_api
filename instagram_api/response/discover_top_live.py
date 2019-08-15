@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Broadcast, PostLiveItem
 
 __all__ = ['DiscoverTopLiveResponse']
 
 
-class DiscoverTopLiveResponse(Response):
+class DiscoverTopLiveResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'broadcasts': [Broadcast],
         'post_live_broadcasts': [PostLiveItem],

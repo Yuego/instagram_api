@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['CheckUsernameResponse']
 
 
-class CheckUsernameResponse(Response):
+class CheckUsernameResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'username': str,
         'available': None,

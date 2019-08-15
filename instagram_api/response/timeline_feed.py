@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import FeedAysf, FeedItem
 
 __all__ = ['TimelineFeedResponse']
 
 
-class TimelineFeedResponse(Response):
+class TimelineFeedResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'num_results': int,
         'client_gap_enforcer_matrix': None,

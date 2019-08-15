@@ -5,7 +5,7 @@ from instagram_api.property_mapper import PropertyMapper
 from .model import UnknownMessage
 
 
-class Response(PropertyMapper):
+class ApiResponse(PropertyMapper):
 
     JSON_PROPERTY_MAP = {
         '_message': [UnknownMessage],

@@ -1,4 +1,4 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import (
     AdsInfo,
     FormerUsernameInfo,
@@ -9,7 +9,7 @@ from .model import (
 __all__ = ['AccountDetailsResponse']
 
 
-class AccountDetailsResponse(Response):
+class AccountDetailsResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'date_joined': str,
         'former_username_info': FormerUsernameInfo,

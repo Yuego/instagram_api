@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Item
 
 __all__ = ['UserFeedResponse']
 
 
-class UserFeedResponse(Response):
+class UserFeedResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'items': [Item],
         'num_results': int,

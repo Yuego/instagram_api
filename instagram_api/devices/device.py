@@ -1,7 +1,8 @@
 from distutils.version import LooseVersion
 
+from instagram_api.interfaces.device import DeviceInterface
+
 from .good import GoodDevices
-from .interface import DeviceInterface
 from .user_agent import UserAgent
 
 
@@ -76,37 +77,48 @@ class Device(DeviceInterface):
 
         self._fb_user_agents = {}
 
-    def get_device_string(self):
+    @property
+    def device_string(self):
         return self._device_string
 
-    def get_android_version(self):
+    @property
+    def android_version(self):
         return self._android_version
 
-    def get_android_release(self):
+    @property
+    def android_release(self):
         return self._android_release
 
-    def get_dpi(self):
+    @property
+    def dpi(self):
         return self._dpi
 
-    def get_resolution(self):
+    @property
+    def resolution(self):
         return self._resolution
 
-    def get_manufacturer(self):
+    @property
+    def manufacturer(self):
         return self._manufacturer
 
-    def get_brand(self):
+    @property
+    def brand(self):
         return self._brand
 
-    def get_model(self):
+    @property
+    def model(self):
         return self._model
 
-    def get_device(self):
+    @property
+    def device(self):
         return self._device
 
-    def get_cpu(self):
+    @property
+    def cpu(self):
         return self._cpu
 
-    def get_user_agent(self):
+    @property
+    def user_agent(self):
         return self._user_agent
 
     def get_fb_user_agent(self, app_name):

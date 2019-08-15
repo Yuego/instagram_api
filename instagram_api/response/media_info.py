@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Item
 
 __all__ = ['MediaInfoResponse']
 
 
-class MediaInfoResponse(Response):
+class MediaInfoResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'auto_load_more_enabled': None,
         'num_results': int,

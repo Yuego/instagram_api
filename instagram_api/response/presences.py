@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['PresencesResponse']
 
 
-class PresencesResponse(Response):
+class PresencesResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'user_presence': 'Model\UnpredictableKeys\PresenceUnpredictableContainer',
     }

@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['MsisdnHeaderResponse']
 
 
-class MsisdnHeaderResponse(Response):
+class MsisdnHeaderResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'phone_number': str,
         'url': str,

@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['ResumableOffsetResponse']
 
 
-class ResumableOffsetResponse(Response):
+class ResumableOffsetResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'offset': int,
     }

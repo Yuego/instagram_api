@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['BroadcastLikeResponse']
 
 
-class BroadcastLikeResponse(Response):
+class BroadcastLikeResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'likes': None,
     }

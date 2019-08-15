@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Collection
 
 __all__ = ['EditCollectionResponse']
 
 
-class EditCollectionResponse(Response, Collection):
+class EditCollectionResponse(ApiResponse, Collection):
     JSON_PROPERTY_MAP = {
 
     }

@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Caption, Comment
 
 __all__ = ['MediaCommentsResponse']
 
 
-class MediaCommentsResponse(Response):
+class MediaCommentsResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'comments': [Comment],
         'comment_count': int,

@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import SavedFeedItem
 
 __all__ = ['SavedFeedResponse']
 
 
-class SavedFeedResponse(Response):
+class SavedFeedResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'items': [SavedFeedItem],
         'more_available': bool,

@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import FriendshipStatus
 
 __all__ = ['FriendshipShowResponse']
 
 
-class FriendshipShowResponse(Response, FriendshipStatus):
+class FriendshipShowResponse(ApiResponse, FriendshipStatus):
     JSON_PROPERTY_MAP = {
 
     }

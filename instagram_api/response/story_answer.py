@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import StoryQuestionResponderInfos
 
 __all__ = ['StoryAnswerResponse']
 
 
-class StoryAnswerResponse(Response):
+class StoryAnswerResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'responder_info': StoryQuestionResponderInfos,
     }

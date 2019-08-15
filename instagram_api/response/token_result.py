@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Token
 
 __all__ = ['TokenResultResponse']
 
 
-class TokenResultResponse(Response):
+class TokenResultResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'token': Token,
     }

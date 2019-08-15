@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Aymf, Counts, Story, Subscription
 
 __all__ = ['ActivityNewsResponse']
 
 
-class ActivityNewsResponse(Response):
+class ActivityNewsResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'new_stories': [Story],
         'old_stories': [Story],

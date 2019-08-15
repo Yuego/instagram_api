@@ -1,11 +1,12 @@
-from urllib3.response import HTTPResponse
+from requests import Response
 
+from instagram_api.interfaces.response import ApiResponseInterface
 
 from .base import PropertyMapperBase
 from .error_list import PropertyMapperErrorList
 
 
-class PropertyMapper(PropertyMapperBase):
+class PropertyMapper(PropertyMapperBase, ApiResponseInterface):
 
     STATUS_OK = 'ok'
     STATUS_FAIL = 'fail'
@@ -16,7 +17,7 @@ class PropertyMapper(PropertyMapperBase):
         'error_type': str,
     }
 
-    _http_response: HTTPResponse
+    _http_response: Response
 
     def __bool__(self):
         return self.status == PropertyMapper.STATUS_OK
@@ -25,7 +26,6 @@ class PropertyMapper(PropertyMapperBase):
     def is_ok(self):
         return self.status == self.STATUS_OK
 
-    @property
     def get_message(self):
         message = self._getattr('message', None)
 
@@ -52,7 +52,7 @@ class PropertyMapper(PropertyMapperBase):
         return self._http_response
 
     @http_response.setter
-    def http_response(self, response: HTTPResponse):
+    def http_response(self, response: Response):
         self._http_response = response
 
     @property

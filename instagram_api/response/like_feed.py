@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Item
 
 __all__ = ['LikeFeedResponse']
 
 
-class LikeFeedResponse(Response):
+class LikeFeedResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'auto_load_more_enabled': None,
         'items': [Item],

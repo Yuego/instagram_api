@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Broadcast, PostLive, StoryTray, TraySuggestions
 
 __all__ = ['ReelsTrayFeedResponse']
 
 
-class ReelsTrayFeedResponse(Response):
+class ReelsTrayFeedResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'story_ranking_token': str,
         'broadcasts': [Broadcast],

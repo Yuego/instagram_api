@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import DirectThreadItem, User
 
 __all__ = ['DirectCreateGroupThread']
 
 
-class DirectCreateGroupThread(Response):
+class DirectCreateGroupThread(ApiResponse):
     JSON_PROPERTY_MAP = {
         'thread_id': int,
         'users': [User],

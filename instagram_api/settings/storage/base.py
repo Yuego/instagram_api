@@ -1,11 +1,12 @@
 import json
 
 from abc import abstractmethod
-from http.cookiejar import CookieJar
+
 from requests.utils import dict_from_cookiejar, cookiejar_from_dict
 
 from instagram_api.exceptions.settings import SettingsException
-from .interface import StorageInterface
+from instagram_api.interfaces import StorageInterface
+from instagram_api.utils.http import ClientCookieJar
 
 __all__ = ['StorageBase']
 
@@ -13,8 +14,7 @@ _default_prefix = '_ig'
 
 
 class StorageBase(StorageInterface):
-
-    cookie_jar_class = CookieJar
+    cookie_jar_class = ClientCookieJar
 
     _prefix: str = _default_prefix
     _username: str = None
@@ -60,10 +60,10 @@ class StorageBase(StorageInterface):
 
     def move_user(self, old_username: str, new_username: str):
         if not self.has_user(old_username):
-            raise SettingsException(f'Cannot move non-existent user {old_username}', response={})
+            raise SettingsException(f'Cannot move non-existent user {old_username}')
 
         if self.has_user(new_username):
-            raise SettingsException(f'Refusing to owerwrite existing user data {new_username}', response={})
+            raise SettingsException(f'Refusing to owerwrite existing user data {new_username}')
 
         settings = self._get_user_key(old_username, 'settings')
         cookies = self._get_user_key(old_username, 'cookies')
@@ -80,7 +80,7 @@ class StorageBase(StorageInterface):
 
     def load_user_settings(self):
         if self._username is None:
-            raise SettingsException(f'Empty username. You forgot to call `open_user`?', response={})
+            raise SettingsException(f'Empty username. You forgot to call `open_user`?')
 
         settings = self._get_user_key(self._username, 'settings')
 
@@ -91,7 +91,7 @@ class StorageBase(StorageInterface):
 
     def save_user_settings(self, settings: dict, trigger_key: str = None):
         if self._username is None:
-            raise SettingsException(f'Empty username. You forgot to call `open_user`?', response={})
+            raise SettingsException(f'Empty username. You forgot to call `open_user`?')
 
         packed_settings = self._pack_settings_dict(settings)
 
@@ -99,7 +99,7 @@ class StorageBase(StorageInterface):
 
     def load_user_cookies(self):
         if self._username is None:
-            raise SettingsException(f'Empty username. You forgot to call `open_user`?', response={})
+            raise SettingsException(f'Empty username. You forgot to call `open_user`?')
 
         jar_string = self._get_user_key(self._username, 'cookies')
 
@@ -110,9 +110,9 @@ class StorageBase(StorageInterface):
 
         return cookiejar_from_dict(jar_dict, self.cookie_jar_class())
 
-    def save_user_cookies(self, jar: CookieJar):
+    def save_user_cookies(self, jar: ClientCookieJar):
         if self._username is None:
-            raise SettingsException(f'Empty username. You forgot to call `open_user`?', response={})
+            raise SettingsException(f'Empty username. You forgot to call `open_user`?')
 
         jar_dict = dict_from_cookiejar(jar)
         jar_string = json.dumps(jar_dict)

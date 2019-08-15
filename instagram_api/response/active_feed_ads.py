@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import FeedItem
 
 __all__ = ['ActiveFeedAdsResponse']
 
 
-class ActiveFeedAdsResponse(Response):
+class ActiveFeedAdsResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'feed_items': [FeedItem],
         'next_max_id': str,

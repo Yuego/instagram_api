@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Item
 
 __all__ = ['UsertagsResponse']
 
 
-class UsertagsResponse(Response):
+class UsertagsResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'num_results': int,
         'auto_load_more_enabled': None,

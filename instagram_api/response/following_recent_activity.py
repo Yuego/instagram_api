@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Story
 
 __all__ = ['FollowingRecentActivityResponse']
 
 
-class FollowingRecentActivityResponse(Response):
+class FollowingRecentActivityResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'stories': [Story],
         'next_max_id': str,

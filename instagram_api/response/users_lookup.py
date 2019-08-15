@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import User
 
 __all__ = ['UsersLookupResponse']
 
 
-class UsersLookupResponse(Response):
+class UsersLookupResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'user': User,
         'email_sent': bool,

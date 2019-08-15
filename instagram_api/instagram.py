@@ -1,37 +1,20 @@
-
 from instagram_api import request
+from instagram_api.exceptions import InstagramException
+from instagram_api.interfaces import DeviceInterface, InstagramInterface, RequestInterface
+from instagram_api.response.login import LoginResponse
+
+from .client import Client
+from .constants import Constants
 from .experiments_interface import ExperimentsInterface
-from .devices.interface import DeviceInterface
-from .instagram_base import InstagramInterface
+from .devices import Device
+from .request.base import RequestBase
+from .settings import StorageFactory, StorageHandler
+from .signatures import Signatures
+
+__all__ = ['Instagram']
 
 
 class Instagram(ExperimentsInterface, InstagramInterface):
-
-    EXPERIMENTS_REFRESH = 7200
-
-    username: str
-    password: str
-    device: DeviceInterface
-    debug: bool
-    debug_truncate: bool
-    debug_developer: bool = False
-
-    uuid: str
-    adversiting_id: str
-    device_id: str
-    phone_id: str
-    account_id: int
-
-    is_maybe_logged_in: bool = False
-
-    client: Client
-
-    settings: Settings
-
-    session_id: str
-
-    experiments: list
-
     account: request.Account
     business: request.Business
     collection: request.Collection
@@ -76,4 +59,138 @@ class Instagram(ExperimentsInterface, InstagramInterface):
         self.timeline = request.Timeline(self)
         self.usertag = request.Usertag(self)
 
+        # TODO: test this
+        def mix_self(this):
+            def close_user(storage: StorageHandler):
+                if isinstance(this.client, Client):
+                    this.client.save_cookie_jar()
 
+            return close_user
+
+        self.settings = StorageFactory.create_handler(
+            storage_config['storage_class'],
+            storage_config['storage_config'],
+            {
+                StorageHandler.ON_CLOSE_USER: mix_self(self),
+            },
+        )
+
+        cookies = self.settings.get_cookies()
+
+        self.client = Client(self, cookies=cookies)
+        self.experiments = []
+
+    def login(self, username: str, password: str, app_refresh_interval: int = 1800):
+        assert username and password, 'You must provide a username and password to login().'
+
+        return self._login(username, password, False, app_refresh_interval)
+
+    def _login(self, username: str, password: str, force_login: bool, app_refresh_interval: int):
+        assert username and password, 'You must provide a username and password to _login().'
+
+        if self.username != username or self.password != password:
+            self.change_user(username, password)
+
+        if not self.is_maybe_logged_in or force_login:
+            self._send_pre_login_flow()
+
+            try:
+                response = self.request(
+                    'accounts/login/'
+                ).require_auth(
+                    False
+                ).add_posts(**{
+                    'country_codes': [
+                        {
+                            'country_code': 1,
+                            'source': [
+                                'default',
+                                'sim',
+                            ],
+                        },
+                    ],
+                    'phone_id': self.phone_id,
+                    '_csrftoken': self.client.get_token(),
+                    'username': self.username,
+                    'adid': self.advertising_id,
+                    'guid': self.uuid,
+                    'device_id': self.device_id,
+                    'password': self.password,
+                    'google_tokens': [],
+                    'login_attempt_count': 0
+                }).get_response(LoginResponse)
+            except InstagramException as e:
+                if e.has_response and e.response.is_two_factor_required:
+                    return e.response
+                else:
+                    raise
+
+    def change_user(self, username: str, password: str):
+        assert username and password, 'You must provide a username and password to change_user().'
+
+        self.settings.change_user(username=username)
+
+        saved_device_string = self.settings.get('device_string')
+        self.device = Device(
+            app_version=Constants.IG_VERSION,
+            version_code=Constants.VERSOIN_CODE,
+            user_locale=Constants.USER_AGENT_LOCALE,
+            device_string=saved_device_string,
+        )
+
+        device_string = self.device.device_string
+
+        reset_cookie_jar = False
+        if (
+                device_string != saved_device_string
+                or not self.settings.get('uuid')
+                or not self.settings.get('phone_id')
+                or not self.settings.get('device_id')
+        ):
+            self.settings.erase_device_settings()
+
+            self.settings.set('device_string', device_string)
+
+            self.settings.set('device_id', Signatures.generate_device_id())
+            self.settings.set('phone_id', Signatures.generate_uuid(keep_dashes=True))
+            self.settings.set('uuid', Signatures.generate_uuid(keep_dashes=True))
+
+            self.settings.set('account_id', None)
+
+            reset_cookie_jar = True
+
+        if self.settings.get('advertising_id') is None:
+            self.settings.set('advertising_id', Signatures.generate_uuid(keep_dashes=True))
+
+        if self.settings.get('session_id') is None:
+            self.settings.set('session_id', Signatures.generate_uuid(keep_dashes=True))
+
+        self.username = username
+        self.password = password
+
+        self.uuid = self.settings.get('uuid')
+        self.advertising_id = self.settings.get('advertising_id')
+        self.device_id = self.settings.get('device_id')
+        self.phone_id = self.settings.get('phone_id')
+        self.session_id = self.settings.get('session_id')
+        self.experiments = self.settings.get_experiments()
+
+        if not reset_cookie_jar and self.settings.is_maybe_logged_in():
+            self.is_maybe_logged_in = True
+            self.account_id = self.settings.get('account_id')
+
+        else:
+            self.is_maybe_logged_in = False
+            self.account_id = None
+
+        self.client.update_from_current_settings(
+            device=self.device,
+            settings=self.settings,
+            reset_cookie_jar=reset_cookie_jar
+        )
+
+        if self.client.get_token() is None:
+            self.is_maybe_logged_in = False
+
+    def request(self, url: str) -> RequestInterface:
+        return RequestBase(self, url)

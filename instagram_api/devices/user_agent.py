@@ -1,10 +1,9 @@
 from instagram_api.constants import Constants
+from instagram_api.interfaces import DeviceInterface
 
 from .good import GoodDevices
-from .interface import DeviceInterface
 
 __all__ = ['UserAgent']
-
 
 fb_translate_table = str.maketrans('/;', '--')
 

@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import DirectInbox, Megaphone, User
 
 __all__ = ['DirectInboxResponse']
 
 
-class DirectInboxResponse(Response):
+class DirectInboxResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'pending_requests_total': int,
         'seq_id': int,

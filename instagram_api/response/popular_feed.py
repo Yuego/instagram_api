@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Item
 
 __all__ = ['PopularFeedResponse']
 
 
-class PopularFeedResponse(Response):
+class PopularFeedResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'next_max_id': str,
         'more_available': bool,

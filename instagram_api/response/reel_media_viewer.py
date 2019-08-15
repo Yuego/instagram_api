@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import Item, User
 
 __all__ = ['ReelMediaVideoResponse']
 
 
-class ReelMediaVideoResponse(Response):
+class ReelMediaVideoResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'users': [User],
         'next_max_id': str,

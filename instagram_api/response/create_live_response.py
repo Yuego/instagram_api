@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['CreateLiveResponse']
 
 
-class CreateLiveResponse(Response):
+class CreateLiveResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'broadcast_id': int,
         'upload_url': str,

@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import DirectMessageMetadata, Item
 
 __all__ = ['ConfigureResponse']
 
 
-class ConfigureResponse(Response):
+class ConfigureResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'upload_id': int,
         'media': Item,

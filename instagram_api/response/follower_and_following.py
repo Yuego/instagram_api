@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import SuggestedUsers, User
 
 __all__ = ['FollowerAndFollowingResponse']
 
 
-class FollowerAndFollowingResponse(Response):
+class FollowerAndFollowingResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'users': [User],
         'suggested_users': SuggestedUsers,

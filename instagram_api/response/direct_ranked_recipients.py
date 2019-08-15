@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import DirectRankedRecipient
 
 __all__ = ['DirectRankedRecipientsResponse']
 
 
-class DirectRankedRecipientsResponse(Response):
+class DirectRankedRecipientsResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'expires': None,
         'ranked_recipients': [DirectRankedRecipient],

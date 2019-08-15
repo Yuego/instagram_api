@@ -1,8 +1,12 @@
 
 
-class UnsupportedType(Exception):
+class PropertyMapperException(Exception):
     pass
 
 
-class WrongType(Exception):
+class UnsupportedType(PropertyMapperException):
+    pass
+
+
+class WrongType(PropertyMapperException):
     pass

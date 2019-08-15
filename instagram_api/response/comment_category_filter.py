@@ -1,9 +1,9 @@
-from .base_response import Response
+from .base_response import ApiResponse
 
 __all__ = ['CommentCategoryFilterResponse']
 
 
-class CommentCategoryFilterResponse(Response):
+class CommentCategoryFilterResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'disabled': None,
     }

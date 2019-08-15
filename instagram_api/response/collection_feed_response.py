@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import SavedFeedItem
 
 __all__ = ['CollectionFeedResponse']
 
 
-class CollectionFeedResponse(Response):
+class CollectionFeedResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'collection_id': str,
         'collection_name': str,

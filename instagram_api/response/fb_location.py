@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import LocationItem
 
 __all__ = ['FBLocationResponse']
 
 
-class FBLocationResponse(Response):
+class FBLocationResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'has_more': bool,
         'items': [LocationItem],

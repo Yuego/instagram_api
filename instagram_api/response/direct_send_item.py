@@ -1,10 +1,10 @@
-from .base_response import Response
+from .base_response import ApiResponse
 from .model import DirectSendItemPayload
 
 __all__ = ['DirectSendItemResponse']
 
 
-class DirectSendItemResponse(Response):
+class DirectSendItemResponse(ApiResponse):
     JSON_PROPERTY_MAP = {
         'action': None,
         'status_code': None,

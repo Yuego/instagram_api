@@ -1,7 +1,11 @@
 from typing import Any
 
+import random
+
+from time import time
+
 from instagram_api import request
-from instagram_api.exceptions import InstagramException
+from instagram_api.exceptions import InstagramException, LoginRequiredException
 from instagram_api.interfaces import ExperimentsInterface, InstagramInterface, ApiRequestInterface
 from instagram_api.response.login import LoginResponse
 
@@ -144,6 +148,62 @@ class Instagram(ExperimentsInterface, InstagramInterface):
             self.client.zero_rating.reset()
 
             self.internal.send_launcher_sync(False)
+            self.internal.sync_user_features()
+            self.timeline.get_timeline_feed(None, {'recover_from_crash': True})
+            self.story.get_reels_tray_feed()
+            self.discover.get_suggested_searches('users')
+            self.discover.get_recent_searches()
+            self.discover.get_suggested_searches('blended')
+
+            self.internal.fetch_zero_rating_token()
+            self._register_push_channels()
+            self.direct.get_ranked_recipients('reshare', True)
+            self.direct.get_ranked_recipients('raven', True)
+            self.direct.get_inbox()
+
+            self.direct.get_presences()
+            self.people.get_recent_activity_inbox()
+            self.internal.get_loom_fetch_config()
+            self.internal.get_profile_notice()
+            self.media.get_blocked_media()
+
+            self.people.get_bootstrap_users()
+
+            self.discover.get_explore_feed(None, True)
+
+            self.internal.get_qp_fetch()
+            self.internal.get_facebook_ota()
+        else:
+            last_login_time = self.settings.get('last_login')
+            is_session_expired = last_login_time is None or (time() - last_login_time) > app_refresh_interval
+
+            try:
+                self.timeline.get_timeline_feed(None, {
+                    'is_pull_to_refresh': None if is_session_expired else random.random() * 4 < 3
+                })
+            except LoginRequiredException as e:
+                return self._login(self.username, self.password, True, app_refresh_interval)
+
+            if is_session_expired:
+                self.settings.set('last_login', time())
+
+                self.session_id = Signatures.generate_uuid(True)
+                self.settings.set('session_id', self.session_id)
+
+                self.people.get_bootstrap_users()
+                self.story.get_reels_tray_feed()
+                self.direct.get_ranked_recipients('reshare', True)
+                self.direct.get_ranked_recipients('raven', True)
+                self._register_push_channels()
+
+                self.direct.get_inbox()
+                self.direct.get_presences()
+                self.people.get_recent_activity_inbox()
+                self.internal.get_profile_notice()
+                self.discover.get_explore_feed()
+
+
+
 
     def change_user(self, username: str, password: str):
         assert username and password, 'You must provide a username and password to change_user().'

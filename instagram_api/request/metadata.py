@@ -1,4 +1,4 @@
 
 
-class Internal:
+class InternalMetadata:
     pass

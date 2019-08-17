@@ -1,11 +1,14 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import User
 
 __all__ = ['User']
 
 
-class MediaLikersResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'user_count': int,
-        'users': [User],
-    }
+class MediaLikersResponseInterface(ApiResponseInterface):
+    user_count: int
+    users: [User]
+
+
+class MediaLikersResponse(ApiResponseInterface):
+    pass

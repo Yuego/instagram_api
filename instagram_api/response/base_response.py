@@ -7,6 +7,5 @@ from .model import UnknownMessage
 
 class ApiResponse(PropertyMapper):
 
-    JSON_PROPERTY_MAP = {
-        '_message': [UnknownMessage],
-    }
+
+        _message: [UnknownMessage]

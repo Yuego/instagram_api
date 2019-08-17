@@ -1,7 +1,8 @@
 
 from .client import ClientInterface
 from .device import DeviceInterface
+from .experiments import ExperimentsInterface
 from .instagram import InstagramInterface
-from .request import RequestInterface
-from .response import ApiResponseInterface
+from .api_request import ApiRequestInterface
+from .api_response import ApiResponseInterface
 from .storage import *

@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['MegaphoneLogResponse']
 
 
-class MegaphoneLogResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'success': None,
-    }
+class MegaphoneLogResponseInterface(ApiResponseInterface):
+    success: AnyType
+
+
+class MegaphoneLogResponse(ApiResponse, MegaphoneLogResponseInterface):
+    pass

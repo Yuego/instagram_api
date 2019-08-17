@@ -1,18 +1,22 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Hashtag']
+__all__ = ['Hashtag', 'HashtagInterface']
 
 
-class Hashtag(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'id': int,
-        'name': str,
-        'media_count': int,
-        'profile_pic_url': str,
-        'follow_status': int,
-        'following': int,
-        'allow_following': int,
-        'allow_muting_story': bool,
-        'related_tags': None,
-        'debug_info': None,
-    }
+class HashtagInterface(ApiInterfaceBase):
+    id: int
+    name: str
+    media_count: int
+    profile_pic_url: str
+    follow_status: int
+    following: int
+    allow_following: int
+    allow_muting_story: bool
+    related_tags: AnyType
+    debug_info: AnyType
+
+
+class Hashtag(PropertyMapper, HashtagInterface):
+    pass
+

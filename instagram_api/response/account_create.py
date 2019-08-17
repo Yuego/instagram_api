@@ -1,12 +1,15 @@
 from .model import User
 
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['AccountCreateResponse']
 
 
-class AccountCreateResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'account_created': None,
-        'created_user': User,
-    }
+class AccountCreateResponseInterface(ApiResponseInterface):
+    account_created: AnyType
+    created_user: User
+
+
+class AccountCreateResponse(ApiResponse, AccountCreateResponseInterface):
+    pass

@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .android_links import AndroidLinks
 
-__all__ = ['StoryCta']
+__all__ = ['StoryCta', 'StoryCtaInterface']
 
 
-class StoryCta(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'links': [AndroidLinks],
-        'felix_deep_link': str,
-    }
+class StoryCtaInterface(ApiInterfaceBase):
+    links: [AndroidLinks]
+    felix_deep_link: str
+
+
+class StoryCta(PropertyMapper, StoryCtaInterface):
+    pass

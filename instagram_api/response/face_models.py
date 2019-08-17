@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import FaceModels
 
 __all__ = ['FaceModelsResponse']
 
 
-class FaceModelsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'face_models': FaceModels,
-    }
+class FaceModelsResponseInterface(ApiResponseInterface):
+    face_models: FaceModels
+
+
+class FaceModelsResponse(ApiResponse, FaceModelsResponseInterface):
+    pass

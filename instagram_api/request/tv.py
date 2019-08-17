@@ -1,5 +1,5 @@
-from .base import RequestBase
+from .collection import Collection
 
 
-class TV(RequestBase):
+class TV(Collection):
     pass

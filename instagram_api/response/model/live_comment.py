@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .comment import Comment
 
-__all__ = ['PropertyMapperBase']
+__all__ = ['PropertyMapperBase', 'PropertyMapperBaseInterface']
 
 
-class LiveComment(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'comment': Comment,
-        'offset': None,
-        'event': None,
-    }
+class LiveCommentInterface(ApiInterfaceBase):
+    comment: Comment
+    offset: AnyType
+    event: AnyType
+
+
+class LiveComment(PropertyMapper, LiveCommentInterface):
+    pass

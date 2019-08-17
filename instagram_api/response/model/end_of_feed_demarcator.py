@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['EndOfFeedDemarcator']
+__all__ = ['EndOfFeedDemarcator', 'EndOfFeedDemarcatorInterface']
 
 
-class EndOfFeedDemarcator(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'id': int,
-        'title': str,
-        'subtitle': str,
-    }
+class EndOfFeedDemarcatorInterface(ApiInterfaceBase):
+    id: int
+    title: str
+    subtitle: str
+
+
+class EndOfFeedDemarcator(PropertyMapper, EndOfFeedDemarcatorInterface):
+    pass

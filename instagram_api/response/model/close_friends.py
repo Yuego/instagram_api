@@ -1,14 +1,17 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .user import User
 
-__all__ = ['CloseFriends']
+__all__ = ['CloseFriends', 'CloseFriendsInterface']
 
 
-class CloseFriends(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'sections': None,
-        'users': [User],
-        'big_list': None,
-        'page_size': None,
-    }
+class CloseFriendsInterface(ApiInterfaceBase):
+    sections: AnyType
+    users: [User]
+    big_list: AnyType
+    page_size: AnyType
+
+
+class CloseFriends(PropertyMapper, CloseFriendsInterface):
+    pass

@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .eligible_promotions import EligiblePromotions
 
-__all__ = ['Viewer']
+__all__ = ['Viewer', 'ViewerInterface']
 
 
-class Viewer(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'eligible_promotions': EligiblePromotions,
-    }
+class ViewerInterface(ApiInterfaceBase):
+    eligible_promotions: EligiblePromotions
+
+
+class Viewer(PropertyMapper, ViewerInterface):
+    pass

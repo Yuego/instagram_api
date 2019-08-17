@@ -1,14 +1,16 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import UserList
 
 __all__ = ['FBSearchResponse']
 
 
-class FBSearchResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'has_more': bool,
-        'list': [UserList],
-        'clear_client_cache': bool,
-        'has_more': bool,
-        'rank_token': str,
-    }
+class FBSearchResponseInterface(ApiResponseInterface):
+    has_more: bool
+    list: [UserList]
+    clear_client_cache: bool
+    rank_token: str
+
+
+class FBSearchResponse(ApiResponse, FBSearchResponseInterface):
+    pass

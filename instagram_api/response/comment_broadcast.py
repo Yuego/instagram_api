@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Comment
 
 __all__ = ['CommentBroadcastResponse']
 
 
-class CommentBroadcastResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'comment': Comment,
-    }
+class CommentBroadcastResponseInterface(ApiResponseInterface):
+    comment: Comment
+
+
+class CommentBroadcastResponse(ApiResponse, CommentBroadcastResponseInterface):
+    pass

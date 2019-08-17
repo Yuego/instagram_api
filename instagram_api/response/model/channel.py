@@ -1,16 +1,19 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import LazyType
-
-__all__ = ['Channel']
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType, Lazy
 
 
-class Channel(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'channel_id': int,
-        'channel_type': None,
-        'title': None,
-        'header': None,
-        'media_count': int,
-        'media': LazyType('model.item.Item'),
-        'context': None,
-    }
+__all__ = ['Channel', 'ChannelInterface']
+
+
+class ChannelInterface(ApiInterfaceBase):
+    channel_id: int
+    channel_type: AnyType
+    title: AnyType
+    header: AnyType
+    media_count: int
+    media: Lazy.model__item__Item
+    context: AnyType
+
+
+class Channel(PropertyMapper, ChannelInterface):
+    pass

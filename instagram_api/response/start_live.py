@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['StartLiveResponse']
 
 
-class StartLiveResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'media_id': int,
-    }
+class StartLiveResponseInterface(ApiResponseInterface):
+    media_id: int
+
+
+class StartLiveResponse(ApiResponse, StartLiveResponseInterface):
+    pass

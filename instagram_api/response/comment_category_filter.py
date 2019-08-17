@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['CommentCategoryFilterResponse']
 
 
-class CommentCategoryFilterResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'disabled': None,
-    }
+class CommentCategoryFilterResponseInterface(ApiResponseInterface):
+    disabled: AnyType
+
+
+class CommentCategoryFilterResponse(ApiResponse, CommentCategoryFilterResponseInterface):
+    pass

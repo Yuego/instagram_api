@@ -1,9 +1,11 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
 
 __all__ = ['DeleteCollectionResponse']
 
 
-class DeleteCollectionResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        
-    }
+class DeleteCollectionResponseInterface(ApiResponseInterface):
+    pass
+
+
+class DeleteCollectionResponse(ApiResponse, DeleteCollectionResponseInterface):
+    pass

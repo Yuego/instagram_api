@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Slot']
+__all__ = ['Slot', 'SlotInterface']
 
 
-class Slot(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'slot': int,
-        'cooldown': int,
-    }
+class SlotInterface(ApiInterfaceBase):
+    slot: int
+    cooldown: int
+
+
+class Slot(PropertyMapper, SlotInterface):
+    pass

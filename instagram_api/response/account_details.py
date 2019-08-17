@@ -1,4 +1,5 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import (
     AdsInfo,
     FormerUsernameInfo,
@@ -9,11 +10,13 @@ from .model import (
 __all__ = ['AccountDetailsResponse']
 
 
-class AccountDetailsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'date_joined': str,
-        'former_username_info': FormerUsernameInfo,
-        'primary_country_info': PrimaryCountryInfo,
-        'shared_follower_accounts_info': SharedFollowerAccountsInfo,
-        'ads_info': AdsInfo,
-    }
+class AccountDetailsResponseInterface(ApiResponseInterface):
+    date_joined: str
+    former_username_info: FormerUsernameInfo
+    primary_country_info: PrimaryCountryInfo
+    shared_follower_accounts_info: SharedFollowerAccountsInfo
+    ads_info: AdsInfo
+
+
+class AccountDetailsResponse(ApiResponse, AccountDetailsResponseInterface):
+    pass

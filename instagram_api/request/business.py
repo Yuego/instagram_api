@@ -1,6 +1,6 @@
-from .base import RequestBase
+from .collection import Collection
 
 
-class Business(RequestBase):
+class Business(Collection):
     pass
 

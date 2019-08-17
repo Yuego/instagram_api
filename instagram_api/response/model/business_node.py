@@ -1,43 +1,46 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['BusinessNode']
+__all__ = ['BusinessNode', 'BusinessNodeInterface']
 
 
-class BusinessNode(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'typename': None,
-        'followers_count': None,
-        'followers_delta_from_last_week': None,
-        'posts_count': None,
-        'posts_delta_from_last_week': None,
-        'last_week_impressions': None,
-        'week_over_week_impressions': None,
-        'last_week_reach': None,
-        'week_over_week_reach': None,
-        'last_week_profile_visits': None,
-        'week_over_week_profile_visits': None,
-        'last_week_website_visits': None,
-        'week_over_week_website_visits': None,
-        'last_week_call': None,
-        'week_over_week_call': None,
-        'last_week_text': None,
-        'week_over_week_text': None,
-        'last_week_email': None,
-        'week_over_week_email': None,
-        'last_week_get_direction': None,
-        'week_over_week_get_direction': None,
-        'average_engagement_count': None,
-        'last_week_impressions_day_graph': None,
-        'last_week_reach_day_graph': None,
-        'last_week_profile_visits_day_graph': None,
-        'summary_posts': None,
-        'state': None,
-        'summary_stories': None,
-        'followers_unit_state': None,
-        'today_hourly_graph': None,
-        'gender_graph': None,
-        'all_followers_age_graph': None,
-        'followers_top_cities_graph': None,
-        'summary_promotions': None,
-        'top_posts': None,
-    }
+class BusinessNodeInterface(ApiInterfaceBase):
+    typename: AnyType
+    followers_count: AnyType
+    followers_delta_from_last_week: AnyType
+    posts_count: AnyType
+    posts_delta_from_last_week: AnyType
+    last_week_impressions: AnyType
+    week_over_week_impressions: AnyType
+    last_week_reach: AnyType
+    week_over_week_reach: AnyType
+    last_week_profile_visits: AnyType
+    week_over_week_profile_visits: AnyType
+    last_week_website_visits: AnyType
+    week_over_week_website_visits: AnyType
+    last_week_call: AnyType
+    week_over_week_call: AnyType
+    last_week_text: AnyType
+    week_over_week_text: AnyType
+    last_week_email: AnyType
+    week_over_week_email: AnyType
+    last_week_get_direction: AnyType
+    week_over_week_get_direction: AnyType
+    average_engagement_count: AnyType
+    last_week_impressions_day_graph: AnyType
+    last_week_reach_day_graph: AnyType
+    last_week_profile_visits_day_graph: AnyType
+    summary_posts: AnyType
+    state: AnyType
+    summary_stories: AnyType
+    followers_unit_state: AnyType
+    today_hourly_graph: AnyType
+    gender_graph: AnyType
+    all_followers_age_graph: AnyType
+    followers_top_cities_graph: AnyType
+    summary_promotions: AnyType
+    top_posts: AnyType
+
+
+class BusinessNode(PropertyMapper, BusinessNodeInterface):
+    pass

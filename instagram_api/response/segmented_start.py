@@ -1,22 +1,20 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['SegmentedStartResponse']
 
 
-class SegmentedStartResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'stream_id': int,
-    }
+class SegmentedStartResponseInterface(ApiResponseInterface):
+    stream_id: int
+
+
+class SegmentedStartResponse(ApiResponse, SegmentedStartResponseInterface):
 
     def is_ok(self):
-        stream_id = getattr(self, 'stream_id', None)
-
-        if stream_id:
+        if self.stream_id:
             return True
         else:
-            message = getattr(self, 'message', None)
-
-            if message is None:
-                self._setattr('message', 'Stream ID for segmented uploader is missing or invalid')
+            if self.message is None:
+                setattr(self, '_message', 'Stream ID for segmented uploader is missing or invalid')
 
             return False

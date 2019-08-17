@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['ExploreItemInfo']
+__all__ = ['ExploreItemInfo', 'ExploreItemInfoInterface']
 
 
-class ExploreItemInfo(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'num_columns': int,
-        'total_num_columns': int,
-        'aspect_ratio': int,
-        'autoplay': bool,
-        'destination_view': str,
-    }
+class ExploreItemInfoInterface(ApiInterfaceBase):
+    num_columns: int
+    total_num_columns: int
+    aspect_ratio: int
+    autoplay: bool
+    destination_view: str
+
+
+class ExploreItemInfo(PropertyMapper, ExploreItemInfoInterface):
+    pass

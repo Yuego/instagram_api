@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['HiddenEntities']
+__all__ = ['HiddenEntities', 'HiddenEntitiesInterface']
 
 
-class HiddenEntities(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'user': None,
-        'hashtag': None,
-        'place': None,
-    }
+class HiddenEntitiesInterface(ApiInterfaceBase):
+    user: AnyType
+    hashtag: AnyType
+    place: AnyType
+
+
+class HiddenEntities(PropertyMapper, HiddenEntitiesInterface):
+    pass

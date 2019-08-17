@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import StoryTray
 
 __all__ = ['LocationStoryResponse']
 
 
-class LocationStoryResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'story': StoryTray,
-    }
+class LocationStoryResponseInterface(ApiResponseInterface):
+    story: StoryTray
+
+
+class LocationStoryResponse(ApiResponse, LocationStoryResponseInterface):
+    pass

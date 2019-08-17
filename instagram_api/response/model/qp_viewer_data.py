@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .viewer import Viewer
 
-__all__ = ['QPViewerData']
+__all__ = ['QPViewerData', 'QPViewerDataInterface']
 
 
-class QPViewerData(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'viewer': Viewer,
-    }
+class QPViewerDataInterface(ApiInterfaceBase):
+    viewer: Viewer
+
+
+class QPViewerData(PropertyMapper, QPViewerDataInterface):
+    pass

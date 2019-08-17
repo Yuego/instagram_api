@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .stickers import Stickers
 
-__all__ = ['StaticStickers']
+__all__ = ['StaticStickers', 'StaticStickersInterface']
 
 
-class StaticStickers(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'include_in_recent': None,
-        'id': int,
-        'stickers': [Stickers],
-    }
+class StaticStickersInterface(ApiInterfaceBase):
+    include_in_recent: AnyType
+    id: int
+    stickers: [Stickers]
+
+
+class StaticStickers(PropertyMapper, StaticStickersInterface):
+    pass

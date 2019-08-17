@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import HiddenEntities
 
 __all__ = ['FacebookHiddenEntitiesResponse']
 
 
-class FacebookHiddenEntitiesResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'recent': HiddenEntities,
-    }
+class FacebookHiddenEntitiesResponseInterface(ApiResponseInterface):
+    recent: HiddenEntities
+
+
+class FacebookHiddenEntitiesResponse(ApiResponse, FacebookHiddenEntitiesResponseInterface):
+    pass

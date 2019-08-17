@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .broadcast import Broadcast
 
-__all__ = ['LiveVideoShare']
+__all__ = ['LiveVideoShare', 'LiveVideoShareInterface']
 
 
-class LiveVideoShare(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'text': str,
-        'broadcast': Broadcast,
-        'video_offset': int,
-    }
+class LiveVideoShareInterface(ApiInterfaceBase):
+    text: str
+    broadcast: Broadcast
+    video_offset: int
+
+
+class LiveVideoShare(PropertyMapper, LiveVideoShareInterface):
+    pass

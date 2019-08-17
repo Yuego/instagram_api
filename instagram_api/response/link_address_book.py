@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Suggestion
 
 __all__ = ['LinkAddressBookResponse']
 
 
-class LinkAddressBookResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'items': [Suggestion],
-    }
+class LinkAddressBookResponseInterface(ApiResponseInterface):
+    items: [Suggestion]
+
+
+class LinkAddressBookResponse(ApiResponse, LinkAddressBookResponseInterface):
+    pass

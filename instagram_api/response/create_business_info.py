@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+
 from .model import User
 
 __all__ = ['CreateBusinessInfoResponse']
 
 
-class CreateBusinessInfoResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'users': [User],
-    }
+class CreateBusinessInfoResponseInterface(ApiResponseInterface):
+    users: [User]
+
+
+class CreateBusinessInfoResponse(ApiResponse, CreateBusinessInfoResponseInterface):
+    pass

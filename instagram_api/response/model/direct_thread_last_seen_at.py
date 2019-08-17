@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
-
-__all__ = ['DirectThreadLastSeenAt']
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 
-class DirectThreadLastSeenAt(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'item_id': int,
-        'timestamp': timestamp,
-    }
+__all__ = ['DirectThreadLastSeenAt', 'DirectThreadLastSeenAtInterface']
+
+
+class DirectThreadLastSeenAtInterface(ApiInterfaceBase):
+    item_id: int
+    timestamp: Timestamp
+
+
+class DirectThreadLastSeenAt(PropertyMapper, DirectThreadLastSeenAtInterface):
+    pass

@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .tab import Tab
 
-__all__ = ['TabsInfo']
+__all__ = ['TabsInfo', 'TabsInfoInterface']
 
 
-class TabsInfo(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'tabs': [Tab],
-        'selected': str,
-    }
+class TabsInfoInterface(ApiInterfaceBase):
+    tabs: [Tab]
+    selected: str
+
+
+class TabsInfo(PropertyMapper, TabsInfoInterface):
+    pass

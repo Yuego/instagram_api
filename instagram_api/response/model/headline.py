@@ -1,22 +1,24 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .user import User
 
-__all__ = ['Headline']
+__all__ = ['Headline', 'HeadlineInterface']
 
 
-class Headline(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'content_type': None,
-        'user': User,
-        'user_id': int,
-        'pk': str,
-        'text': str,
-        'type': None,
-        'created_at': timestamp,
-        'created_at_utc': str,
-        'media_id': int,
-        'bit_flags': int,
-        'status': None,
-    }
+class HeadlineInterface(ApiInterfaceBase):
+    content_type: AnyType
+    user: User
+    user_id: int
+    pk: str
+    text: str
+    type: AnyType
+    created_at: Timestamp
+    created_at_utc: str
+    media_id: int
+    bit_flags: int
+    status: AnyType
+
+
+class Headline(PropertyMapper, HeadlineInterface):
+    pass

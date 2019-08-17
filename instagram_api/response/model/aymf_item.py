@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['AymfItem']
+__all__ = ['AymfItem', 'AymfItemInterface']
 
 
-class AymfItem(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'caption': str,
-        'uuid': str,
-    }
+class AymfItemInterface(ApiInterfaceBase):
+    caption: str
+    uuid: str
+
+
+class AymfItem(PropertyMapper, AymfItemInterface):
+    pass

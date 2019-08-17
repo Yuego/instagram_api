@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .user_card import UserCard
 
-__all__ = ['SuggestionCard']
+__all__ = ['SuggestionCard', 'SuggestionCardInterface']
 
 
-class SuggestionCard(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'user_card': UserCard,
-        'upsell_ci_card': None,
-        'upsell_fbc_card': None,
-    }
+class SuggestionCardInterface(ApiInterfaceBase):
+    user_card: UserCard
+    upsell_ci_card: AnyType
+    upsell_fbc_card: AnyType
+
+
+class SuggestionCard(PropertyMapper, SuggestionCardInterface):
+    pass

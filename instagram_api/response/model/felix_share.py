@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .item import Item
 
-__all__ = ['FelixShare']
+__all__ = ['FelixShare', 'FelixShareInterface']
 
 
-class FelixShare(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'video': [Item],
-        'text': str,
-    }
+class FelixShareInterface(ApiInterfaceBase):
+    video: [Item]
+    text: str
+
+
+class FelixShare(PropertyMapper, FelixShareInterface):
+    pass

@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .direct_thread import DirectThread
 from .user import User
 
-__all__ = ['DirectRankedRecipient']
+__all__ = ['DirectRankedRecipient', 'DirectRankedRecipientInterface']
 
 
-class DirectRankedRecipient(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'thread': DirectThread,
-        'user': User,
-    }
+class DirectRankedRecipientInterface(ApiInterfaceBase):
+    thread: DirectThread
+    user: User
+
+
+class DirectRankedRecipient(PropertyMapper, DirectRankedRecipientInterface):
+    pass

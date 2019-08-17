@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .bold import Bold
 
-__all__ = ['ActionLog']
+__all__ = ['ActionLog', 'ActionLogInterface']
 
 
-class ActionLog(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'bold': [Bold],
-        'description': str,
-    }
+class ActionLogInterface(ApiInterfaceBase):
+    bold: [Bold]
+    description: str
+
+
+class ActionLog(PropertyMapper, ActionLogInterface):
+    pass

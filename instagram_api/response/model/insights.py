@@ -1,9 +1,12 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Insights']
+__all__ = ['Insights', 'InsightsInterface']
 
 
-class Insights(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'instagram_insights': None,
-    }
+class InsightsInterface(ApiInterfaceBase):
+    instagram_insights: AnyType
+
+
+class Insights(PropertyMapper, InsightsInterface):
+    pass

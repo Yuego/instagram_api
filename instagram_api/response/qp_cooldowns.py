@@ -1,13 +1,16 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import QPSurface, Slot
 
 __all__ = ['QPCooldownsResponse']
 
 
-class QPCooldownsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'global': int,
-        'default': int,
-        'surfaces': [QPSurface],
-        'slots': [Slot],
-    }
+class QPCooldownsResponseInterface(ApiResponseInterface):
+    global__: int  # TODO: разобраться со служебными именами
+    default: int
+    surfaces: [QPSurface]
+    slots: [Slot]
+
+
+class QPCooldownsResponse(ApiResponse, QPCooldownsResponseInterface):
+    pass

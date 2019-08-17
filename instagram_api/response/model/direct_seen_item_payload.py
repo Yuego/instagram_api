@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
-
-__all__ = ['DirectSeenItemPayload']
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 
-class DirectSeenItemPayload(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'count': int,
-        'timestamp': timestamp,
-    }
+__all__ = ['DirectSeenItemPayload', 'DirectSeenItemPayloadInterface']
+
+
+class DirectSeenItemPayloadInterface(ApiInterfaceBase):
+    count: int
+    timestamp: Timestamp
+
+
+class DirectSeenItemPayload(PropertyMapper, DirectSeenItemPayloadInterface):
+    pass

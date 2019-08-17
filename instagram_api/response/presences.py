@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .model.unpredictable import PresenceUnpredictableContainer
 
 __all__ = ['PresencesResponse']
 
 
-class PresencesResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'user_presence': 'Model\UnpredictableKeys\PresenceUnpredictableContainer',
-    }
+class PresencesResponseInterface(ApiResponseInterface):
+    user_presence: PresenceUnpredictableContainer
+
+
+class PresencesResponse(ApiResponse, PresencesResponseInterface):
+    pass

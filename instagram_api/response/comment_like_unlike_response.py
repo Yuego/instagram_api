@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['CommentLikeUnlikeResponse']
 
 
-class CommentLikeUnlikeResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
+class CommentLikeUnlikeResponseInterface(ApiResponseInterface):
+    pass
 
-    }
+
+class CommentLikeUnlikeResponse(ApiResponse, CommentLikeUnlikeResponseInterface):
+    pass

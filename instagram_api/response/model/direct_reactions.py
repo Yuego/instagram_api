@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .direct_reaction import DirectReaction
 
-__all__ = ['DirectReactions']
+__all__ = ['DirectReactions', 'DirectReactionsInterface']
 
 
-class DirectReactions(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'likes_count': int,
-        'likes': [DirectReaction]
-    }
+class DirectReactionsInterface(ApiInterfaceBase):
+    likes_count: int
+    likes: [DirectReaction]
+
+
+class DirectReactions(PropertyMapper, DirectReactionsInterface):
+    pass

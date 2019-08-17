@@ -1,6 +1,6 @@
 import inspect
 
-from instagram_api.interfaces.response import ApiResponseInterface
+from instagram_api.interfaces.api_response import ApiResponseInterface
 
 from .exceptions import UnsupportedType, WrongType
 from .meta import PropertyMapperMeta, base_allowed_types

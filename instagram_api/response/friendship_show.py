@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
-from .model import FriendshipStatus
+from .mapper import ApiResponse
+
+from .model.friendship_status import FriendshipStatusInterface
 
 __all__ = ['FriendshipShowResponse']
 
 
-class FriendshipShowResponse(ApiResponse, FriendshipStatus):
-    JSON_PROPERTY_MAP = {
+class FriendshipShowResponseInterface(FriendshipStatusInterface):
+    pass
 
-    }
+
+class FriendshipShowResponse(ApiResponse, FriendshipShowResponseInterface):
+    pass

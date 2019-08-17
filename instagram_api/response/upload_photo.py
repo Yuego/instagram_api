@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
-__all__ = ['UploadPhoteResponse']
+__all__ = ['UploadPhotoResponse']
 
 
-class UploadPhoteResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'upload_id': int,
-        'media_id': int,
-    }
+class UploadPhotoResponseInterface(ApiResponseInterface):
+    upload_id: int
+    media_id: int
+
+
+class UploadPhotoResponse(ApiResponse, UploadPhotoResponseInterface):
+    pass

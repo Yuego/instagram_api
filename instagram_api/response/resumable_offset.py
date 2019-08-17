@@ -1,21 +1,22 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['ResumableOffsetResponse']
 
 
-class ResumableOffsetResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'offset': int,
-    }
+class ResumableOffsetResponseInterface(ApiResponseInterface):
+    offset: int
 
+
+class ResumableOffsetResponse(ApiResponse, ResumableOffsetResponseInterface):
     def is_ok(self):
-        offset = getattr(self, 'offset', None)
+        offset = self.offset
 
         if offset is not None and offset > 0:
             return True
         else:
-            message = getattr(self, 'message', None)
-            if message is None:
-                self._setattr('message', 'Offset for resumable uploader is missing or invalid.')
+            message = self.message
+            if message is AnyType:
+                setattr(self, '_message', 'Offset for resumable uploader is missing or invalid.')
 
             return False

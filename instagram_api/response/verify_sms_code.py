@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['VerifySMSCodeResponse']
 
 
-class VerifySMSCodeResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'verified': bool,
-        'phone_number': str,
-    }
+class VerifySMSCodeResponseInterface(ApiResponseInterface):
+    verified: bool
+    phone_number: str
+
+
+class VerifySMSCodeResponse(ApiResponse, VerifySMSCodeResponseInterface):
+    pass

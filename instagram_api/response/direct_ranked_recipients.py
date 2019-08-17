@@ -1,14 +1,17 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import DirectRankedRecipient
 
 __all__ = ['DirectRankedRecipientsResponse']
 
 
-class DirectRankedRecipientsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'expires': None,
-        'ranked_recipients': [DirectRankedRecipient],
-        'filtered': None,
-        'request_id': str,
-        'rank_token': str,
-    }
+class DirectRankedRecipientsResponseInterface(ApiResponseInterface):
+    expires: AnyType
+    ranked_recipients: [DirectRankedRecipient]
+    filtered: AnyType
+    request_id: str
+    rank_token: str
+
+
+class DirectRankedRecipientsResponse(ApiResponse, DirectRankedRecipientsResponseInterface):
+    pass

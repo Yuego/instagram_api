@@ -1,5 +1,5 @@
-from .base import RequestBase
+from .collection import Collection
 
 
-class Usertag(RequestBase):
+class Usertag(Collection):
     pass

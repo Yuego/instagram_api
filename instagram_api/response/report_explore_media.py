@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['ReportExploreMediaResponse']
 
 
-class ReportExploreMediaResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'explore_report_status': None,
-    }
+class ReportExploreMediaResponseInterface(ApiResponseInterface):
+    explore_report_status: AnyType
+
+
+class ReportExploreMediaResponse(ApiResponse, ReportExploreMediaResponseInterface):
+    pass

@@ -1,14 +1,17 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .voter import Voter
 
-__all__ = ['VoterInfo']
+__all__ = ['VoterInfo', 'VoterInfoInterface']
 
 
-class VoterInfo(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'poll_id': int,
-        'voters': [Voter],
-        'max_id': int,
-        'more_available': bool,
-    }
+class VoterInfoInterface(ApiInterfaceBase):
+    poll_id: int
+    voters: [Voter]
+    max_id: int
+    more_available: bool
+
+
+class VoterInfo(PropertyMapper, VoterInfoInterface):
+    pass

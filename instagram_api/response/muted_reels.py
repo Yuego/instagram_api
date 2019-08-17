@@ -1,13 +1,16 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import User
 
 __all__ = ['MutedReelsResponse']
 
 
-class MutedReelsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'users': [User],
-        'next_max_id': str,
-        'page_size': None,
-        'big_list': None,
-    }
+class MutedReelsResponseInterface(ApiResponseInterface):
+    users: [User]
+    next_max_id: str
+    page_size: AnyType
+    big_list: AnyType
+
+
+class MutedReelsResponse(ApiResponse, MutedReelsResponseInterface):
+    pass

@@ -1,10 +1,12 @@
-from .base_response import ApiResponse
-from .model import DirectThread
+from .mapper import ApiResponse
+from .model.direct_thread import DirectThreadInterface
 
 __all__ = ['DirectVisualThreadResponse']
 
 
-class DirectVisualThreadResponse(ApiResponse, DirectThread):
-    JSON_PROPERTY_MAP = {
+class DirectVisualThreadResponseInterface(DirectThreadInterface):
+    pass
 
-    }
+
+class DirectVisualThreadResponse(ApiResponse, DirectVisualThreadResponseInterface):
+    pass

@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Template']
+__all__ = ['Template', 'TemplateInterface']
 
 
-class Template(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'name': str,
-        'parameters': None,
-    }
+class TemplateInterface(ApiInterfaceBase):
+    name: str
+    parameters: AnyType
+
+
+class Template(PropertyMapper, TemplateInterface):
+    pass

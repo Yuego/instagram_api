@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Experiment
 
 __all__ = ['SyncResponse']
 
 
-class SyncResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'experiments': Experiment,
-    }
+class SyncResponseInterface(ApiResponseInterface):
+    experiments: Experiment
+
+
+class SyncResponse(ApiResponse, SyncResponseInterface):
+    pass

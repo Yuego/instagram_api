@@ -1,11 +1,14 @@
-from .common.sticker import Sticker
+from ..mapper import PropertyMapper
+from .common.sticker import StickerInterface
 from .user import User
 
-__all__ = ['ReelMention']
+__all__ = ['ReelMention', 'ReelMentionInterface']
 
 
-class ReelMention(Sticker):
-    JSON_PROPERTY_MAP = {
-        'user': User,
-        'is_hidden': int,
-    }
+class ReelMentionInterface(StickerInterface):
+    user: User
+    is_hidden: int
+
+
+class ReelMention(PropertyMapper, ReelMentionInterface):
+    pass

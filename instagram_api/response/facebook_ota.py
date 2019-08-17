@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['FacebookOTAResponse']
 
 
-class FacebookOTAResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'bundles': None,
-        'request_id': str,
-    }
+class FacebookOTAResponseInterface(ApiResponseInterface):
+    bundles: AnyType
+    request_id: str
+
+
+class FacebookOTAResponse(ApiResponse, FacebookOTAResponseInterface):
+    pass

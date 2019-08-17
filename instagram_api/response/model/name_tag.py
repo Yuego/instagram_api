@@ -1,12 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Nametag']
+__all__ = ['Nametag', 'NametagInterface']
 
 
-class Nametag(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'mode': int,
-        'gradient': int,
-        'emoji': str,
-        'selfie_sticker': int,
-    }
+class NametagInterface(ApiInterfaceBase):
+    mode: int
+    gradient: int
+    emoji: str
+    selfie_sticker: int
+
+
+class Nametag(PropertyMapper, NametagInterface):
+    pass
+

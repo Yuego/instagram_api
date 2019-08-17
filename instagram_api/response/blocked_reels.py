@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
-from .model import BlockedReels
+from .mapper import ApiResponse
+
+from .model.blocked_reels import BlockedReelsInterface
 
 __all__ = ['BlockedReelsResponse']
 
 
-class BlockedReelsResponse(ApiResponse, BlockedReels):
-    JSON_PROPERTY_MAP = {
-        'next_max_id': str,
-    }
+class BlockedReelsResponseInterface(BlockedReelsInterface):
+    next_max_id: str
+
+
+class BlockedReelsResponse(ApiResponse, BlockedReelsResponseInterface):
+    pass

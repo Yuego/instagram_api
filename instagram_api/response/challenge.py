@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['ChallengeResponse']
 
 
-class ChallengeResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
+class ChallengeResponseInterface(ApiResponseInterface):
+    pass
 
-    }
+
+class ChallengeResponse(ApiResponse, ChallengeResponseInterface):
+    pass

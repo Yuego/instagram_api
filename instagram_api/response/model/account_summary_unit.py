@@ -1,9 +1,11 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
 
-__all__ = ['AccountSummaryUnit']
+__all__ = ['AccountSummaryUnit', 'AccountSummaryUnitInterface']
 
 
-class AccountSummaryUnit(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'posts_count': int,
-    }
+class AccountSummaryUnitInterface(ApiInterfaceBase):
+    posts_count: int
+
+
+class AccountSummaryUnit(PropertyMapper, AccountSummaryUnitInterface):
+    pass

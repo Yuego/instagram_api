@@ -1,13 +1,17 @@
-from .common.sticker import Sticker
+from ..mapper import PropertyMapper
+
+from .common.sticker import StickerInterface
 
 from .location import Location
 
-__all__ = ['StoryLocation']
+__all__ = ['StoryLocation', 'StoryLocationInterface']
 
 
-class StoryLocation(Sticker):
-    JSON_PROPERTY_MAP = {
-        'location': Location,
-        'attribution': str,
-        'is_hidden': int,
-    }
+class StoryLocationInterface(StickerInterface):
+    location: Location
+    attribution: str
+    is_hidden: int
+
+
+class StoryLocation(PropertyMapper, StoryLocationInterface):
+    pass

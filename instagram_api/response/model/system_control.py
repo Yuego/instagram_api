@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['SystemControl']
+__all__ = ['SystemControl', 'SystemControlInterface']
 
 
-class SystemControl(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'upload_max_bytes': int,
-        'upload_time_period_sec': int,
-        'upload_bytes_per_update': int,
-    }
+class SystemControlInterface(ApiInterfaceBase):
+    upload_max_bytes: int
+    upload_time_period_sec: int
+    upload_bytes_per_update: int
+
+
+class SystemControl(PropertyMapper, SystemControlInterface):
+    pass

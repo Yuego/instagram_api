@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['PermalinkResponse']
 
 
-class PermalinkResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'permalink': str,
-    }
+class PermalinkResponseInterface(ApiResponseInterface):
+    permalink: str
+
+
+class PermalinkResponse(ApiResponse, PermalinkResponseInterface):
+    pass

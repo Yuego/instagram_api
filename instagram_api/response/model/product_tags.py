@@ -1,11 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .in_ import In
 
-__all__ = ['ProductTags']
+__all__ = ['ProductTags', 'ProductTagsInterface']
 
 
-class ProductTags(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'in': [In],
-    }
+# TODO: решить проблему со служебными словами
+class ProductTagsInterface(ApiInterfaceBase):
+    in__: [In]
+
+
+class ProductTags(PropertyMapper, ProductTagsInterface):
+    pass
+

@@ -1,9 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['TraceControl']
+__all__ = ['TraceControl', 'TraceControlInterface']
 
 
-class TraceControl(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'max_trace_timeout_ms': int,
-    }
+class TraceControlInterface(ApiInterfaceBase):
+    max_trace_timeout_ms: int
+
+
+class TraceControl(PropertyMapper, TraceControlInterface):
+    pass
+

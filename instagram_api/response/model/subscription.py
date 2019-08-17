@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Subscription']
+__all__ = ['Subscription', 'SubscriptionInterface']
 
 
-class Subscription(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'topic': None,
-        'url': str,
-        'sequence': None,
-        'auth': None,
-    }
+class SubscriptionInterface(ApiInterfaceBase):
+    topic: AnyType
+    url: str
+    sequence: AnyType
+    auth: AnyType
+
+
+class Subscription(PropertyMapper, SubscriptionInterface):
+    pass

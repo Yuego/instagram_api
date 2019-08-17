@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['PresenceStatusResponse']
 
 
-class PresenceStatusResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'disabled': bool,
-        'thread_presence_disabled': bool,
-    }
+class PresenceStatusResponseInterface(ApiResponseInterface):
+    disabled: bool
+    thread_presence_disabled: bool
+
+
+class PresenceStatusResponse(ApiResponse, PresenceStatusResponseInterface):
+    pass

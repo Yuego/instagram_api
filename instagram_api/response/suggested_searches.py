@@ -1,11 +1,14 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Suggested
 
 __all__ = ['SuggestedSearchesResponse']
 
 
-class SuggestedSearchesResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'suggested': [Suggested],
-        'rank_token': str,
-    }
+class SuggestedSearchesResponseInterface(ApiResponseInterface):
+    suggested: [Suggested]
+    rank_token: str
+
+
+class SuggestedSearchesResponse(ApiResponse, SuggestedSearchesResponseInterface):
+    pass

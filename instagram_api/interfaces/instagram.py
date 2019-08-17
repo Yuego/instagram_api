@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 
 from .client import ClientInterface
 from .device import DeviceInterface
-from .request import RequestInterface
+from .api_request import ApiRequestInterface
 from .storage import StorageHandlerInterface
 
 __all__ = ['InstagramInterface']
@@ -28,29 +28,29 @@ class InstagramInterface(metaclass=ABCMeta):
 
     session_id: str
 
-    experiments: list
+    experiments: dict
 
     client: ClientInterface
 
     device: DeviceInterface
     settings: StorageHandlerInterface
 
-    account: RequestInterface
-    business: RequestInterface
-    collection: RequestInterface
-    creative: RequestInterface
-    direct: RequestInterface
-    discover: RequestInterface
-    hashtag: RequestInterface
-    highlight: RequestInterface
-    tv: RequestInterface
-    internal: RequestInterface
-    live: RequestInterface
-    location: RequestInterface
-    media: RequestInterface
-    people: RequestInterface
-    push: RequestInterface
-    shopping: RequestInterface
-    story: RequestInterface
-    timeline: RequestInterface
-    usertag: RequestInterface
+    account: ApiRequestInterface
+    business: ApiRequestInterface
+    collection: ApiRequestInterface
+    creative: ApiRequestInterface
+    direct: ApiRequestInterface
+    discover: ApiRequestInterface
+    hashtag: ApiRequestInterface
+    highlight: ApiRequestInterface
+    tv: ApiRequestInterface
+    internal: ApiRequestInterface
+    live: ApiRequestInterface
+    location: ApiRequestInterface
+    media: ApiRequestInterface
+    people: ApiRequestInterface
+    push: ApiRequestInterface
+    shopping: ApiRequestInterface
+    story: ApiRequestInterface
+    timeline: ApiRequestInterface
+    usertag: ApiRequestInterface

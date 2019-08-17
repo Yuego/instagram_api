@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .user import User
 
-__all__ = ['BlockedReels']
+__all__ = ['BlockedReels', 'BlockedReelsInterface']
 
 
-class BlockedReels(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'users': [User],
-        'page_size': None,
-        'big_list': bool,
-    }
+class BlockedReelsInterface(ApiInterfaceBase):
+    users: [User]
+    page_size: AnyType
+    big_list: bool
+
+
+class BlockedReels(PropertyMapper, BlockedReelsInterface):
+    pass

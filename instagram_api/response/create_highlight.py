@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+
 from .model import Reel
 
 __all__ = ['CreateHighlightResponse']
 
 
-class CreateHighlightResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'reel': Reel,
-    }
+class CreateHighlightResponseInterface(ApiResponseInterface):
+    reel: Reel
+
+
+class CreateHighlightResponse(ApiResponse, CreateHighlightResponseInterface):
+    pass

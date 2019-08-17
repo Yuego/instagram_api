@@ -1,9 +1,12 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['SharedFollowerAccountsInfo']
+__all__ = ['SharedFollowerAccountsInfo', 'SharedFollowerAccountsInfoInterface']
 
 
-class SharedFollowerAccountsInfo(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'has_shared_follower_accounts': bool,
-    }
+class SharedFollowerAccountsInfoInterface(ApiInterfaceBase):
+    has_shared_follower_accounts: bool
+
+
+class SharedFollowerAccountsInfo(PropertyMapper, SharedFollowerAccountsInfoInterface):
+    pass

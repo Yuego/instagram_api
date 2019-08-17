@@ -5,7 +5,7 @@ import re
 from collections import OrderedDict
 from requests import Response as ServerResponse
 
-from instagram_api.response.base_response import ApiResponse as ApiResponse
+from instagram_api.response.mapper import ApiResponse
 
 from .account_disabled import AccountDisabledException
 from .bad_request import BadRequestException

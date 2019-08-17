@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['BroadcastLikeResponse']
 
 
-class BroadcastLikeResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'likes': None,
-    }
+class BroadcastLikeResponseInterface(ApiResponseInterface):
+    likes: AnyType
+
+
+class BroadcastLikeResponse(ApiResponse, BroadcastLikeResponseInterface):
+    pass

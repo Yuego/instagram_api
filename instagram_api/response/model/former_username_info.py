@@ -1,9 +1,12 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['FormerUsernameInfo']
+__all__ = ['FormerUsernameInfo', 'FormerUsernameInfoInterface']
 
 
-class FormerUsernameInfo(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'has_former_usernames': bool,
-    }
+class FormerUsernameInfoInterface(ApiInterfaceBase):
+    has_former_usernames: bool
+
+
+class FormerUsernameInfo(PropertyMapper, FormerUsernameInfoInterface):
+    pass

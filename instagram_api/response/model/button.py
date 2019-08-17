@@ -1,15 +1,18 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Button']
+__all__ = ['Button', 'ButtonInterface']
 
 
-class Button(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'text': str,
-        'url': str,
-        'action': None,
-        'background_color': None,
-        'border_color': None,
-        'text_color': None,
-        'action_info': None,
-    }
+class ButtonInterface(ApiInterfaceBase):
+    text: str
+    url: str
+    action: AnyType
+    background_color: AnyType
+    border_color: AnyType
+    text_color: AnyType
+    action_info: AnyType
+
+
+class Button(PropertyMapper, ButtonInterface):
+    pass

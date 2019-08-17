@@ -1,17 +1,20 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .product import Product
 from .user import User
 
-__all__ = ['In']
+__all__ = ['In', 'InInterface']
 
 
-class In(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'position': [float],
-        'user': User,
-        'time_in_video': None,
-        'start_time_in_video_in_sec': None,
-        'duration_in_video_in_sec': None,
-        'product': Product,
-    }
+class InInterface(ApiInterfaceBase):
+    position: [float]
+    user: User
+    time_in_video: AnyType
+    start_time_in_video_in_sec: AnyType
+    duration_in_video_in_sec: AnyType
+    product: Product
+
+
+class In(PropertyMapper, InInterface):
+    pass

@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['LogoutResponse']
 
 
-class LogoutResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
+class LogoutResponseInterface(ApiResponseInterface):
+    pass
 
-    }
+
+class LogoutResponse(ApiResponse, LogoutResponseInterface):
+    pass

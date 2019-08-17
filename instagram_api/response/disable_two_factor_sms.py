@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['DisableTwoFactorSMSResponse']
 
 
-class DisableTwoFactorSMSResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
+class DisableTwoFactorSMSResponseInterface(ApiResponseInterface):
+    pass
 
-    }
+
+class DisableTwoFactorSMSResponse(ApiResponse, DisableTwoFactorSMSResponseInterface):
+    pass

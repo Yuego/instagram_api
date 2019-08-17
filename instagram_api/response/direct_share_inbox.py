@@ -1,14 +1,17 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['DirectShareInboxResponse']
 
 
-class DirectShareInboxResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'shares': None,
-        'max_id': str,
-        'new_shares': None,
-        'patches': None,
-        'last_counted_at': None,
-        'new_shares_info': None,
-    }
+class DirectShareInboxResponseInterface(ApiResponseInterface):
+    shares: AnyType
+    max_id: str
+    new_shares: AnyType
+    patches: AnyType
+    last_counted_at: AnyType
+    new_shares_info: AnyType
+
+
+class DirectShareInboxResponse(ApiResponse, DirectShareInboxResponseInterface):
+    pass

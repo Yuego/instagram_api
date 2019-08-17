@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .direct_thread_item_media import DirectThreadItemMedia
 
-__all__ = ['VoiceMedia']
+__all__ = ['VoiceMedia', 'VoiceMediaInterface']
 
 
-class VoiceMedia(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'media': DirectThreadItemMedia,
-    }
+class VoiceMediaInterface(ApiInterfaceBase):
+    media: DirectThreadItemMedia
+
+
+class VoiceMedia(PropertyMapper, VoiceMediaInterface):
+    pass

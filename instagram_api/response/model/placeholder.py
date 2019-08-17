@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Placeholder']
+__all__ = ['Placeholder', 'PlaceholderInterface']
 
 
-class Placeholder(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'is_linked': bool,
-        'title': str,
-        'message': str,
-    }
+class PlaceholderInterface(ApiInterfaceBase):
+    is_linked: bool
+    title: str
+    message: str
+
+
+class Placeholder(PropertyMapper, PlaceholderInterface):
+    pass

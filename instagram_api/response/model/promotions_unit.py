@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .summary_promotions import SummaryPromotions
 
-__all__ = ['PromotionsUnit']
+__all__ = ['PromotionsUnit', 'PromotionsUnitInterface']
 
 
-class PromotionsUnit(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        '_summary_promotions2ubm1F': SummaryPromotions,
-    }
+class PromotionsUnitInterface(ApiInterfaceBase):
+    _summary_promotions2ubm1F: SummaryPromotions
+
+
+class PromotionsUnit(PropertyMapper, PromotionsUnitInterface):
+    pass

@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['LinkContext']
+__all__ = ['LinkContext', 'LinkContextInterface']
 
 
-class LinkContext(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'link_url': str,
-        'link_title': str,
-        'link_summary': str,
-        'link_image_url': str,
-    }
+class LinkContextInterface(ApiInterfaceBase):
+    link_url: str
+    link_title: str
+    link_summary: str
+    link_image_url: str
+
+
+class LinkContext(PropertyMapper, LinkContextInterface):
+    pass

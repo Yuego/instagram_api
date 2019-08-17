@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import DirectThread
 
 __all__ = ['DirectThreadResponse']
 
 
-class DirectThreadResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'thread': DirectThread,
-    }
+class DirectThreadResponseInterface(ApiResponseInterface):
+    thread: DirectThread
+
+
+class DirectThreadResponse(ApiResponse, DirectThreadResponseInterface):
+    pass

@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Explore']
+__all__ = ['Explore', 'ExploreInterface']
 
 
-class Explore(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'explanation': None,
-        'actor_id': int,
-        'source_token': None,
-    }
+class ExploreInterface(ApiInterfaceBase):
+    explanation: AnyType
+    actor_id: int
+    source_token: AnyType
+
+
+class Explore(PropertyMapper, ExploreInterface):
+    pass

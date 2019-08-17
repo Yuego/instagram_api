@@ -1,11 +1,14 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import User
 
 __all__ = ['UserInfoResponse']
 
 
-class UserInfoResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'megaphone': None,
-        'user': User,
-    }
+class UserInfoResponseInterface(ApiResponseInterface):
+    megaphone: AnyType
+    user: User
+
+
+class UserInfoResponse(ApiResponse, UserInfoResponseInterface):
+    pass

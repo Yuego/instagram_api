@@ -1,13 +1,16 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Item
 
 __all__ = ['DiscoverChannelsResponse']
 
 
-class DiscoverChannelsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'auto_load_more_enabled': None,
-        'items': [Item],
-        'more_available': bool,
-        'next_max_id': str,
-    }
+class DiscoverChannelsResponseInterface(ApiResponseInterface):
+    auto_load_more_enabled: AnyType
+    items: [Item]
+    more_available: bool
+    next_max_id: str
+
+
+class DiscoverChannelsResponse(ApiResponse, DiscoverChannelsResponseInterface):
+    pass

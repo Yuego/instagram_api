@@ -1,13 +1,16 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Badging, Composer, TvChannel
 
 __all__ = ['TvGuideResponse']
 
 
-class TvGuideResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'channels': [TvChannel],
-        'my_channel': TvChannel,
-        'badging': Badging,
-        'composer': Composer,
-    }
+class TvGuideResponseInterface(ApiResponseInterface):
+    channels: [TvChannel]
+    my_channel: TvChannel
+    badging: Badging
+    composer: Composer
+
+
+class TvGuideResponse(ApiResponse, TvGuideResponseInterface):
+    pass

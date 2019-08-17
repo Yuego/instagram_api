@@ -1,14 +1,17 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['StoryAppAttribution']
+__all__ = ['StoryAppAttribution', 'StoryAppAttributionInterface']
 
 
-class StoryAppAttribution(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'app_action_text': str,
-        'app_icon_url': str,
-        'content_url': str,
-        'id': int,
-        'link': str,
-        'name': str,
-    }
+class StoryAppAttributionInterface(ApiInterfaceBase):
+    app_action_text: str
+    app_icon_url: str
+    content_url: str
+    id: int
+    link: str
+    name: str
+
+
+class StoryAppAttribution(PropertyMapper, StoryAppAttributionInterface):
+    pass

@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Token
 
 __all__ = ['TokenResultResponse']
 
 
-class TokenResultResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'token': Token,
-    }
+class TokenResultResponseInterface(ApiResponseInterface):
+    token: Token
+
+
+class TokenResultResponse(ApiResponse, TokenResultResponseInterface):
+    pass

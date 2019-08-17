@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['DirectRecentRecipientsResponse']
 
 
-class DirectRecentRecipientsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'expiration_interval': None,
-        'recent_recipients': None,
-    }
+class DirectRecentRecipientsResponseInterface(ApiResponseInterface):
+    expiration_interval: AnyType
+    recent_recipients: AnyType
+
+
+class DirectRecentRecipientsResponse(ApiResponse, DirectRecentRecipientsResponseInterface):
+    pass

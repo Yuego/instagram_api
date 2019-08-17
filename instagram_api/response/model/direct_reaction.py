@@ -1,16 +1,19 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
-
-__all__ = ['DirectReaction']
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 
-class DirectReaction(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'reaction_type': str,
-        'timestamp': timestamp,
-        'sender_id': int,
-        'client_context': str,
-        'reaction_status': str,
-        'node_type': str,
-        'item_id': int,
-    }
+__all__ = ['DirectReaction', 'DirectReactionInterface']
+
+
+class DirectReactionInterface(ApiInterfaceBase):
+    reaction_type: str
+    timestamp: Timestamp
+    sender_id: int
+    client_context: str
+    reaction_status: str
+    node_type: str
+    item_id: int
+
+
+class DirectReaction(PropertyMapper, DirectReactionInterface):
+    pass

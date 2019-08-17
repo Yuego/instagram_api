@@ -1,11 +1,14 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['UploadVideoResponse']
 
 
-class UploadVideoResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'upload_id': str,
-        'configure_delay_ms': float,
-        'result': None,
-    }
+class UploadVideoResponseInterface(ApiResponseInterface):
+    upload_id: str
+    configure_delay_ms: float
+    result: AnyType
+
+
+class UploadVideoResponse(ApiResponse, UploadVideoResponseInterface):
+    pass

@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
-
-__all__ = ['DirectMessageMetadata']
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 
-class DirectMessageMetadata(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'thread_id': int,
-        'item_id': int,
-        'timestamp': timestamp,
-        'participant_ids': [int],
-    }
+__all__ = ['DirectMessageMetadata', 'DirectMessageMetadataInterface']
+
+
+class DirectMessageMetadataInterface(ApiInterfaceBase):
+    thread_id: int
+    item_id: int
+    timestamp: Timestamp
+    participant_ids: [int]
+
+
+class DirectMessageMetadata(PropertyMapper, DirectMessageMetadataInterface):
+    pass

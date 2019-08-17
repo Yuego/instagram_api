@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Location
 
 __all__ = ['RelatedLocationResponse']
 
 
-class RelatedLocationResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'related': [Location],
-    }
+class RelatedLocationResponseInterface(ApiResponseInterface):
+    related: [Location]
+
+
+class RelatedLocationResponse(ApiResponse, RelatedLocationResponseInterface):
+    pass

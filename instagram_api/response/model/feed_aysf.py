@@ -1,22 +1,25 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .suggestion import Suggestion
 
-__all__ = ['FeedAysf']
+__all__ = ['FeedAysf', 'FeedAysfInterface']
 
 
-class FeedAysf(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'landing_site_type': None,
-        'uuid': str,
-        'view_all_text': None,
-        'feed_position': None,
-        'landing_site_title': None,
-        'is_dismissable': None,
-        'suggestions': [Suggestion],
-        'should_refill': None,
-        'display_new_unit': None,
-        'fetch_user_details': None,
-        'title': None,
-        'activator': None,
-    }
+class FeedAysfInterface(ApiInterfaceBase):
+    landing_site_type: AnyType
+    uuid: str
+    view_all_text: AnyType
+    feed_position: AnyType
+    landing_site_title: AnyType
+    is_dismissable: AnyType
+    suggestions: [Suggestion]
+    should_refill: AnyType
+    display_new_unit: AnyType
+    fetch_user_details: AnyType
+    title: AnyType
+    activator: AnyType
+
+
+class FeedAysf(PropertyMapper, FeedAysfInterface):
+    pass

@@ -1,11 +1,14 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['OnBoardCatalogResponse']
 
 
-class OnBoardCatalogResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'shopping_onboarding_state': str,
-        'current_catalog_id': str,
-        'is_business_targeted_for_shopping': bool,
-    }
+class OnBoardCatalogResponseInterface(ApiResponseInterface):
+    shopping_onboarding_state: str
+    current_catalog_id: str
+    is_business_targeted_for_shopping: bool
+
+
+class OnBoardCatalogResponse(ApiResponse, OnBoardCatalogResponseInterface):
+    pass

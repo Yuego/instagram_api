@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Image']
+__all__ = ['Image', 'ImageInterface']
 
 
-class Image(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'uri': str,
-        'width': int,
-        'height': int,
-    }
+class ImageInterface(ApiInterfaceBase):
+    uri: str
+    width: int
+    height: int
+
+
+class Image(PropertyMapper, ImageInterface):
+    pass

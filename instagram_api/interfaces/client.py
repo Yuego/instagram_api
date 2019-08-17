@@ -1,9 +1,9 @@
-from abc import ABCMeta, abstractmethod, abstractstaticmethod
+from abc import ABCMeta, abstractmethod, abstractstaticmethod, abstractproperty
 from typing import Union, Any
 
 from requests import Response
 
-from .response import ApiResponseInterface
+from .api_response import ApiResponseInterface
 
 __all__ = ['ClientInterface']
 
@@ -11,41 +11,41 @@ __all__ = ['ClientInterface']
 class ClientInterface(metaclass=ABCMeta):
 
     @abstractmethod
-    def set_proxy(self, proxy: Union[str, list, dict]):
-        raise NotImplementedError
+    def __call__(self, endpoint: str, headers: dict = None, data: dict = None, files: dict = None) -> Response: ...
 
     @abstractmethod
-    def clear_proxy(self):
-        raise NotImplementedError
+    def set_proxy(self, proxy: Union[str, list, dict]): ...
 
     @abstractmethod
-    def update_from_current_settings(self, reset_cookie_jar: bool = False):
-        raise NotImplementedError
+    def clear_proxy(self): ...
 
     @abstractmethod
-    def load_cookie_jar(self, reset_cookie_jar: bool = False):
-        raise NotImplementedError
+    def update_from_current_settings(self, reset_cookie_jar: bool = False): ...
 
     @abstractmethod
-    def save_cookie_jar(self):
-        raise NotImplementedError
+    def load_cookie_jar(self, reset_cookie_jar: bool = False): ...
 
     @abstractmethod
-    def get_cookie(self, name: str, domain: str = None, path: str = None) -> Any:
-        raise NotImplementedError
+    def save_cookie_jar(self): ...
 
     @abstractmethod
-    def get_token(self):
-        raise NotImplementedError
+    def get_cookie(self, name: str, domain: str = None, path: str = None) -> Any: ...
+
+    @abstractmethod
+    def get_token(self): ...
 
     @abstractmethod
     def map_server_response(self,
                             api_response: type(ApiResponseInterface),
                             json_response: str,
                             http_response: Response,
-                            ) -> ApiResponseInterface:
-        raise NotImplementedError
+                            ) -> ApiResponseInterface: ...
 
     @abstractstaticmethod
-    def api_body_decode(json_string: str) -> dict:
-        raise NotImplementedError
+    def api_body_decode(json_string: str) -> dict: ...
+
+    @abstractproperty
+    def zero_rating(self): ...
+
+    @abstractproperty
+    def fake_cookies(self): ...

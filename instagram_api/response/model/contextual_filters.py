@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['ContextualFilters']
+__all__ = ['ContextualFilters', 'ContextualFiltersInterface']
 
 
-class ContextualFilters(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'clause_type': str,
-        'filters': None,
-        'clauses': None,
-    }
+class ContextualFiltersInterface(ApiInterfaceBase):
+    clause_type: str
+    filters: AnyType
+    clauses: AnyType
+
+
+class ContextualFilters(PropertyMapper, ContextualFiltersInterface):
+    pass

@@ -1,24 +1,27 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .button import Button
 
-__all__ = ['GenericMegaphone']
+__all__ = ['GenericMegaphone', 'GenericMegaphoneInterface']
 
 
-class GenericMegaphone(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'type': None,
-        'title': None,
-        'message': None,
-        'dismissible': None,
-        'icon': None,
-        'buttons': [Button],
-        'megaphone_version': None,
-        'button_layout': None,
-        'action_info': None,
-        'button_location': None,
-        'background_color': None,
-        'title_color': None,
-        'message_color': None,
-        'uuid': str,
-    }
+class GenericMegaphoneInterface(ApiInterfaceBase):
+    type: AnyType
+    title: AnyType
+    message: AnyType
+    dismissible: AnyType
+    icon: AnyType
+    buttons: [Button]
+    megaphone_version: AnyType
+    button_layout: AnyType
+    action_info: AnyType
+    button_location: AnyType
+    background_color: AnyType
+    title_color: AnyType
+    message_color: AnyType
+    uuid: str
+
+
+class GenericMegaphone(PropertyMapper, GenericMegaphoneInterface):
+    pass

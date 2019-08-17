@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import SharedFollower
 
 __all__ = ['SharedFollowersResponse']
 
 
-class SharedFollowersResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'users': [SharedFollower],
-    }
+class SharedFollowersResponseInterface(ApiResponseInterface):
+    users: [SharedFollower]
+
+
+class SharedFollowersResponse(ApiResponse, SharedFollowersResponseInterface):
+    pass

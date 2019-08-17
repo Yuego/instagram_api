@@ -1,11 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Badging']
+__all__ = ['Badging', 'BadgingInterface']
 
 
-class Badging(PropertyMapperBase):
+class BadgingInterface(ApiInterfaceBase):
+    ids: AnyType
+    items: AnyType
 
-    JSON_PROPERTY_MAP = {
-        'ids': None,
-        'items': None,
-    }
+
+class Badging(PropertyMapper, BadgingInterface):
+    pass

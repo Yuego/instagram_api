@@ -1,17 +1,13 @@
+from typing import Optional, Union
+
 import json
 import requests
 import time
 
-from datetime import datetime
 from time import time
 
 from http.cookiejar import Cookie
-from requests import Response as RequestsResponse
-from urllib import request, error, parse
 from urllib.parse import urlparse
-from urllib3.response import HTTPResponse
-
-from typing import Optional, Union
 
 from instagram_api.constants import Constants
 from instagram_api.exceptions import (
@@ -28,12 +24,17 @@ from instagram_api.exceptions import (
 from instagram_api.exceptions.server_message_raiser import ServerMessageRaiser
 from instagram_api.interfaces import ClientInterface, InstagramInterface
 from instagram_api.property_mapper.exceptions import PropertyMapperException
-from instagram_api.response.base_response import ApiResponse as ApiResponse
+from instagram_api.response.mapper import ApiResponse
 from instagram_api.response.direct_send_item import DirectSendItemResponse
-from instagram_api.settings.handler import StorageHandler
-from instagram_api.utils.http import ClientCookieJar, create_cookie_jar_proxy
+
+from instagram_api.utils.http import (
+    ClientCookieJar,
+    create_cookie_jar_proxy,
+    Session,
+)
 from .middleware import FakeCookiesMiddleware, ZeroRatingMiddleware, MiddlewareHTTPAdapter
 
+__all__ = ['Client']
 
 
 class Client(ClientInterface):
@@ -55,17 +56,15 @@ class Client(ClientInterface):
 
     _reset_connection: bool
 
-    def __init__(self, ig: InstagramInterface, cookies: ClientCookieJar = None, middlewares: list = None,
-                 proxy: Union[str, list, dict] = None):
+    def __init__(self, ig: InstagramInterface, middlewares: list = None, proxy: Union[str, list, dict] = None):
         middlewares = middlewares or []
-        cookies = cookies or ClientCookieJar()
 
         self._ig = ig
 
         self._verify_ssl = True
         self._proxy = None
 
-        self._session = requests.Session()
+        self._session = Session()
         self._session.verify = self._verify_ssl
         self._session.max_redirects = 8
 
@@ -85,13 +84,13 @@ class Client(ClientInterface):
         else:
             self.clear_proxy()
 
-        self._cookie_jar = cookies
+        self._cookie_jar = ClientCookieJar()
 
         self._session.cookies = create_cookie_jar_proxy(self, '_cookie_jar')
 
         self._reset_connection = False
 
-    def __call__(self, endpoint: str, headers: dict = None, post: dict = None):
+    def __call__(self, endpoint: str, headers: dict = None, data: dict = None, files: dict = None):
         if self._reset_connection:
             # Сбрасываем кеш соединений
             self._http_adapter.restart()
@@ -101,10 +100,10 @@ class Client(ClientInterface):
         headers.update(self.force_headers)
 
         try:
-            if post is None:
-                response: RequestsResponse = self._session.get(endpoint, headers=headers)
+            if not data and not files:
+                response: requests.Response = self._session.get(endpoint, headers=headers)
             else:
-                response: RequestsResponse = self._session.post(endpoint, data=post, headers=headers)
+                response: requests.Response = self._session.post(endpoint, data=data, files=files, headers=headers)
         except Exception as e:
             raise NetworkException(*e.args)
 
@@ -130,6 +129,14 @@ class Client(ClientInterface):
             'Accept-Encoding': Constants.ACCEPT_ENCODING,
             'Accept-Language': Constants.ACCEPT_LANGUAGE,
         }
+
+    @property
+    def fake_cookies(self):
+        return self._fake_cookies
+
+    @property
+    def zero_rating(self):
+        return self._zero_rating
 
     def set_proxy(self, proxy: Union[str, list, dict]):
         if isinstance(proxy, str):
@@ -223,7 +230,7 @@ class Client(ClientInterface):
     def map_server_response(self,
                             api_response: ApiResponse.__class__,
                             json_response: str,
-                            http_response: RequestsResponse) -> ApiResponse:
+                            http_response: requests.Response) -> ApiResponse:
 
         json_data = self.api_body_decode(json_response)
 

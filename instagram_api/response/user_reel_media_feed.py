@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
-from .model import Reel
+from .mapper import ApiResponse
+
+from .model.reel import ReelInterface
 
 __all__ = ['UserReelMediaFeedResponse']
 
 
-class UserReelMediaFeedResponse(ApiResponse, Reel):
-    JSON_PROPERTY_MAP = {
+class UserReelMediaFeedResponseInterface(ReelInterface):
+    pass
 
-    }
+
+class UserReelMediaFeedResponse(ApiResponse, UserReelMediaFeedResponseInterface):
+    pass

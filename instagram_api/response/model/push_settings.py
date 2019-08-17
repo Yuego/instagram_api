@@ -1,14 +1,17 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['PushSettings']
+__all__ = ['PushSettings', 'PushSettingsInterface']
 
 
-class PushSettings(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'name': None,
-        'eligible': None,
-        'title': None,
-        'example': None,
-        'options': None,
-        'checked': None,
-    }
+class PushSettingsInterface(ApiInterfaceBase):
+    name: AnyType
+    eligible: AnyType
+    title: AnyType
+    example: AnyType
+    options: AnyType
+    checked: AnyType
+
+
+class PushSettings(PropertyMapper, PushSettingsInterface):
+    pass

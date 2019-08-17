@@ -1,5 +1,5 @@
-from .base import RequestBase
+from .collection import Collection
 
 
-class Push(RequestBase):
+class Push(Collection):
     pass

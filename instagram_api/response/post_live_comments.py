@@ -1,13 +1,17 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import LiveComment
+
 __all__ = ['PostLiveCommentsResponse']
 
 
-class PostLiveCommentsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'starting_offset': None,
-        'ending_offset': None,
-        'next_fetch_offset': None,
-        'comments': [LiveComment],
-        'pinned_comments': [LiveComment],
-    }
+class PostLiveCommentsResponseInterface(ApiResponseInterface):
+    starting_offset: AnyType
+    ending_offset: AnyType
+    next_fetch_offset: AnyType
+    comments: [LiveComment]
+    pinned_comments: [LiveComment]
+
+
+class PostLiveCommentResponse(ApiResponse, PostLiveCommentsResponseInterface):
+    pass

@@ -1,9 +1,12 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Attribution']
+__all__ = ['Attribution', 'AttributionInterface']
 
 
-class Attribution(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'name': str,
-    }
+class AttributionInterface(ApiInterfaceBase):
+    name: str
+
+
+class Attribution(PropertyMapper, AttributionInterface):
+    pass

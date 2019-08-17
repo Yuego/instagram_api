@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .aymf_item import AymfItem
 
-__all__ = ['Aymf']
+__all__ = ['Aymf', 'AymfInterface']
 
 
-class Aymf(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'items': [AymfItem],
-        'more_available': bool,
-    }
+class AymfInterface(ApiInterfaceBase):
+    items: [AymfItem]
+    more_available: bool
+
+
+class Aymf(PropertyMapper, AymfInterface):
+    pass

@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .catalog_node import CatalogNode
 
-__all__ = ['CatalogEdge']
+__all__ = ['CatalogEdge', 'CatalogEdgeInterface']
 
 
-class CatalogEdge(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'node': CatalogNode,
-    }
+class CatalogEdgeInterface(ApiInterfaceBase):
+    node: CatalogNode
+
+
+class CatalogEdge(PropertyMapper, CatalogEdgeInterface):
+    pass

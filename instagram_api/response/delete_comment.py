@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['DeleteCommentResponse']
 
 
-class DeleteCommentResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
+class DeleteCommentResponseInterface(ApiResponseInterface):
+    pass
 
-    }
+
+class DeleteCommentResponse(ApiResponse, DeleteCommentResponseInterface):
+    pass

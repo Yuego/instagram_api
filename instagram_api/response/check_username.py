@@ -1,12 +1,15 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['CheckUsernameResponse']
 
 
-class CheckUsernameResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'username': str,
-        'available': None,
-        'error': None,
-        'error_type': None,
-    }
+class CheckUsernameResponseInterface(ApiResponseInterface):
+    username: str
+    available: AnyType
+    error: AnyType
+    error_type: AnyType
+
+
+class CheckUsernameResponse(ApiResponse, CheckUsernameResponseInterface):
+    pass

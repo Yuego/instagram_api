@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['CommentFilterKeywordsResponse']
 
 
-class CommentFilterKeywordsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'keywords': None,
-    }
+class CommentFilterKeywordsResponseInterface(ApiResponseInterface):
+    keywords: AnyType
+
+
+class CommentFilterKeywordsResponse(ApiResponse, CommentFilterKeywordsResponseInterface):
+    pass

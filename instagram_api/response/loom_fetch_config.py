@@ -1,12 +1,15 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import SystemControl, TraceControl
 
 __all__ = ['LoomFetchConfigResponse']
 
 
-class LoomFetchConfigResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'system_control': SystemControl,
-        'trace_control': TraceControl,
-        'id': int,
-    }
+class LoomFetchConfigResponseInterface(ApiResponseInterface):
+    system_control: SystemControl
+    trace_control: TraceControl
+    id: int
+
+
+class LoomFetchConfigResponse(ApiResponse, LoomFetchConfigResponseInterface):
+    pass

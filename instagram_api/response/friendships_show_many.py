@@ -1,9 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+
+from .model.unpredictable import FriendshipStatusUnpredictableContainer
 
 __all__ = ['FriendshipsShowManyResponse']
 
 
-class FriendshipsShowManyResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'friendship_statuses': 'Model\UnpredictableKeys\FriendshipStatusUnpredictableContainer',
-    }
+class FriendshipsShowManyResponseInterface(ApiResponseInterface):
+    friendship_statuses: FriendshipStatusUnpredictableContainer
+
+
+class FriendshipsShowManyResponse(ApiResponse, FriendshipsShowManyResponseInterface):
+    pass

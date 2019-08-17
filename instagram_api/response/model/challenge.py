@@ -1,14 +1,17 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Challenge']
+__all__ = ['Challenge', 'ChallengeInterface']
 
 
-class Challenge(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'url': str,
-        'api_path': None,
-        'hide_webview_header': None,
-        'lock': None,
-        'logout': None,
-        'native_flow': None,
-    }
+class ChallengeInterface(ApiInterfaceBase):
+    url: str
+    api_path: AnyType
+    hide_webview_header: AnyType
+    lock: AnyType
+    logout: AnyType
+    native_flow: AnyType
+
+
+class Challenge(PropertyMapper, ChallengeInterface):
+    pass

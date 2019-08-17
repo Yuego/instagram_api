@@ -1,20 +1,23 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .action import Action
 from .image import Image
 from .text import Text
 
-__all__ = ['Creative']
+__all__ = ['Creative', 'CreativeInterface']
 
 
-class Creative(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'title': Text,
-        'content': Text,
-        'footer': Text,
-        'social_context': Text,
-        'primary_action': Action,
-        'secondary_action': Action,
-        'dismiss_action': None,
-        'image': Image,
-    }
+class CreativeInterface(ApiInterfaceBase):
+    title: Text
+    content: Text
+    footer: Text
+    social_context: Text
+    primary_action: Action
+    secondary_action: Action
+    dismiss_action: AnyType
+    image: Image
+
+
+class Creative(PropertyMapper, CreativeInterface):
+    pass

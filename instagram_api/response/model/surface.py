@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Surface']
+__all__ = ['Surface', 'SurfaceInterface']
 
 
-class Surface(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'scores': None,
-        'rank_token': str,
-        'ttl_secs': int,
-        'name': str,
-    }
+class SurfaceInterface(ApiInterfaceBase):
+    scores: AnyType
+    rank_token: str
+    ttl_secs: int
+    name: str
+
+
+class Surface(PropertyMapper, SurfaceInterface):
+    pass

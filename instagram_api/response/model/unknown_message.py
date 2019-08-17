@@ -1,11 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['UnknownMessage']
+__all__ = ['UnknownMessage', 'UnknownMessageInterface']
 
 
-class UnknownMessage(PropertyMapperBase):
+class UnknownMessageInterface(ApiInterfaceBase):
+    key: str
+    time: str
 
-    JSON_PROPERTY_MAP = {
-        'key': str,
-        'time': str,
-    }
+
+class UnknownMessage(PropertyMapper, UnknownMessageInterface):
+    pass

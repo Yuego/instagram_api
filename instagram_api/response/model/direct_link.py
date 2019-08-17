@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .link_context import LinkContext
 
-__all__ = ['DirectLink']
+__all__ = ['DirectLink', 'DirectLinkInterface']
 
 
-class DirectLink(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'text': str,
-        'link_context': LinkContext,
-    }
+class DirectLinkInterface(ApiInterfaceBase):
+    text: str
+    link_context: LinkContext
+
+
+class DirectLink(PropertyMapper, DirectLinkInterface):
+    pass

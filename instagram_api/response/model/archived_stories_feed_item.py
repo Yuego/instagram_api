@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['ArchivedStoriesFeedItem']
+__all__ = ['ArchivedStoriesFeedItem', 'ArchivedStoriesFeedItemInterface']
 
 
-class ArchivedStoriesFeedItem(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'timestamp': int,
-        'media_count': int,
-        'id': int,
-        'reel_type': str,
-    }
+class ArchivedStoriesFeedItemInterface(ApiInterfaceBase):
+    timestamp: int
+    media_count: int
+    id: int
+    reel_type: str
+
+
+class ArchivedStoriesFeedItem(PropertyMapper, ArchivedStoriesFeedItemInterface):
+    pass

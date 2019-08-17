@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .user import User
 
-__all__ = ['UserList']
+__all__ = ['UserList', 'UserListInterface']
 
 
-class UserList(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'position': int,
-        'user': User,
-    }
+class UserListInterface(ApiInterfaceBase):
+    position: int
+    user: User
+
+
+class UserList(PropertyMapper, UserListInterface):
+    pass

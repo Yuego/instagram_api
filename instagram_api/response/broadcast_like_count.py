@@ -1,13 +1,16 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+
 from .model import User
 
 __all__ = ['BroadcastLikeCountResponse']
 
 
-class BroadcastLikeCountResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'like_ts': int,
-        'likes': int,
-        'burst_likes': int,
-        'likers': [User],
-    }
+class BroadcastLikeCountResponseInterface(ApiResponseInterface):
+    like_ts: int
+    likes: int
+    burst_likes: int
+    likers: [User]
+
+
+class BroadcastLikeCountResponse(ApiResponse, BroadcastLikeCountResponseInterface):
+    pass

@@ -1,9 +1,11 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
 
 __all__ = ['ChangePasswordResponse']
 
 
-class ChangePasswordResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
+class ChangePasswordResponseInterface(ApiResponseInterface):
+    pass
 
-    }
+
+class ChangePasswordResponse(ApiResponse, ChangePasswordResponseInterface):
+    pass

@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['AssetModel']
+__all__ = ['AssetModel', 'AssetModelInterface']
 
 
-class AssetModel(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'asset_url': str,
-        'id': int,
-    }
+class AssetModelInterface(ApiInterfaceBase):
+    asset_url: str
+    id: int
+
+
+class AssetModel(PropertyMapper, AssetModelInterface):
+    pass

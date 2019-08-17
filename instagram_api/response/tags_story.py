@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Reel
 
 __all__ = ['TagsStoryResponse']
 
 
-class TagsStoryResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'story': Reel,
-    }
+class TagsStoryResponseInterface(ApiResponseInterface):
+    story: Reel
+
+
+class TagsStoryResponse(ApiResponse, TagsStoryResponseInterface):
+    pass

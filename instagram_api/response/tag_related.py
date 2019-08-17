@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Related
 
 __all__ = ['TagRelatedResponse']
 
 
-class TagRelatedResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'related': [Related],
-    }
+class TagRelatedResponseInterface(ApiResponseInterface):
+    related: [Related]
+
+
+class TagRelatedResponse(ApiResponse, TagRelatedResponseInterface):
+    pass

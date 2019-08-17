@@ -1,14 +1,17 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .broadcast import Broadcast
 
-__all__ = ['LiveViewerInvite']
+__all__ = ['LiveViewerInvite', 'LiveViewerInviteInterface']
 
 
-class LiveViewerInvite(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'text': str,
-        'broadcast': Broadcast,
-        'title': str,
-        'message': str,
-    }
+class LiveViewerInviteInterface(ApiInterfaceBase):
+    text: str
+    broadcast: Broadcast
+    title: str
+    message: str
+
+
+class LiveViewerInvite(PropertyMapper, LiveViewerInviteInterface):
+    pass

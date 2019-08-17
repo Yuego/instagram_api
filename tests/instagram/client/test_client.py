@@ -3,12 +3,13 @@ import httpretty
 import pytest
 
 from instagram_api.client import Client
-from instagram_api.request.base import RequestBase
+from instagram_api.request.base import ApiRequest
 from instagram_api.constants import Constants
 from instagram_api.utils.http import ClientCookieJar
 
+
 @httpretty.activate
-def test_send_request():
+def test_send_request(instagram):
     url = f'{Constants.API_URLS[1]}feed/timeline/'.replace('https', 'http')
 
     httpretty.register_uri(
@@ -29,20 +30,22 @@ def test_send_request():
         })
     )
 
-    rb = RequestBase()
+    c = instagram.client
 
-    c = Client(None)
+    # rb = ApiRequest()
+
+    # c = Client(None)
 
     jar = ClientCookieJar()
     jar.set('test', 'value')
 
-    c2 = Client(None, cookies=jar)
+    # c2 = Client(None, cookies=jar)
 
     response = c(url)
 
     print(httpretty.last_request())
 
-    response2 = c2(url, headers=rb.force_headers)
+    # response2 = c2(url, headers=rb.force_headers)
 
     print(httpretty.last_request())
 

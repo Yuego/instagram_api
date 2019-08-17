@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Bold']
+__all__ = ['Bold', 'BoldInterface']
 
 
-class Bold(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'start': int,
-        'end': int,
-    }
+class BoldInterface(ApiInterfaceBase):
+    start: int
+    end: int
+
+
+class Bold(PropertyMapper, BoldInterface):
+    pass

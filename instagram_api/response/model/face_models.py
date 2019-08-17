@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['FaceModels']
+__all__ = ['FaceModels', 'FaceModelsInterface']
 
 
-class FaceModels(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'face_align_model': None,
-        'face_detect_model': None,
-        'pdm_multires': None,
-    }
+class FaceModelsInterface(ApiInterfaceBase):
+    face_align_model: AnyType
+    face_detect_model: AnyType
+    pdm_multires: AnyType
+
+
+class FaceModels(PropertyMapper, FaceModelsInterface):
+    pass

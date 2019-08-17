@@ -1,10 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['ActionBadge']
+__all__ = ['ActionBadge', 'ActionBadgeInterface']
 
 
-class ActionBadge(PropertyMapperBase):
+class ActionBadgeInterface(ApiInterfaceBase):
+    action_type: AnyType
+    action_count: int
+    action_timestamp: Timestamp
+
+
+class ActionBadge(PropertyMapper, ActionBadgeInterface):
     DELIVERED = 'raven_delivered'
     SENT = 'raven_sent'
     OPENED = 'raven_opened'
@@ -15,9 +21,3 @@ class ActionBadge(PropertyMapperBase):
     BLOCKED = 'raven_blocked'
     UNKNOWN = 'raven_unknown'
     SUGGESTED = 'raven_suggested'
-
-    JSON_PROPERTY_MAP = {
-        'action_type': None,
-        'action_count': int,
-        'action_timestamp': timestamp,
-    }

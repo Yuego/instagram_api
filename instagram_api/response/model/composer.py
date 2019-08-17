@@ -1,9 +1,12 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Composer']
+__all__ = ['Composer', 'ComposerInterface']
 
 
-class Composer(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'nux_finished': bool,
-    }
+class ComposerInterface(ApiInterfaceBase):
+    nux_finished: bool
+
+
+class Composer(PropertyMapper, ComposerInterface):
+    pass

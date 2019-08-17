@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['BroadcastStatusItem']
+__all__ = ['BroadcastStatusItem', 'BroadcastStatusItemInterface']
 
 
-class BroadcastStatusItem(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'broadcast_status': str,
-        'has_reduced_visibility': bool,
-        'cover_frame_url': str,
-        'viewer_count': int,
-        'id': int,
-    }
+class BroadcastStatusItemInterface(ApiInterfaceBase):
+    broadcast_status: str
+    has_reduced_visibility: bool
+    cover_frame_url: str
+    viewer_count: int
+    id: int
+
+
+class BroadcastStatusItem(PropertyMapper, BroadcastStatusItemInterface):
+    pass

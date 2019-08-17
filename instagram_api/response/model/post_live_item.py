@@ -1,22 +1,24 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .broadcast import Broadcast
 from .user import User
 
-__all__ = ['PostLiveItem']
+__all__ = ['PostLiveItem', 'PostLiveItemInterface']
 
 
-class PostLiveItem(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'pk': int,
-        'user': User,
-        'broadcasts': [Broadcast],
-        'peak_viewer_count': int,
-        'last_seen_broadcast_ts': timestamp,
-        'can_reply': None,
-        'ranked_position': None,
-        'seen_ranked_position': None,
-        'muted': None,
-        'can_reshare': None,
-    }
+class PostLiveItemInterface(ApiInterfaceBase):
+    pk: int
+    user: User
+    broadcasts: [Broadcast]
+    peak_viewer_count: int
+    last_seen_broadcast_ts: Timestamp
+    can_reply: AnyType
+    ranked_position: AnyType
+    seen_ranked_position: AnyType
+    muted: AnyType
+    can_reshare: AnyType
+
+
+class PostLiveItem(PropertyMapper, PostLiveItemInterface):
+    pass

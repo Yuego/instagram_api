@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .business_edge import BusinessEdge
 from .page_info import PageInfo
 
-__all__ = ['SummaryPromotions']
+__all__ = ['SummaryPromotions', 'SummaryPromotionsInterface']
 
 
-class SummaryPromotions(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'edges': [BusinessEdge],
-        'page_info': PageInfo,
-    }
+class SummaryPromotionsInterface(ApiInterfaceBase):
+    edges: [BusinessEdge]
+    page_info: PageInfo
+
+
+class SummaryPromotions(PropertyMapper, SummaryPromotionsInterface):
+    pass

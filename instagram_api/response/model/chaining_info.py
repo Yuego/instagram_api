@@ -1,10 +1,12 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['ChainingInfo']
+__all__ = ['ChainingInfo', 'ChainingInfoInterface']
 
 
-class ChainingInfo(PropertyMapperBase):
+class ChainingInfoInterface(ApiInterfaceBase):
+    sources: str
 
-    JSON_PROPERTY_MAP = {
-        'sources': str,
-    }
+
+class ChainingInfo(PropertyMapper, ChainingInfoInterface):
+    pass

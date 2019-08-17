@@ -1,6 +1,6 @@
 from requests import Response
 
-from instagram_api.interfaces.response import ApiResponseInterface
+from instagram_api.interfaces.api_response import ApiResponseInterface
 
 from .base import PropertyMapperBase
 from .error_list import PropertyMapperErrorList

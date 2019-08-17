@@ -1,10 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['TimeRange']
+__all__ = ['TimeRange', 'TimeRangeInterface']
 
 
-class TimeRange(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'start': int,
-        'end': int,
-    }
+class TimeRangeInterface(ApiInterfaceBase):
+    start: int
+    end: int
+
+
+class TimeRange(PropertyMapper, TimeRangeInterface):
+    pass
+

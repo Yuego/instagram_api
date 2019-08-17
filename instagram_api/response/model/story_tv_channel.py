@@ -1,19 +1,22 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .item import Item
 from .user import User
 
-__all__ = ['StoryTvChannel']
+__all__ = ['StoryTvChannel', 'StoryTvChannelInterface']
 
 
-class StoryTvChannel(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'id': int,
-        'items': [Item],
-        'title': str,
-        'type': str,
-        'max_id': int,
-        'more_available': bool,
-        'seen_state': None,
-        'user_dict': User,
-    }
+class StoryTvChannelInterface(ApiInterfaceBase):
+    id: int
+    items: [Item]
+    title: str
+    type: str
+    max_id: int
+    more_available: bool
+    seen_state: AnyType
+    user_dict: User
+
+
+class StoryTvChannel(PropertyMapper, StoryTvChannelInterface):
+    pass

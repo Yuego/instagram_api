@@ -1,14 +1,17 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .location import Location
 
-__all__ = ['LocationItem']
+__all__ = ['LocationItem', 'LocationItemInterface']
 
 
-class LocationItem(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'media_bundles': None,
-        'subtitle': None,
-        'location': Location,
-        'title': None,
-    }
+class LocationItemInterface(ApiInterfaceBase):
+    media_bundles: AnyType
+    subtitle: AnyType
+    location: Location
+    title: AnyType
+
+
+class LocationItem(PropertyMapper, LocationItemInterface):
+    pass

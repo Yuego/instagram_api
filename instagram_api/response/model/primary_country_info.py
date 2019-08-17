@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['PrimaryCountryInfo']
+__all__ = ['PrimaryCountryInfo', 'PrimaryCountryInfoInterface']
 
 
-class PrimaryCountryInfo(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'is_visible': bool,
-        'has_country': bool,
-        'country_name': str,
-    }
+class PrimaryCountryInfoInterface(ApiInterfaceBase):
+    is_visible: bool
+    has_country: bool
+    country_name: str
+
+
+class PrimaryCountryInfo(PropertyMapper, PrimaryCountryInfoInterface):
+    pass

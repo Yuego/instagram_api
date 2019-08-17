@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
-
-__all__ = ['DirectExpiringSummary']
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 
-class DirectExpiringSummary(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'type': str,
-        'timestamp': timestamp,
-        'count': int,
-    }
+__all__ = ['DirectExpiringSummary', 'DirectExpiringSummaryInterface']
+
+
+class DirectExpiringSummaryInterface(ApiInterfaceBase):
+    type: str
+    timestamp: Timestamp
+    count: int
+
+
+class DirectExpiringSummary(PropertyMapper, DirectExpiringSummaryInterface):
+    pass

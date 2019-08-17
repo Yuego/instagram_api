@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['ValidateURLResponse']
 
 
-class ValidateURLResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
+class ValidateURLResponseInterface(ApiResponseInterface):
+    pass
 
-    }
+
+class ValidateURLResponse(ApiResponse, ValidateURLResponseInterface):
+    pass

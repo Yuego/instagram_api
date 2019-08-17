@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['QPExtraInfo']
+__all__ = ['QPExtraInfo', 'QPExtraInfoInterface']
 
 
-class QPExtraInfo(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'surface': int,
-        'extra_info': str,
-    }
+class QPExtraInfoInterface(ApiInterfaceBase):
+    surface: int
+    extra_info: str
+
+
+class QPExtraInfo(PropertyMapper, QPExtraInfoInterface):
+    pass

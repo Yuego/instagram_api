@@ -1,16 +1,19 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['AnimatedMediaImageFixedHeight']
+__all__ = ['AnimatedMediaImageFixedHeight', 'AnimatedMediaImageFixedHeightInterface']
 
 
-class AnimatedMediaImageFixedHeight(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'url': str,
-        'width': str,
-        'heigth': str,
-        'size': str,
-        'mp4': str,
-        'mp4_size': str,
-        'webp': str,
-        'webp_size': str,
-    }
+class AnimatedMediaImageFixedHeightInterface(ApiInterfaceBase):
+    url: str
+    width: str
+    heigth: str
+    size: str
+    mp4: str
+    mp4_size: str
+    webp: str
+    webp_size: str
+
+
+class AnimatedMediaImageFixedHeight(PropertyMapper, AnimatedMediaImageFixedHeightInterface):
+    pass

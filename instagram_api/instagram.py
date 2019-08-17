@@ -1,13 +1,14 @@
+from typing import Any
+
 from instagram_api import request
 from instagram_api.exceptions import InstagramException
-from instagram_api.interfaces import DeviceInterface, InstagramInterface, RequestInterface
+from instagram_api.interfaces import ExperimentsInterface, InstagramInterface, ApiRequestInterface
 from instagram_api.response.login import LoginResponse
 
 from .client import Client
 from .constants import Constants
-from .experiments_interface import ExperimentsInterface
 from .devices import Device
-from .request.base import RequestBase
+from .request.base import ApiRequest
 from .settings import StorageFactory, StorageHandler
 from .signatures import Signatures
 
@@ -75,10 +76,8 @@ class Instagram(ExperimentsInterface, InstagramInterface):
             },
         )
 
-        cookies = self.settings.get_cookies()
-
-        self.client = Client(self, cookies=cookies)
-        self.experiments = []
+        self.client = Client(self)
+        self.experiments = {}
 
     def login(self, username: str, password: str, app_refresh_interval: int = 1800):
         assert username and password, 'You must provide a username and password to login().'
@@ -124,6 +123,27 @@ class Instagram(ExperimentsInterface, InstagramInterface):
                     return e.response
                 else:
                     raise
+
+            self._update_login_state(response)
+
+            self._send_login_flow(True, app_refresh_interval)
+
+            return response
+
+        return self._send_login_flow(False, app_refresh_interval)
+
+    def _send_login_flow(self, just_logged_in: bool, app_refresh_interval: int = 1800):
+        assert isinstance(app_refresh_interval, int) and app_refresh_interval > 0, (
+            'Instagram`s app state refresh interval must be a positive integer.'
+        )
+        assert app_refresh_interval < 21600, (
+            'Instagram`s app state refresh interval is NOT allowed to be higher than 6 hours, and the lower is better!'
+        )
+
+        if just_logged_in:
+            self.client.zero_rating.reset()
+
+            self.internal.send_launcher_sync(False)
 
     def change_user(self, username: str, password: str):
         assert username and password, 'You must provide a username and password to change_user().'
@@ -183,14 +203,20 @@ class Instagram(ExperimentsInterface, InstagramInterface):
             self.is_maybe_logged_in = False
             self.account_id = None
 
-        self.client.update_from_current_settings(
-            device=self.device,
-            settings=self.settings,
-            reset_cookie_jar=reset_cookie_jar
-        )
+        self.client.update_from_current_settings(reset_cookie_jar=reset_cookie_jar)
 
         if self.client.get_token() is None:
             self.is_maybe_logged_in = False
 
-    def request(self, url: str) -> RequestInterface:
-        return RequestBase(self, url)
+    def request(self, url: str) -> ApiRequestInterface:
+        return ApiRequest(self, url)
+
+    def is_experiment_enabled(self, experiment: str, param: str, default: bool = False):
+        param = self.experiments.get(experiment, {}).get(param, None)
+        if param is not None:
+            return param in ['enabled', 'true', '1']
+        else:
+            return default
+
+    def get_experiment_param(self, experiment: str, param: str, default: Any = None):
+        return self.experiments.get(experiment, {}).get(param, default)

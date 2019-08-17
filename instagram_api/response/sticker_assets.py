@@ -1,11 +1,14 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import StaticStickers
 
 __all__ = ['StickerAssetsResponse']
 
 
-class StickerAssetsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'version': None,
-        'static_stickers': [StaticStickers],
-    }
+class StickerAssetsResponseInterface(ApiResponseInterface):
+    version: AnyType
+    static_stickers: [StaticStickers]
+
+
+class StickerAssetsResponse(ApiResponse, StickerAssetsResponseInterface):
+    pass

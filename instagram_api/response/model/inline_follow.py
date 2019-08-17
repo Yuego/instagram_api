@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .user import User
 
-__all__ = ['InlineFollow']
+__all__ = ['InlineFollow', 'InlineFollowInterface']
 
 
-class InlineFollow(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'user_info': User,
-        'following': bool,
-        'outgoing_request': bool,
-    }
+class InlineFollowInterface(ApiInterfaceBase):
+    user_info: User
+    following: bool
+    outgoing_request: bool
+
+
+class InlineFollow(PropertyMapper, InlineFollowInterface):
+    pass

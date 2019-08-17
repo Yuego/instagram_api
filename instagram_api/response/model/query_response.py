@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .shadow_instagram_user import ShadowInstagramUser
 
-__all__ = ['QueryResponse']
+__all__ = ['QueryResponse', 'QueryResponseInterface']
 
 
-class QueryResponse(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'shadow_instagram_user': ShadowInstagramUser,
-    }
+class QueryResponseInterface(ApiInterfaceBase):
+    shadow_instagram_user: ShadowInstagramUser
+
+
+class QueryResponse(PropertyMapper, QueryResponseInterface):
+    pass

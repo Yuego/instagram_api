@@ -1,13 +1,16 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+
 from .model import DirectMessageMetadata, Item
 
 __all__ = ['ConfigureResponse']
 
 
-class ConfigureResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'upload_id': int,
-        'media': Item,
-        'client_sidecar_id': int,
-        'message_metadata': [DirectMessageMetadata],
-    }
+class ConfigureResponseInterface(ApiResponseInterface):
+    upload_id: int
+    media: Item
+    client_sidecar_id: int
+    message_metadata: [DirectMessageMetadata]
+
+
+class ConfigureResponse(ApiResponse, ConfigureResponseInterface):
+    pass

@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .edges import Edges
 
-__all__ = ['EligiblePromotions']
+__all__ = ['EligiblePromotions', 'EligiblePromotionsInterface']
 
 
-class EligiblePromotions(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'edges': [Edges],
-    }
+class EligiblePromotionsInterface(ApiInterfaceBase):
+    edges: [Edges]
+
+
+class EligiblePromotions(PropertyMapper, EligiblePromotionsInterface):
+    pass

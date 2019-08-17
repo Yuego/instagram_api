@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .user import User
 
-__all__ = ['TopLive']
+__all__ = ['TopLive', 'TopLiveInterface']
 
 
-class TopLive(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'broadcast_owners': [User],
-        'ranked_position': None
-    }
+class TopLiveInterface(ApiInterfaceBase):
+    broadcast_owners: [User]
+    ranked_position: AnyType
+
+
+class TopLive(PropertyMapper, TopLiveInterface):
+    pass

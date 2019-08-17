@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['MediaDeleteResponse']
 
 
-class MediaDeleteResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'did_delete': None,
-    }
+class MediaDeleteResponseInterface(ApiResponseInterface):
+    did_delete: AnyType
+
+
+class MediaDeleteResponse(ApiResponse, MediaDeleteResponseInterface):
+    pass

@@ -1,15 +1,23 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ...mapper import PropertyMapper, ApiInterfaceBase
 
-__all__ = ['Sticker']
+__all__ = ['Sticker', 'StickerInterface']
 
 
-class Sticker(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'x': float,
-        'y': float,
-        'z': float,
-        'width': float,
-        'height': float,
-        'rotation': float,
-        'is_pinned': int,
-    }
+class StickerInterface(ApiInterfaceBase):
+    x: float
+
+    y: float
+
+    z: float
+
+    width: float
+
+    height: float
+
+    rotation: float
+
+    is_pinned: int
+
+
+class Sticker(PropertyMapper, StickerInterface):
+    pass

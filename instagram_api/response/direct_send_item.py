@@ -1,12 +1,15 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import DirectSendItemPayload
 
 __all__ = ['DirectSendItemResponse']
 
 
-class DirectSendItemResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'action': None,
-        'status_code': None,
-        'payload': DirectSendItemPayload,
-    }
+class DirectSendItemResponseInterface(ApiResponseInterface):
+    action: AnyType
+    status_code: AnyType
+    payload: DirectSendItemPayload
+
+
+class DirectSendItemResponse(ApiResponse, DirectSendItemResponseInterface):
+    pass

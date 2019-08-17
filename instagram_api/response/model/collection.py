@@ -1,13 +1,16 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .item import Item
 
-__all__ = ['Collection']
+__all__ = ['Collection', 'CollectionInterface']
 
 
-class Collection(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'collection_id': int,
-        'collection_name': str,
-        'cover_media': Item,
-    }
+class CollectionInterface(ApiInterfaceBase):
+    collection_id: int
+    collection_name: str
+    cover_media: Item
+
+
+class Collection(PropertyMapper, CollectionInterface):
+    pass

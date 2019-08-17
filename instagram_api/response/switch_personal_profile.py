@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import User
 
 __all__ = ['SwitchPersonalProfileResponse']
 
 
-class SwitchPersonalProfileResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'users': [User],
-    }
+class SwitchPersonalProfileResponseInterface(ApiResponseInterface):
+    users: [User]
+
+
+class SwitchPersonalProfileResponse(ApiResponse, SwitchPersonalProfileResponseInterface):
+    pass

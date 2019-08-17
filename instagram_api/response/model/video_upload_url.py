@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['VideoUploadUrl']
+__all__ = ['VideoUploadUrl', 'VideoUploadUrlInterface']
 
 
-class VideoUploadUrl(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'url': str,
-        'job': str,
-        'expires': float,
-    }
+class VideoUploadUrlInterface(ApiInterfaceBase):
+    url: str
+    job: str
+    expires: float
+
+
+class VideoUploadUrl(PropertyMapper, VideoUploadUrlInterface):
+    pass

@@ -1,5 +1,5 @@
-from .base import RequestBase
+from .collection import Collection
 
 
-class Creative(RequestBase):
+class Creative(Collection):
     pass

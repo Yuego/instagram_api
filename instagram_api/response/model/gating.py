@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Gating']
+__all__ = ['Gating', 'GatingInterface']
 
 
-class Gating(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'gating_type': None,
-        'description': None,
-        'buttons': None,
-        'title': None,
-    }
+class GatingInterface(ApiInterfaceBase):
+    gating_type: AnyType
+    description: AnyType
+    buttons: AnyType
+    title: AnyType
+
+
+class Gating(PropertyMapper, GatingInterface):
+    pass

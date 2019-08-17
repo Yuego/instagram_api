@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import FormerUsername
 
 __all__ = ['FormerUsernamesResponse']
 
 
-class FormerUsernamesResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'former_usernames': [FormerUsername],
-    }
+class FormerUsernamesResponseInterface(ApiResponseInterface):
+    former_usernames: [FormerUsername]
+
+
+class FormerUsernamesResponse(ApiResponse, FormerUsernamesResponseInterface):
+    pass

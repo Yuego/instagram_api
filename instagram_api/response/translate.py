@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import CommentTranslations
 
 __all__ = ['TranslateResponse']
 
 
-class TranslateResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'comment_translations': [CommentTranslations],
-    }
+class TranslateResponseInterface(ApiResponseInterface):
+    comment_translations: [CommentTranslations]
+
+
+class TranslateResponse(ApiResponse, TranslateResponseInterface):
+    pass

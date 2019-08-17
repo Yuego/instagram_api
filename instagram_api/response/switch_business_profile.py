@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['SwitchBusinessProfileResponse']
 
 
-class SwitchBusinessProfileResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'social_context': None,
-    }
+class SwitchBusinessProfileResponseInterface(ApiResponseInterface):
+    social_context: AnyType
+
+
+class SwitchBusinessProfileResponse(ApiResponse, SwitchBusinessProfileResponseInterface):
+    pass

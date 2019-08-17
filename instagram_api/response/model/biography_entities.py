@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['BiographyEntities']
+__all__ = ['BiographyEntities', 'BiographyEntitiesInterface']
 
 
-class BiographyEntities(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'entities': None,
-        'raw_text': str,
-        'nux_type': str,
-    }
+class BiographyEntitiesInterface(ApiInterfaceBase):
+    entities: AnyType
+    raw_text: str
+    nux_type: str
+
+
+class BiographyEntities(PropertyMapper, BiographyEntitiesInterface):
+    pass

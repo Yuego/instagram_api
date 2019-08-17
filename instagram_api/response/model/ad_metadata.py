@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['AdMetadata']
+__all__ = ['AdMetadata', 'AdMetadataInterface']
 
 
-class AdMetadata(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'value': None,
-        'type': None,
-    }
+class AdMetadataInterface(ApiInterfaceBase):
+    value: AnyType
+    type: AnyType
+
+
+class AdMetadata(PropertyMapper, AdMetadataInterface):
+    pass

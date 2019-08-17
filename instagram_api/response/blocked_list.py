@@ -1,12 +1,15 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import User
 
 __all__ = ['BlockedListResponse']
 
 
-class BlockedListResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'blocked_list': [User],
-        'next_max_id': str,
-        'page_size': None,
-    }
+class BlockedListResponseInterface(ApiResponseInterface):
+    blocked_list: [User]
+    next_max_id: str
+    page_size: AnyType
+
+
+class BlockedListResponse(ApiResponse, BlockedListResponseInterface):
+    pass

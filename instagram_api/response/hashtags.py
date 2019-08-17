@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import Hashtag
 
 __all__ = ['HashtagsResponse']
 
 
-class HashtagsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'tags': [Hashtag],
-    }
+class HashtagsResponseInterface(ApiResponseInterface):
+    tags: [Hashtag]
+
+
+class HashtagsResponse(ApiResponse, HashtagsResponseInterface):
+    pass

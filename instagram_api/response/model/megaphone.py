@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .generic_megaphone import GenericMegaphone
 
-__all__ = ['Megaphone']
+__all__ = ['Megaphone', 'MegaphoneInterface']
 
 
-class Megaphone(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'generic_megaphone': GenericMegaphone,
-    }
+class MegaphoneInterface(ApiInterfaceBase):
+    generic_megaphone: GenericMegaphone
+
+
+class Megaphone(PropertyMapper, MegaphoneInterface):
+    pass

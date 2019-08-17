@@ -1,5 +1,5 @@
-from instagram_api.property_mapper import PropertyMapperBase
-from instagram_api.property_mapper.types import timestamp
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .item import Item
 from .direct_thread_item_media import DirectThreadItemMedia
@@ -21,10 +21,43 @@ from .animated_media import AnimatedMedia
 from .felix_share import FelixShare
 from .voice_media import VoiceMedia
 
-__all__ = ['DirectThreadItem']
+__all__ = ['DirectThreadItem', 'DirectThreadItemInterface']
 
 
-class DirectThreadItem(PropertyMapperBase):
+class DirectThreadItemInterface(ApiInterfaceBase):
+    item_id: int
+    item_type: AnyType
+    text: str
+    media_share: Item
+    preview_medias: [Item]
+    media: DirectThreadItemMedia
+    user_id: int
+    timestamp: Timestamp
+    client_context: str
+    hide_in_thread: AnyType
+    action_log: ActionLog
+    link: DirectLink
+    reactions: DirectReactions
+    raven_media: Item
+    seen_user_ids: [str]
+    expiring_media_action_summary: DirectExpiringSummary
+    reel_share: ReelShare
+    placeholder: Placeholder
+    location: Location
+    like: AnyType
+    live_video_share: LiveVideoShare
+    live_viewer_invite: LiveViewerInvite
+    profile: User
+    story_share: StoryShare
+    direct_media_share: MediaShare
+    video_call_event: VideoCallEvent
+    product_share: ProductShare
+    animated_media: AnimatedMedia
+    felix_share: FelixShare
+    voice_media: VoiceMedia
+
+
+class DirectThreadItem(PropertyMapper, DirectThreadItemInterface):
     PLACEHOLDER = 'placeholder'
     TEXT = 'text'
     HASHTAG = 'hashtag'
@@ -44,36 +77,3 @@ class DirectThreadItem(PropertyMapperBase):
     PRODUCT_SHARE = 'product_share'
     VIDEO_CALL_EVENT = 'video_call_event'
     VOICE_MEDIA = 'voice_media'
-
-    JSON_PROPERTY_MAP = {
-        'item_id': int,
-        'item_type': None,
-        'text': str,
-        'media_share': Item,
-        'preview_medias': [Item],
-        'media': DirectThreadItemMedia,
-        'user_id': int,
-        'timestamp': timestamp,
-        'client_context': str,
-        'hide_in_thread': None,
-        'action_log': ActionLog,
-        'link': DirectLink,
-        'reactions': DirectReactions,
-        'raven_media': Item,
-        'seen_user_ids': [str],
-        'expiring_media_action_summary': DirectExpiringSummary,
-        'reel_share': ReelShare,
-        'placeholder': Placeholder,
-        'location': Location,
-        'like': None,
-        'live_video_share': LiveVideoShare,
-        'live_viewer_invite': LiveViewerInvite,
-        'profile': User,
-        'story_share': StoryShare,
-        'direct_media_share': MediaShare,
-        'video_call_event': VideoCallEvent,
-        'product_share': ProductShare,
-        'animated_media': AnimatedMedia,
-        'felix_share': FelixShare,
-        'voice_media': VoiceMedia,
-    }

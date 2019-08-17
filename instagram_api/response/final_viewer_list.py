@@ -1,11 +1,14 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import User
 
 __all__ = ['FinalViewerListResponse']
 
 
-class FinalViewerListResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'users': [User],
-        'total_unique_viewer_count': 'int',
-    }
+class FinalViewerListResponseInterface(ApiResponseInterface):
+    users: [User]
+    total_unique_viewer_count: int
+
+
+class FinalViewerListResponse(ApiResponse, FinalViewerListResponseInterface):
+    pass

@@ -24,7 +24,7 @@ class StorageHandler(StorageHandlerInterface):
         'datacenter',  # Preferred data center (region-based).
         'presence_disabled',  # Whether the presence feature has been disabled by user.
         'zr_token',  # Zero rating token.
-        'zr_expires',  # Zero rating token expiration timestamp.
+        'zr_expires',  # Zero rating token expiration Timestamp.
         'zr_rules',  # Zero rating rewrite rules.
     ]
 
@@ -60,6 +60,9 @@ class StorageHandler(StorageHandlerInterface):
     _user_settings: dict
 
     def __init__(self, storage: StorageInterface, storage_config: dict, callbacks: dict = None):
+        self._username = None
+        self._user_settings = {}
+
         callbacks = callbacks or {}
 
         if not isinstance(storage, StorageInterface):

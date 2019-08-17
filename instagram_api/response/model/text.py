@@ -1,9 +1,12 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['Text']
+__all__ = ['Text', 'TextInterface']
 
 
-class Text(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'text': str,
-    }
+class TextInterface(ApiInterfaceBase):
+    text: str
+
+
+class Text(PropertyMapper, TextInterface):
+    pass

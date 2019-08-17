@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['UnpinCommentBroadcastResponse']
 
 
-class UnpinCommentBroadcastResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'comment_id': int,
-    }
+class UnpinCommentBroadcastResponseInterface(ApiResponseInterface):
+    comment_id: int
+
+
+class UnpinCommentBroadcastResponse(ApiResponse, UnpinCommentBroadcastResponseInterface):
+    pass

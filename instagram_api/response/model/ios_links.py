@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['IOSLinks']
+__all__ = ['IOSLinks', 'IOSLinksInterface']
 
 
-class IOSLinks(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'linkType': int,
-        'canvasDocId': str,
-    }
+class IOSLinksInterface(ApiInterfaceBase):
+    linkType: int
+    canvasDocId: str
+
+
+class IOSLinks(PropertyMapper, IOSLinksInterface):
+    pass

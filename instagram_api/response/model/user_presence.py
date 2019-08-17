@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['UserPresence']
+__all__ = ['UserPresence', 'UserPresenceInterface']
 
 
-class UserPresence(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'user_id': int,
-        'last_activity_at_ms': str,
-        'is_active': bool,
-        'in_threads': [str],
-    }
+class UserPresenceInterface(ApiInterfaceBase):
+    user_id: int
+    last_activity_at_ms: str
+    is_active: bool
+    in_threads: [str]
+
+
+class UserPresence(PropertyMapper, UserPresenceInterface):
+    pass

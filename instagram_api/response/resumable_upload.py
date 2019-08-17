@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['ResumableUploadResponse']
 
 
-class ResumableUploadResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'xsharing_nonces': None,
-        'upload_id': int,
-    }
+class ResumableUploadResponseInterface(ApiResponseInterface):
+    xsharing_nonces: AnyType
+    upload_id: int
+
+
+class ResumableUploadResponse(ApiResponse, ResumableUploadResponseInterface):
+    pass

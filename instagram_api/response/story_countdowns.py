@@ -1,10 +1,13 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import CountdownSticker
 
 __all__ = ['StoryCountdownsResponse']
 
 
-class StoryCountdownsResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'countdowns': [CountdownSticker],
-    }
+class StoryCountdownsResponseInterface(ApiResponseInterface):
+    countdowns: [CountdownSticker]
+
+
+class StoryCountdownsResponse(ApiResponse, StoryCountdownsResponseInterface):
+    pass

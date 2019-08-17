@@ -1,12 +1,15 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['PostLiveLikesResponse']
 
 
-class PostLiveLikesResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'starting_offset': None,
-        'ending_offset': None,
-        'next_fetch_offset': None,
-        'time_series': None,
-    }
+class PostLiveLikesResponseInterface(ApiResponseInterface):
+    starting_offset: AnyType
+    ending_offset: AnyType
+    next_fetch_offset: AnyType
+    time_series: AnyType
+
+
+class PostLiveLikesResponse(ApiResponse, PostLiveLikesResponseInterface):
+    pass

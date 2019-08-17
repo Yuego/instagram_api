@@ -1,11 +1,14 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 from .model import VideoUploadUrl
 
 __all__ = ['UploadJobVideoResponse']
 
 
-class UploadJobVideoResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'upload_id': int,
-        'video_upload_urls': [VideoUploadUrl],
-    }
+class UploadJobVideoResponseInterface(ApiResponseInterface):
+    upload_id: int
+    video_upload_urls: [VideoUploadUrl]
+
+
+class UploadJobVideoResponse(ApiResponse, UploadJobVideoResponseInterface):
+    pass

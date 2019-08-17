@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['RewriteRule']
+__all__ = ['RewriteRule', 'RewriteRuleInterface']
 
 
-class RewriteRule(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'matcher': str,
-        'replacer': str,
-    }
+class RewriteRuleInterface(ApiInterfaceBase):
+    matcher: str
+    replacer: str
+
+
+class RewriteRule(PropertyMapper, RewriteRuleInterface):
+    pass

@@ -1,10 +1,13 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['AdsInfo']
+__all__ = ['AdsInfo', 'AdsInfoInterface']
 
 
-class AdsInfo(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'has_ads': bool,
-        'ads_url': str,
-    }
+class AdsInfoInterface(ApiInterfaceBase):
+    has_ads: bool
+    ads_url: str
+
+
+class AdsInfo(PropertyMapper, AdsInfoInterface):
+    pass

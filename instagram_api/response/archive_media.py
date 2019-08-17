@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['ArchiveMediaResponse']
 
 
-class ArchiveMediaResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
+class ArchiveMediaResponseInterface(ApiResponseInterface):
+    pass
 
-    }
+
+class ArchiveMediaResponse(ApiResponse, ArchiveMediaResponseInterface):
+    pass

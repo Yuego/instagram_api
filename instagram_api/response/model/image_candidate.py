@@ -1,12 +1,15 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
-__all__ = ['ImageCandidate']
+__all__ = ['ImageCandidate', 'ImageCandidateInterface']
 
 
-class ImageCandidate(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'url': str,
-        'width': int,
-        'height': int,
-        'estimated_scans_sizes': [int],
-    }
+class ImageCandidateInterface(ApiInterfaceBase):
+    url: str
+    width: int
+    height: int
+    estimated_scans_sizes: [int]
+
+
+class ImageCandidate(PropertyMapper, ImageCandidateInterface):
+    pass

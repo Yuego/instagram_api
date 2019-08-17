@@ -1,11 +1,14 @@
-from instagram_api.property_mapper import PropertyMapperBase
+from ..mapper import PropertyMapper, ApiInterfaceBase
+from ..mapper.types import Timestamp, AnyType
 
 from .item import Item
 
-__all__ = ['SectionMedia']
+__all__ = ['SectionMedia', 'SectionMediaInterface']
 
 
-class SectionMedia(PropertyMapperBase):
-    JSON_PROPERTY_MAP = {
-        'media': Item,
-    }
+class SectionMediaInterface(ApiInterfaceBase):
+    media: Item
+
+
+class SectionMedia(PropertyMapper, SectionMediaInterface):
+    pass

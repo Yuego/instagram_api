@@ -1,9 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['UnlinkAddressBookResponse']
 
 
-class UnlinkAddressBookResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
+class UnlinkAddressBookResponseInterface(ApiResponseInterface):
+    pass
 
-    }
+
+class UnlinkAddressBookResponse(ApiResponse, UnlinkAddressBookResponseInterface):
+    pass

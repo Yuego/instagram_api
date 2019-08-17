@@ -1,11 +1,14 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['SendConfirmEmailResponse']
 
 
-class SendConfirmEmailResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {
-        'title': None,
-        'is_email_legit': None,
-        'body': None,
-    }
+class SendConfirmEmailResponseInterface(ApiResponseInterface):
+    title: AnyType
+    is_email_legit: AnyType
+    body: AnyType
+
+
+class SendConfirmEmailResponse(ApiResponse, SendConfirmEmailResponseInterface):
+    pass

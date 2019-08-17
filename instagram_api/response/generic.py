@@ -1,7 +1,12 @@
-from .base_response import ApiResponse
+from .mapper import ApiResponse, ApiResponseInterface
+from .mapper.types import Timestamp, AnyType
 
 __all__ = ['GenericResponse']
 
 
-class GenericResponse(ApiResponse):
-    JSON_PROPERTY_MAP = {}
+class GenericResponseInterface(ApiResponseInterface):
+    pass
+
+
+class GenericResponse(ApiResponse, GenericResponseInterface):
+    pass

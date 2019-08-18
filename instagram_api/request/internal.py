@@ -1,6 +1,7 @@
 from typing import Optional, Callable
 
 from instagram_api import response
+from instagram_api.constants import Constants
 from .base import CollectionBase
 from .metadata import InternalMetadata
 
@@ -60,7 +61,25 @@ class Internal(CollectionBase):
                                  internal_metadata: InternalMetadata,
                                  external_metadata: dict = None) -> response.ConfigureResponse: ...
 
-    def sync_device_features(self, prelogin: bool = False) -> response.SyncResponse: ...
+    def sync_device_features(self, prelogin: bool = False) -> response.SyncResponse:
+        request = self._ig.request('qe/sync/').add_headers(**{
+            'X-DEVICE_ID': self._ig.uuid,
+        }).add_posts(**{
+            'id': self._ig.uuid,
+            'experiments': Constants.LOGIN_EXPERIMENTS,
+        })
+
+        if prelogin:
+            request.set_needs_auth(False)
+
+        else:
+            request.add_posts(**{
+                '_uuid': self._ig.uuid,
+                '_uid': self._ig.account_id,
+                '_csrftoken': self._ig.client.get_token(),
+            })
+
+        return request.get_response(response.SyncResponse)
 
     def sync_user_features(self) -> response.SyncResponse: ...
 

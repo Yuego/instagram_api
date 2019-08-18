@@ -1,3 +1,5 @@
+from typing import List
+
 from time import time
 
 from ..mapper import PropertyMapper, ApiInterfaceBase

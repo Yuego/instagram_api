@@ -2,6 +2,8 @@ from typing import Optional, Callable
 
 from instagram_api import response
 from instagram_api.constants import Constants
+from instagram_api.response.model import Token
+from instagram_api.exceptions import SettingsException
 from .base import CollectionBase
 from .metadata import InternalMetadata
 
@@ -83,9 +85,29 @@ class Internal(CollectionBase):
 
     def sync_user_features(self) -> response.SyncResponse: ...
 
-    def send_launcher_sync(self, prelogin: bool) -> response.LauncherSyncResponse: ...
+    def send_launcher_sync(self, prelogin: bool) -> response.LauncherSyncResponse:
+        request = self._ig.request('launcher/sync/').add_posts(**{
+            'configs': Constants.LAUNCHER_CONFIGS,
+        })
 
-    def log_attribution(self) -> response.GenericResponse: ...
+        if prelogin:
+            request.set_needs_auth(False).add_posts(**{
+                'id': self._ig.uuid,
+            })
+        else:
+            request.add_posts(**{
+                'id': self._ig.account_id,
+                '_uuid': self._ig.uuid,
+                '_uid': self._ig.account_id,
+                '_csrftoken': self._ig.client.get_token(),
+            })
+
+        return request.get_response(response.LauncherSyncResponse)
+
+    def log_attribution(self) -> response.GenericResponse:
+        return self._ig.request('attribution/log_attribution/').set_needs_auth(False).add_posts(**{
+            'adid': self._ig.advertising_id,
+        }).get_response(response.GenericResponse)
 
     def log_resurrect_attribution(self) -> response.GenericResponse: ...
 
@@ -105,7 +127,37 @@ class Internal(CollectionBase):
 
     def bootstrap_msisdn_header(self, usage: str = 'ig_select_app') -> response.MsisdnHeaderResponse: ...
 
-    def fetch_zero_rating_token(self, reason: str = 'token_expired') -> response.TokenResultResponse: ...
+    def _save_zero_rating_token(self, token: Optional[Token]):
+        if token is None:
+            return
+
+        rules = {}
+        for rule in token.rewrite_rules:
+            rules[rule.matcher] = rule.replacer
+
+        self._ig.client.zero_rating.update(rules)
+
+        try:
+            self._ig.settings.set_rewrite_rules(rules)
+            self._ig.settings.set('zr_token', token.token_hash)
+            self._ig.settings.set('zr_expires', token.expires_at)
+
+        except SettingsException as e:
+            pass
+
+    def fetch_zero_rating_token(self, reason: str = 'token_expired') -> response.TokenResultResponse:
+        request = self._ig.request('zr/token/result/').set_needs_auth(False).add_params(**{
+            'custom_device_id': self._ig.uuid,
+            'device_id': self._ig.device_id,
+            'fetch_reason': reason,
+            # TODO: Если токена нет, None или ''???
+            'token_hash': self._ig.settings.get('zr_token'),
+        })
+
+        result = request.get_response(response.TokenResultResponse)
+        self._save_zero_rating_token(result.token)
+
+        return result
 
     def get_megaphone_log(self) -> response.MegaphoneLogResponse: ...
 

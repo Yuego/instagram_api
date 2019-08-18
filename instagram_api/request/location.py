@@ -1,5 +1,5 @@
-from .collection import Collection
+from .base import CollectionBase
 
 
-class Location(Collection):
+class Location(CollectionBase):
     pass

@@ -1,10 +1,10 @@
 from typing import List
 
 from instagram_api.response.model.item import Item
-from .collection import Collection
+from .base import CollectionBase
 
 
-class Story(Collection):
+class Story(CollectionBase):
 
     def upload_photo(self, photo_filename: str, external_metadata: dict = None): ...
 

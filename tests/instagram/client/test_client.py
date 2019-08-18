@@ -3,7 +3,7 @@ import httpretty
 import pytest
 
 from instagram_api.client import Client
-from instagram_api.request.base import ApiRequest
+from instagram_api.request.request import ApiRequest
 from instagram_api.constants import Constants
 from instagram_api.utils.http import ClientCookieJar
 

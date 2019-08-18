@@ -5,6 +5,7 @@ from .mapper_base import PropertyMapperBase
 from .mapper_meta import PropertyMapperMeta
 
 from .error_list import ErrorList
+from .message import Message
 
 __all__ = ['ApiResponse', 'ApiResponseInterface']
 
@@ -13,10 +14,10 @@ class ApiResponseInterface(ApiInterfaceBase):
     status: str
     message: {str, ErrorList}
     error_type: str
+    _messages: [Message]
 
 
 class ApiResponse(PropertyMapperBase, ApiResponseInterface, metaclass=PropertyMapperMeta):
-
     STATUS_OK = 'ok'
     STATUS_FAIL = 'fail'
 
@@ -65,4 +66,3 @@ class ApiResponse(PropertyMapperBase, ApiResponseInterface, metaclass=PropertyMa
     @property
     def has_http_response(self):
         return self._http_response is not any_value
-

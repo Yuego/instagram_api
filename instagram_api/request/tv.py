@@ -1,5 +1,5 @@
-from .collection import Collection
+from .base import CollectionBase
 
 
-class TV(Collection):
+class TV(CollectionBase):
     pass

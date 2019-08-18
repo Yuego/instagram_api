@@ -2,17 +2,19 @@ from typing import Any
 
 import random
 
+from datetime import timedelta
 from time import time
 
 from instagram_api import request
 from instagram_api.exceptions import InstagramException, LoginRequiredException
 from instagram_api.interfaces import ExperimentsInterface, InstagramInterface, ApiRequestInterface
 from instagram_api.response.login import LoginResponse
+from instagram_api.response.logout import LogoutResponse
 
 from .client import Client
 from .constants import Constants
 from .devices import Device
-from .request.base import ApiRequest
+from .request.request import ApiRequest
 from .settings import StorageFactory, StorageHandler
 from .signatures import Signatures
 
@@ -136,6 +138,39 @@ class Instagram(ExperimentsInterface, InstagramInterface):
 
         return self._send_login_flow(False, app_refresh_interval)
 
+    def _send_pre_login_flow(self):
+
+        self.client.zero_rating.reset()
+
+        self.internal.read_msisdn_header('ig_select_app')
+        self.internal.sync_device_features(True)
+        self.internal.send_launcher_sync(True)
+        self.internal.log_attribution()
+
+        self.internal.fetch_zero_rating_token()
+        self.account.set_contact_point_prefill('prefill')
+
+    # TODO: перепроверить реализацию
+    def _register_push_channels(self):
+        last_fbns_token = self.settings.get('last_fbns_token')
+
+        if last_fbns_token is None or last_fbns_token < (time() - timedelta(hours=24).total_seconds()):
+            self.settings.set('fbns_token', None)
+
+            return
+
+        fbns_token = self.settings.get('fbns_token')
+
+        if fbns_token is None:
+            return
+
+        try:
+            self.push.register('mqtt', fbns_token)
+        except Exception as e:
+            self.settings.set('fbns_token', None)
+
+
+
     def _send_login_flow(self, just_logged_in: bool, app_refresh_interval: int = 1800):
         assert isinstance(app_refresh_interval, int) and app_refresh_interval > 0, (
             'Instagram`s app state refresh interval must be a positive integer.'
@@ -202,8 +237,30 @@ class Instagram(ExperimentsInterface, InstagramInterface):
                 self.internal.get_profile_notice()
                 self.discover.get_explore_feed()
 
+            last_experiments_time = self.settings.get('last_experiments')
+            if last_experiments_time is None or (time() - last_experiments_time) > self.EXPERIMENTS_REFRESH:
+                self.internal.sync_user_features()
+                self.internal.sync_device_features()
 
+            expired = time() - self.settings.get('zr_expires')
+            if expired > 0:
+                self.client.zero_rating.reset()
+                self.internal.fetch_zero_rating_token('token_stale' if expired > 7200 else 'token_expired')
 
+        self.client.save_cookie_jar()
+
+    def logout(self):
+        response = self.request('accounts/logout').sign_post(False).add_posts(**{
+            'phone_id': self.phone_id,
+            '_csrftoken': self.client.get_token(),
+            'guid': self.uuid,
+            'device_id': self.device_id,
+            '_uuid': self.uuid,
+        }).get_response(LogoutResponse)
+
+        self.client.save_cookie_jar()
+
+        return response
 
     def change_user(self, username: str, password: str):
         assert username and password, 'You must provide a username and password to change_user().'

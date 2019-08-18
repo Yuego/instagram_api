@@ -1,9 +1,9 @@
 from typing import List
 
-from .collection import Collection
+from .base import CollectionBase
 
 
-class Media(Collection):
+class Media(CollectionBase):
 
     def get_info(self, media_id: int): ...
 

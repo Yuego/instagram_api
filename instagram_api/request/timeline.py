@@ -1,7 +1,7 @@
-from .collection import Collection
+from .base import CollectionBase
 
 
-class Timeline(Collection):
+class Timeline(CollectionBase):
 
     def upload_photo(self, photo_filename: str, external_metadata: dict = None): ...
 

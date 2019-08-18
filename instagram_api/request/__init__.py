@@ -1,7 +1,7 @@
 
 from .account import Account
 from .business import Business
-from .collection import Collection
+from .base import CollectionBase
 from .creative import Creative
 from .direct import Direct
 from .discover import Discover

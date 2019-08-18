@@ -1,6 +1,6 @@
-from .collection import Collection
+from .base import CollectionBase
 
 
-class Shopping(Collection):
+class Shopping(CollectionBase):
     pass
 

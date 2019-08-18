@@ -1,9 +1,9 @@
 from typing import List
 
-from .collection import Collection
+from .base import CollectionBase
 
 
-class People(Collection):
+class People(CollectionBase):
 
     def get_info_by_id(self, user_id: int, module: str = None): ...
 

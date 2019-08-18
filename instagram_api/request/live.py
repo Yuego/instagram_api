@@ -1,5 +1,5 @@
-from .collection import Collection
+from .base import CollectionBase
 
 
-class Live(Collection):
+class Live(CollectionBase):
     pass

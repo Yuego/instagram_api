@@ -131,11 +131,11 @@ class Client(ClientInterface):
         }
 
     @property
-    def fake_cookies(self):
+    def fake_cookies(self) -> FakeCookiesMiddleware:
         return self._fake_cookies
 
     @property
-    def zero_rating(self):
+    def zero_rating(self) -> ZeroRatingMiddleware:
         return self._zero_rating
 
     def set_proxy(self, proxy: Union[str, list, dict]):

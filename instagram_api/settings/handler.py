@@ -106,7 +106,7 @@ class StorageHandler(StorageHandlerInterface):
 
         self._storage.delete_user(username)
 
-    def select_user(self, username: str):
+    def change_user(self, username: str):
         self._validate_empty_value(username)
 
         if username == self._username:

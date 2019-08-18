@@ -13,5 +13,5 @@ class PostLiveCommentsResponseInterface(ApiResponseInterface):
     pinned_comments: [LiveComment]
 
 
-class PostLiveCommentResponse(ApiResponse, PostLiveCommentsResponseInterface):
+class PostLiveCommentsResponse(ApiResponse, PostLiveCommentsResponseInterface):
     pass

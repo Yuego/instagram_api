@@ -1,7 +1,7 @@
 
 from .account import Account
 from .business import Business
-from .base import CollectionBase
+from .collection import Collection
 from .creative import Creative
 from .direct import Direct
 from .discover import Discover
@@ -16,5 +16,5 @@ from .push import Push
 from .shopping import Shopping
 from .story import Story
 from .timeline import Timeline
-from .tv import TV
+from .tv import Tv
 from .usertag import Usertag

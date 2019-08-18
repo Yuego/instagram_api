@@ -114,7 +114,7 @@ from .push_register import PushRegisterResponse
 from .qp_cooldowns import QPCooldownsResponse
 from .recent_searches import RecentSearchesResponse
 from .recovery import RecoveryResponse
-from .reel_media_viewer import ReelMediaVideoResponse
+from .reel_media_viewer import ReelMediaViewerResponse
 from .reel_settings import ReelSettingsResponse
 from .reels_media import ReelsMediaResponse
 from .reels_tray_feed import ReelsTrayFeedResponse

@@ -2,10 +2,10 @@ from .mapper import ApiResponse, ApiResponseInterface
 from .mapper.types import Timestamp, AnyType
 from .model import Item, User
 
-__all__ = ['ReelMediaVideoResponse']
+__all__ = ['ReelMediaViewerResponse']
 
 
-class ReelMediaVideoResponseInterface(ApiResponseInterface):
+class ReelMediaViewerResponseInterface(ApiResponseInterface):
     users: [User]
     next_max_id: str
     user_count: int
@@ -15,5 +15,5 @@ class ReelMediaVideoResponseInterface(ApiResponseInterface):
     updated_media: Item
 
 
-class ReelMediaVideoResponse(ApiResponse, ReelMediaVideoResponseInterface):
+class ReelMediaViewerResponse(ApiResponse, ReelMediaViewerResponseInterface):
     pass

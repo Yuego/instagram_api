@@ -30,7 +30,7 @@ class Instagram(ExperimentsInterface, InstagramInterface):
     discover: request.Discover
     hashtag: request.Hashtag
     highlight: request.Highlight
-    tv: request.TV
+    tv: request.Tv
     internal: request.Internal
     live: request.Live
     location: request.Location
@@ -54,7 +54,7 @@ class Instagram(ExperimentsInterface, InstagramInterface):
         self.discover = request.Discover(self)
         self.hashtag = request.Hashtag(self)
         self.highlight = request.Highlight(self)
-        self.tv = request.TV(self)
+        self.tv = request.Tv(self)
         self.internal = request.Internal(self)
         self.live = request.Live(self)
         self.location = request.Location(self)

@@ -46,6 +46,9 @@ class PropertyMapperBase:
                                               f'Please check Interface definition.')
 
                 elif inspect.isclass(prop_type) and issubclass(prop_type, allowed_types):
+                    if issubclass(prop_type, PropertyMapperType):
+                        prop_type = prop_type()
+
                     setattr(self, f'_{prop_name}', prop_type(prop_value))
 
 

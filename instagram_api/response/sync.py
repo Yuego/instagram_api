@@ -6,7 +6,7 @@ __all__ = ['SyncResponse']
 
 
 class SyncResponseInterface(ApiResponseInterface):
-    experiments: Experiment
+    experiments: [Experiment]
 
 
 class SyncResponse(ApiResponse, SyncResponseInterface):

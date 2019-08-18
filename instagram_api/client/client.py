@@ -22,8 +22,8 @@ from instagram_api.exceptions import (
 
 )
 from instagram_api.exceptions.server_message_raiser import ServerMessageRaiser
-from instagram_api.interfaces import ClientInterface, InstagramInterface
-from instagram_api.property_mapper.exceptions import PropertyMapperException
+from instagram_api.interfaces.client import ClientInterface
+from instagram_api.response.mapper.exceptions import PropertyMapperException
 from instagram_api.response.mapper import ApiResponse
 from instagram_api.response.direct_send_item import DirectSendItemResponse
 
@@ -40,8 +40,6 @@ __all__ = ['Client']
 class Client(ClientInterface):
     COOKIE_AUTOSAVE_INTERVAL = 45
 
-    _ig: InstagramInterface
-
     _user_agent: str
     _verify_ssl: bool
 
@@ -56,10 +54,11 @@ class Client(ClientInterface):
 
     _reset_connection: bool
 
-    def __init__(self, ig: InstagramInterface, middlewares: list = None, proxy: Union[str, list, dict] = None):
-        middlewares = middlewares or []
+    def __init__(self, ig, middlewares: list = None, proxy: Union[str, list, dict] = None):
+        from instagram_api.instagram import Instagram
+        self._ig: Instagram = ig
 
-        self._ig = ig
+        middlewares = middlewares or []
 
         self._verify_ssl = True
         self._proxy = None

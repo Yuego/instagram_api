@@ -1,7 +1,7 @@
 import importlib
 
 from instagram_api.exceptions.settings import SettingsException
-from instagram_api.interfaces import StorageInterface
+from instagram_api.interfaces.storage import StorageInterface
 
 from .handler import StorageHandler
 """

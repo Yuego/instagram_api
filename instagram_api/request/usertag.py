@@ -12,7 +12,7 @@ class Usertag(CollectionBase):
     def tag_media(self,
                   media_id: str,
                   user_id: int,
-                  position: List[float, float],
+                  position: List[float],
                   caption_text: str = '') -> response.EditMediaResponse: ...
 
     def untag_media(self,

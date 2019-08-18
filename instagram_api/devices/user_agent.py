@@ -1,5 +1,5 @@
 from instagram_api.constants import Constants
-from instagram_api.interfaces import DeviceInterface
+from instagram_api.interfaces.device import DeviceInterface
 
 from .good import GoodDevices
 

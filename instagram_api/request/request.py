@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 
 from instagram_api.constants import Constants
 from instagram_api.exceptions import LoginRequiredException
-from instagram_api.interfaces import InstagramInterface, ApiRequestInterface
+from instagram_api.interfaces.api_request import ApiRequestInterface
 from instagram_api.signatures import Signatures
 from instagram_api.utils import Utils
 
@@ -15,7 +15,6 @@ __all__ = ['ApiRequest']
 
 
 class ApiRequest(ApiRequestInterface):
-    _ig: InstagramInterface
 
     _api_version: int = 1
     _url: str
@@ -38,8 +37,9 @@ class ApiRequest(ApiRequestInterface):
 
     _response: Response
 
-    def __init__(self, ig: InstagramInterface, url: str):
-        self._ig = ig
+    def __init__(self, ig, url: str):
+        from instagram_api.instagram import Instagram
+        self._ig: Instagram = ig
         self._url = url
 
         self._api_version = 1

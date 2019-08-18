@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Callable
 
 from instagram_api import response
 from .base import CollectionBase
@@ -95,4 +95,4 @@ class Internal(CollectionBase):
                               source_id: Optional[str] = None,
                               module: str = 'feed_timeline') -> response.MediaSeenResponse: ...
 
-    def configure_with_retries(self, configurator: function): ...
+    def configure_with_retries(self, configurator: Callable): ...

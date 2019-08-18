@@ -1,10 +1,8 @@
-
-from instagram_api.interfaces import InstagramInterface
+__all__ = ['CollectionBase']
 
 
 class CollectionBase:
 
-    _ig: InstagramInterface
-
-    def __init__(self, ig: InstagramInterface):
-        self._ig = ig
+    def __init__(self, ig):
+        from instagram_api.instagram import Instagram
+        self._ig: Instagram = ig

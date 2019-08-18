@@ -5,7 +5,7 @@ from abc import abstractmethod
 from requests.utils import dict_from_cookiejar, cookiejar_from_dict
 
 from instagram_api.exceptions.settings import SettingsException
-from instagram_api.interfaces import StorageInterface
+from instagram_api.interfaces.storage import StorageInterface
 from instagram_api.utils.http import ClientCookieJar
 
 __all__ = ['StorageBase']

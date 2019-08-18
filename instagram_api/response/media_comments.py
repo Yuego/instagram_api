@@ -14,7 +14,7 @@ class MediaCommentsResponseInterface(ApiResponseInterface):
     caption: Caption
     has_more_comments: bool
     caption_is_edited: bool
-    preview_comments: ''
+    preview_comments: AnyType
     has_more_headload_comments: bool
     media_header_display: str
     threading_enabled: bool

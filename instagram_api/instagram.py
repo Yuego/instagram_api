@@ -5,11 +5,11 @@ import random
 from datetime import timedelta
 from time import time
 
-from instagram_api import request
+from instagram_api import request, response as api_response
 from instagram_api.exceptions import InstagramException, LoginRequiredException
-from instagram_api.interfaces import ExperimentsInterface, InstagramInterface, ApiRequestInterface
-from instagram_api.response.login import LoginResponse
-from instagram_api.response.logout import LogoutResponse
+from instagram_api.interfaces.api_request import ApiRequestInterface
+from instagram_api.interfaces.experiments import ExperimentsInterface
+from instagram_api.interfaces.instagram import InstagramInterface
 
 from .client import Client
 from .constants import Constants
@@ -22,25 +22,6 @@ __all__ = ['Instagram']
 
 
 class Instagram(ExperimentsInterface, InstagramInterface):
-    account: request.Account
-    business: request.Business
-    collection: request.Collection
-    creative: request.Creative
-    direct: request.Direct
-    discover: request.Discover
-    hashtag: request.Hashtag
-    highlight: request.Highlight
-    tv: request.Tv
-    internal: request.Internal
-    live: request.Live
-    location: request.Location
-    media: request.Media
-    people: request.People
-    push: request.Push
-    shopping: request.Shopping
-    story: request.Story
-    timeline: request.Timeline
-    usertag: request.Usertag
 
     def __init__(self, storage_config: dict, debug: bool = False, debug_truncate: bool = False):
         self.debug = debug
@@ -123,7 +104,7 @@ class Instagram(ExperimentsInterface, InstagramInterface):
                     'password': self.password,
                     'google_tokens': [],
                     'login_attempt_count': 0
-                }).get_response(LoginResponse)
+                }).get_response(api_response.LoginResponse)
             except InstagramException as e:
                 if e.has_response and e.response.is_two_factor_required:
                     return e.response
@@ -168,8 +149,6 @@ class Instagram(ExperimentsInterface, InstagramInterface):
             self.push.register('mqtt', fbns_token)
         except Exception as e:
             self.settings.set('fbns_token', None)
-
-
 
     def _send_login_flow(self, just_logged_in: bool, app_refresh_interval: int = 1800):
         assert isinstance(app_refresh_interval, int) and app_refresh_interval > 0, (
@@ -256,7 +235,7 @@ class Instagram(ExperimentsInterface, InstagramInterface):
             'guid': self.uuid,
             'device_id': self.device_id,
             '_uuid': self.uuid,
-        }).get_response(LogoutResponse)
+        }).get_response(api_response.LogoutResponse)
 
         self.client.save_cookie_jar()
 

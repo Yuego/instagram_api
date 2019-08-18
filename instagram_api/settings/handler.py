@@ -1,7 +1,7 @@
 from http.cookiejar import CookieJar
 
 from instagram_api.exceptions.settings import SettingsException
-from instagram_api.interfaces import StorageHandlerInterface, StorageInterface
+from instagram_api.interfaces.storage import StorageHandlerInterface, StorageInterface
 
 __all__ = ['StorageHandler']
 

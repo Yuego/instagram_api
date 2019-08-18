@@ -1,4 +1,4 @@
-from instagram_api.interfaces import ApiResponseInterface
+from instagram_api.interfaces.api_response import ApiResponseInterface
 
 
 class InstagramException(Exception):

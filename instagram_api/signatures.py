@@ -64,7 +64,7 @@ class Signatures:
 
         volatile_seed = '9876543210'
         m = hashlib.md5()
-        m.update(seed.encode('utf-8'), volatile_seed.encode('utf-8'))
+        m.update('-'.join([seed, volatile_seed]).encode('utf-8'))
         return 'android-' + m.hexdigest()[:16]
 
     @staticmethod

@@ -2,7 +2,6 @@ from typing import Optional, Union
 
 import json
 import requests
-import time
 
 from time import time
 
@@ -192,7 +191,7 @@ class Client(ClientInterface):
         self._cookie_jar_last_saved = time()
 
     def get_cookie(self, name: str, domain: str = None, path: str = None):
-        now = int(time.time())
+        now = int(time())
         future = now + 100 * 365 * 24 * 60 * 60
 
         if not domain:
@@ -252,9 +251,9 @@ class Client(ClientInterface):
 
         if not response:
             if isinstance(response, DirectSendItemResponse) and response.payload is not None:
-                message = response.payload.get_message()
+                message = response.payload.message
             else:
-                message = response.get_message()
+                message = response.message
 
             try:
                 ServerMessageRaiser.auto_raise(

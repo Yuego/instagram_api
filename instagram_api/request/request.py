@@ -73,9 +73,10 @@ class ApiRequest(ApiRequestInterface):
         }
 
     def _close_handlers(self):
-        raise NotImplementedError
+        # TODO: fix me!!!
+        pass
 
-    def use_version(self, version: int):
+    def set_version(self, version: int):
         if version not in Constants.API_URLS:
             raise KeyError(f'`{version}` is not a supported API version.')
 
@@ -83,32 +84,32 @@ class ApiRequest(ApiRequestInterface):
 
         return self
 
-    def require_auth(self, flag: bool):
+    def set_needs_auth(self, flag: bool):
         self._needs_auth = flag
 
         return self
 
-    def sign_get(self, flag: bool):
+    def set_signed_get(self, flag: bool):
         self._sign_get = flag
 
         return self
 
-    def sign_post(self, flag: bool):
+    def set_signed_post(self, flag: bool):
         self._sign_post = flag
 
         return self
 
-    def multi_json_response(self, flag: bool):
+    def set_is_multi_response(self, flag: bool):
         self._is_multi_response = flag
 
         return self
 
-    def compress_body(self, flag: bool):
+    def set_is_body_compressed(self, flag: bool):
         self._is_body_compressed = flag
 
         return self
 
-    def use_default_headers(self, flag: bool):
+    def set_add_default_headers(self, flag: bool):
         self._default_headers = flag
 
         return self
@@ -149,6 +150,8 @@ class ApiRequest(ApiRequestInterface):
 
     def add_headers(self, **headers: Dict[str, str]):
         self._headers.update(headers)
+
+        return self
 
     def get_http_response(self) -> Optional[Response]:
         if self._response is None:

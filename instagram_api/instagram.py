@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional, Union
 
 import random
 
@@ -71,6 +71,34 @@ class Instagram(ExperimentsInterface, InstagramInterface):
 
         return self._login(username, password, False, app_refresh_interval)
 
+    def _send_login_request(self) -> api_response.LoginResponse:
+        response = self.request(
+            'accounts/login/'
+        ).set_needs_auth(
+            False
+        ).add_posts(**{
+            'country_codes': [
+                {
+                    'country_code': 1,
+                    'source': [
+                        'default',
+                        'sim',
+                    ],
+                },
+            ],
+            'phone_id': self.phone_id,
+            '_csrftoken': self.client.get_token(),
+            'username': self.username,
+            'adid': self.advertising_id,
+            'guid': self.uuid,
+            'device_id': self.device_id,
+            'password': self.password,
+            'google_tokens': [],
+            'login_attempt_count': 0
+        }).get_response(api_response.LoginResponse)
+
+        return response
+
     def _login(self, username: str, password: str, force_login: bool, app_refresh_interval: int):
         assert username and password, 'You must provide a username and password to _login().'
 
@@ -81,30 +109,7 @@ class Instagram(ExperimentsInterface, InstagramInterface):
             self._send_pre_login_flow()
 
             try:
-                response = self.request(
-                    'accounts/login/'
-                ).require_auth(
-                    False
-                ).add_posts(**{
-                    'country_codes': [
-                        {
-                            'country_code': 1,
-                            'source': [
-                                'default',
-                                'sim',
-                            ],
-                        },
-                    ],
-                    'phone_id': self.phone_id,
-                    '_csrftoken': self.client.get_token(),
-                    'username': self.username,
-                    'adid': self.advertising_id,
-                    'guid': self.uuid,
-                    'device_id': self.device_id,
-                    'password': self.password,
-                    'google_tokens': [],
-                    'login_attempt_count': 0
-                }).get_response(api_response.LoginResponse)
+                response = self._send_login_request()
             except InstagramException as e:
                 if e.has_response and e.response.is_two_factor_required:
                     return e.response
@@ -118,6 +123,15 @@ class Instagram(ExperimentsInterface, InstagramInterface):
             return response
 
         return self._send_login_flow(False, app_refresh_interval)
+
+    def _update_login_state(self, response: api_response.LoginResponse):
+        if not isinstance(response, api_response.LoginResponse) or not response.is_ok:
+            raise ValueError('Invalid login response provided to `_update_login_state()`.')
+
+        self.is_maybe_logged_in = True
+        self.account_id = response.logged_in_user.pk
+        self.settings.set('account_id', self.account_id)
+        self.settings.set('last_login', time())
 
     def _send_pre_login_flow(self):
 
@@ -229,7 +243,7 @@ class Instagram(ExperimentsInterface, InstagramInterface):
         self.client.save_cookie_jar()
 
     def logout(self):
-        response = self.request('accounts/logout').sign_post(False).add_posts(**{
+        response = self.request('accounts/logout').set_signed_post(False).add_posts(**{
             'phone_id': self.phone_id,
             '_csrftoken': self.client.get_token(),
             'guid': self.uuid,
@@ -242,11 +256,11 @@ class Instagram(ExperimentsInterface, InstagramInterface):
         return response
 
     def change_user(self, username: str, password: str):
-        assert username and password, 'You must provide a username and password to change_user().'
+        assert username and password, 'You must provide a username and password to set_active_user().'
 
-        self.settings.change_user(username=username)
+        self.settings.set_active_user(username=username)
 
-        saved_device_string = self.settings.get('device_string')
+        saved_device_string = self.settings.get('devicestring')
         self.device = Device(
             app_version=Constants.IG_VERSION,
             version_code=Constants.VERSOIN_CODE,
@@ -265,13 +279,13 @@ class Instagram(ExperimentsInterface, InstagramInterface):
         ):
             self.settings.erase_device_settings()
 
-            self.settings.set('device_string', device_string)
+            self.settings.set('devicestring', device_string)
 
             self.settings.set('device_id', Signatures.generate_device_id())
             self.settings.set('phone_id', Signatures.generate_uuid(keep_dashes=True))
             self.settings.set('uuid', Signatures.generate_uuid(keep_dashes=True))
 
-            self.settings.set('account_id', None)
+            self.settings.set('account_id', '')
 
             reset_cookie_jar = True
 
@@ -316,3 +330,32 @@ class Instagram(ExperimentsInterface, InstagramInterface):
 
     def get_experiment_param(self, experiment: str, param: str, default: Any = None):
         return self.experiments.get(experiment, {}).get(param, default)
+
+    def finish_two_factor_login(self,
+                                username: str,
+                                password: str,
+                                two_factor_identifier: str,
+                                verification_code: str,
+                                verification_method: int,
+                                app_refresh_interval: int = 1800,
+                                username_handler: str = None):
+        raise NotImplementedError
+
+    def get_proxy(self):
+        raise NotImplementedError
+
+    def get_verify_ssl(self):
+        raise NotImplementedError
+
+    def send_two_factor_login_sms(self,
+                                  username: str,
+                                  password: str,
+                                  two_factor_identifier: str,
+                                  username_handler: str = None):
+        raise NotImplementedError
+
+    def set_proxy(self, proxy: Optional[Union[str, dict, list]]):
+        raise NotImplementedError
+
+    def set_verify_ssl(self, state: Union[bool, str]):
+        raise NotImplementedError

@@ -106,7 +106,7 @@ class StorageHandler(StorageHandlerInterface):
 
         self._storage.delete_user(username)
 
-    def change_user(self, username: str):
+    def set_active_user(self, username: str):
         self._validate_empty_value(username)
 
         if username == self._username:
@@ -188,6 +188,28 @@ class StorageHandler(StorageHandlerInterface):
 
     def get_rewrite_rules(self):
         return self.get('zr_rules', {})
+
+    def set_experiments(self, experiments: dict):
+        filtered = {}
+        for key in self.EXPERIMENT_KEYS:
+            if key not in experiments:
+                continue
+
+            filtered[key] = experiments[key]
+
+        self.set('experiments', filtered)
+
+        return filtered
+
+    def get_experiments(self):
+        return self.get('experiments', {})
+
+    def set_fbns_auth(self, auth):
+        self.set('fbns_auth', auth)
+
+    def get_fbns_auth(self):
+        # TODO: fix me!!!
+        return ''
 
     def _trigger_callback(self, callback_name: str):
         if callback_name not in self.SUPPORTED_CALLBACKS:

@@ -70,7 +70,19 @@ class Internal(CollectionBase):
 
     def log_resurrect_attribution(self) -> response.GenericResponse: ...
 
-    def read_msisdn_header(self, usage: str, subno_key: Optional[str] = None) -> response.MsisdnHeaderResponse: ...
+    def read_msisdn_header(self, usage: str, subno_key: Optional[str] = None) -> response.MsisdnHeaderResponse:
+        request = self._ig.request('accounts/read_msisdn_header/').set_needs_auth(False).add_headers(**{
+            'X-DEVICE-ID': self._ig.uuid,
+        }).add_posts(**{
+            'device_id': self._ig.uuid,
+            'mobile_subno_usage': usage,
+        })
+        if subno_key is not None:
+            request = request.add_posts(**{
+                'subno_key': subno_key,
+            })
+
+        return request.get_response(response.MsisdnHeaderResponse)
 
     def bootstrap_msisdn_header(self, usage: str = 'ig_select_app') -> response.MsisdnHeaderResponse: ...
 

@@ -78,14 +78,14 @@ class StorageBase(StorageInterface):
         self._del_user_key(username, 'settings')
         self._del_user_key(username, 'cookies')
 
-    def load_user_settings(self):
+    def load_user_settings(self) -> dict:
         if self._username is None:
             raise SettingsException(f'Empty username. You forgot to call `open_user`?')
 
         settings = self._get_user_key(self._username, 'settings')
 
         if settings is None:
-            return None
+            return {}
 
         return self._unpack_settings_dict(settings)
 

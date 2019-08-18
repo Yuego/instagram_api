@@ -1,9 +1,9 @@
 from abc import ABCMeta, abstractmethod, abstractstaticmethod, abstractproperty
-from typing import Union, Any
+from typing import Union, Any, Type, TypeVar
 
 from requests import Response
 
-from .api_response import ApiResponseInterface
+T = TypeVar('T')
 
 __all__ = ['ClientInterface']
 
@@ -36,10 +36,10 @@ class ClientInterface(metaclass=ABCMeta):
 
     @abstractmethod
     def map_server_response(self,
-                            api_response: type(ApiResponseInterface),
+                            api_response: Type[T],
                             json_response: str,
                             http_response: Response,
-                            ) -> ApiResponseInterface: ...
+                            ) -> T: ...
 
     @abstractstaticmethod
     def api_body_decode(json_string: str) -> dict: ...

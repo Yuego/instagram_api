@@ -1,11 +1,15 @@
+from typing import TypeVar
+
 from instagram_api.interfaces.api_response import ApiResponseInterface
+
+T = TypeVar('T', bound=ApiResponseInterface)
 
 
 class InstagramException(Exception):
 
-    _response: ApiResponseInterface
+    _response: T
 
-    def __init__(self, *args, response: ApiResponseInterface = None, **kwargs):
+    def __init__(self, *args, response: T = None, **kwargs):
         self.message = args[0]
         self._response = response
 
@@ -16,5 +20,5 @@ class InstagramException(Exception):
         return self._response is not None
 
     @property
-    def response(self) -> ApiResponseInterface:
+    def response(self) -> T:
         return self._response

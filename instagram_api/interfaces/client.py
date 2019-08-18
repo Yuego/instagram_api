@@ -3,6 +3,8 @@ from typing import Union, Any, Type, TypeVar
 
 from requests import Response
 
+from instagram_api.utils.http.middleware import FakeCookiesMiddleware, ZeroRatingMiddleware
+
 T = TypeVar('T')
 
 __all__ = ['ClientInterface']
@@ -32,7 +34,7 @@ class ClientInterface(metaclass=ABCMeta):
     def get_cookie(self, name: str, domain: str = None, path: str = None) -> Any: ...
 
     @abstractmethod
-    def get_token(self): ...
+    def get_token(self) -> str: ...
 
     @abstractmethod
     def map_server_response(self,
@@ -45,7 +47,7 @@ class ClientInterface(metaclass=ABCMeta):
     def api_body_decode(json_string: str) -> dict: ...
 
     @abstractproperty
-    def zero_rating(self): ...
+    def zero_rating(self) -> ZeroRatingMiddleware: ...
 
     @abstractproperty
-    def fake_cookies(self): ...
+    def fake_cookies(self) -> FakeCookiesMiddleware: ...

@@ -31,7 +31,7 @@ from instagram_api.utils.http import (
     create_cookie_jar_proxy,
     Session,
 )
-from .middleware import FakeCookiesMiddleware, ZeroRatingMiddleware, MiddlewareHTTPAdapter
+from instagram_api.utils.http.middleware import FakeCookiesMiddleware, ZeroRatingMiddleware, MiddlewareHTTPAdapter
 
 __all__ = ['Client']
 

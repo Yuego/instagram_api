@@ -77,7 +77,12 @@ class Account(CollectionBase):
 
     def verify_sms_code(self, phone_number: str, verification_code: str) -> response.VerifySMSCodeResponse: ...
 
-    def set_contact_point_prefill(self, usage: str) -> response.GenericResponse: ...
+    def set_contact_point_prefill(self, usage: str) -> response.GenericResponse:
+        return self._ig.request('accounts/contact_point_prefill/').set_needs_auth(False).add_posts(**{
+            'phone_id': self._ig.phone_id,
+            '_csrftoken': self._ig.client.get_token(),
+            'usage': usage,
+        }).get_response(response.GenericResponse)
 
     def get_badge_notifications(self) -> response.BadgeNotificationsResponse: ...
 

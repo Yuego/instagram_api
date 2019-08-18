@@ -2,12 +2,12 @@ from .mapper import ApiResponse
 
 from .model.friendship_status import FriendshipStatusInterface
 
-__all__ = ['FriendshipShowResponse']
+__all__ = ['FriendshipsShowResponse']
 
 
 class FriendshipShowResponseInterface(FriendshipStatusInterface):
     pass
 
 
-class FriendshipShowResponse(ApiResponse, FriendshipShowResponseInterface):
+class FriendshipsShowResponse(ApiResponse, FriendshipShowResponseInterface):
     pass

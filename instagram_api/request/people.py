@@ -1,6 +1,9 @@
 from typing import List, Optional
 
+import json
+
 from instagram_api import response
+from instagram_api.exceptions import ThrottledException
 from .base import CollectionBase
 
 
@@ -14,11 +17,39 @@ class People(CollectionBase):
 
     def get_self_info(self) -> response.UserInfoResponse: ...
 
-    def get_recent_activity_inbox(self) -> response.ActivityNewsResponse: ...
+    def get_recent_activity_inbox(self) -> response.ActivityNewsResponse:
+        return self._ig.request('news/inbox/').get_response(response.ActivityNewsResponse)
 
     def get_following_recent_activity(self, max_id: str = None) -> response.FollowingRecentActivityResponse: ...
 
-    def get_bootstrap_users(self) -> Optional[response.BootstrapUserResponse]: ...
+    def get_bootstrap_users(self) -> Optional[response.BootstrapUserResponse]:
+        """
+        Retrieve bootstrap user data (autocompletion user list).
+
+        WARNING: This is a special, very heavily throttled API endpoint.
+        Instagram REQUIRES that you wait several minutes between calls to it.
+
+        :raise: ThrottledException
+
+        :return: response.BootstrapUserResponse or None
+        """
+        surfaces = [
+            'coefficient_direct_closed_friends_ranking',
+            'coefficient_direct_recipients_ranking_variant_2',
+            'coefficient_rank_recipient_user_suggestion',
+            'coefficient_ios_section_test_bootstrap_ranking',
+            'autocomplete_user_list',
+        ]
+
+        try:
+            request = self._ig.request('scores/bootstrap/users/').add_params(**{
+                'surfaces': json.dumps(surfaces),
+            })
+
+            return request.get_response(response.BootstrapUserResponse)
+        except ThrottledException:
+            # Throttling is so common that we'll simply return NULL in that case.
+            return None
 
     def get_friendship(self, user_id: int) -> response.FriendshipsShowResponse: ...
 

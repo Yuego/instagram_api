@@ -1,6 +1,9 @@
 from typing import List
 
+import json
+
 from instagram_api import response
+from instagram_api.constants import Constants
 from instagram_api.response.model.item import Item
 
 from .base import CollectionBase
@@ -22,7 +25,13 @@ class Story(CollectionBase):
                                    video_filename: str,
                                    external_metadata: dict = None) -> response.ConfigureResponse: ...
 
-    def get_reels_tray_feed(self) -> response.ReelsTrayFeedResponse: ...
+    def get_reels_tray_feed(self) -> response.ReelsTrayFeedResponse:
+        return self._ig.request('feed/reels_tray/').set_signed_post(False).add_posts(**{
+            'supported_capabilities_new': json.dumps(Constants.SUPPORTED_CAPABILITIES),
+            'reason': 'pull_to_refresh',
+            '_csrftoken': self._ig.client.get_token(),
+            '_uuid': self._ig.uuid,
+        }).get_response(response.ReelsTrayFeedResponse)
 
     def get_user_reel_media_feed(self, user_id: int) -> response.UserReelMediaFeedResponse: ...
 

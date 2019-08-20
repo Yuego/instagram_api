@@ -1,6 +1,7 @@
 from typing import Optional, List
 
 from instagram_api import response
+from instagram_api.exceptions import ThrottledException
 
 from .base import CollectionBase
 
@@ -9,7 +10,17 @@ __all__ = ['Direct']
 
 class Direct(CollectionBase):
 
-    def get_inbox(self, cursor_id: Optional[str] = None) -> response.DirectInboxResponse: ...
+    def get_inbox(self, cursor_id: Optional[str] = None) -> response.DirectInboxResponse:
+        request = self._ig.request('direct_v2/inbox/').add_params(**{
+            'persistentBadging': 'true',
+            'use_unified_inbox': 'true',
+        })
+        if cursor_id is not None:
+            request.add_params(**{
+                'cursor': cursor_id,
+            })
+
+        return request.get_response(response.DirectInboxResponse)
 
     def get_pending_inbox(self, cursor_id: Optional[str] = None) -> response.DirectPendingInboxResponse: ...
 
@@ -19,12 +30,27 @@ class Direct(CollectionBase):
 
     def decline_all_pending_threads(self) -> response.GenericResponse: ...
 
-    def get_presences(self) -> response.PresencesResponse: ...
+    def get_presences(self) -> response.PresencesResponse:
+        return self._ig.request('direct_v2/get_presence/').get_response(response.PresencesResponse)
 
     def get_ranked_recipients(self,
                               mode: str,
                               show_threads: bool,
-                              query: str = None) -> response.DirectRankedRecipientsResponse: ...
+                              query: str = None) -> Optional[response.DirectRankedRecipientsResponse]:
+        try:
+            request = self._ig.request('direct_v2/ranked_recipients/').add_params(**{
+                'mode': mode,
+                'show_threads': 'true' if show_threads else 'false',
+                'use_unified_inbox': 'true',
+            })
+            if query is not None:
+                request.add_params(**{
+                    'query': query,
+                })
+
+            return request.get_response(response.DirectRankedRecipientsResponse)
+        except ThrottledException:
+            return None
 
     def get_thread_by_participants(self, users: List[int]) -> response.DirectThreadResponse: ...
 

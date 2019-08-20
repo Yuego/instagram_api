@@ -70,7 +70,8 @@ class Media(CollectionBase):
 
     def get_saved_feed(self, max_id: str = None) -> response.SavedFeedResponse: ...
 
-    def get_blocked_media(self) -> response.BlockedMediaResponse: ...
+    def get_blocked_media(self) -> response.BlockedMediaResponse:
+        return self._ig.request('media/blocked/').get_response(response.BlockedMediaResponse)
 
     def report(self, media_id: str, source_name: str = 'feed_contextual_chain') -> response.GenericResponse: ...
 

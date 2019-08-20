@@ -171,6 +171,27 @@ class Instagram(ExperimentsInterface, InstagramInterface):
         assert app_refresh_interval < 21600, (
             'Instagram`s app state refresh interval is NOT allowed to be higher than 6 hours, and the lower is better!'
         )
+        """
+        SUPER IMPORTANT:
+        
+        STOP trying to ask us to remove this code section!
+        
+        EVERY time the user presses their device's home button to leave the
+        app and then comes back to the app, Instagram does ALL of these things
+        to refresh its internal app state. We MUST emulate that perfectly,
+        otherwise Instagram will silently detect you as a "fake" client
+        after a while!
+        
+        You can configure the login's $appRefreshInterval in the function
+        parameter above, but you should keep it VERY frequent (definitely
+        NEVER longer than 6 hours), so that Instagram sees you as a real
+        client that keeps quitting and opening their app like a REAL user!
+        
+        Otherwise they WILL detect you as a bot and silently BLOCK features
+        or even ban you.
+        
+        You have been warned.
+        """
 
         if just_logged_in:
             self.client.zero_rating.reset()

@@ -34,7 +34,14 @@ class ApiRequestInterface(metaclass=ABCMeta):
     def add_params(self, **params: Dict[str, Any]) -> 'ApiRequestInterface': ...
 
     @abstractmethod
-    def add_posts(self, **posts: Dict[str, Any]) -> 'ApiRequestInterface': ...
+    def add_posts(self,
+                  _uid: str = None,
+                  _uuid: str = None,
+                  _csrftoken: str = None,
+                  phone_id: str = None,
+                  device_id: str = None,
+                  adid: str = None,
+                  **posts: Dict[str, Any]) -> 'ApiRequestInterface': ...
 
     @abstractmethod
     def add_unsigned_posts(self, **posts: Dict[str, Any]) -> 'ApiRequestInterface': ...

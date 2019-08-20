@@ -77,20 +77,20 @@ class Internal(CollectionBase):
     def sync_device_features(self, prelogin: bool = False) -> response.SyncResponse:
         request = self._ig.request('qe/sync/').add_headers(**{
             'X-DEVICE_ID': self._ig.uuid,
-        }).add_posts(**{
-            'id': self._ig.uuid,
-            'experiments': Constants.LOGIN_EXPERIMENTS,
-        })
+        }).add_posts(
+            id=self._ig.uuid,
+            experiments=Constants.LOGIN_EXPERIMENTS,
+        )
 
         if prelogin:
             request.set_needs_auth(False)
 
         else:
-            request.add_posts(**{
-                '_uuid': self._ig.uuid,
-                '_uid': self._ig.account_id,
-                '_csrftoken': self._ig.client.get_token(),
-            })
+            request.add_posts(
+                _uuid=self._ig.uuid,
+                _uid=self._ig.account_id,
+                _csrftoken=self._ig.client.get_token(),
+            )
 
         return request.get_response(response.SyncResponse)
 
@@ -98,28 +98,28 @@ class Internal(CollectionBase):
         ...
 
     def send_launcher_sync(self, prelogin: bool) -> response.LauncherSyncResponse:
-        request = self._ig.request('launcher/sync/').add_posts(**{
-            'configs': Constants.LAUNCHER_CONFIGS,
-        })
+        request = self._ig.request('launcher/sync/').add_posts(
+            configs=Constants.LAUNCHER_CONFIGS,
+        )
 
         if prelogin:
-            request.set_needs_auth(False).add_posts(**{
-                'id': self._ig.uuid,
-            })
+            request.set_needs_auth(False).add_posts(
+                id=self._ig.uuid,
+            )
         else:
-            request.add_posts(**{
-                'id': self._ig.account_id,
-                '_uuid': self._ig.uuid,
-                '_uid': self._ig.account_id,
-                '_csrftoken': self._ig.client.get_token(),
-            })
+            request.add_posts(
+                id=self._ig.account_id,
+                _uuid=self._ig.uuid,
+                _uid=self._ig.account_id,
+                _csrftoken=self._ig.client.get_token(),
+            )
 
         return request.get_response(response.LauncherSyncResponse)
 
     def log_attribution(self) -> response.GenericResponse:
-        return self._ig.request('attribution/log_attribution/').set_needs_auth(False).add_posts(**{
-            'adid': self._ig.advertising_id,
-        }).get_response(response.GenericResponse)
+        return self._ig.request('attribution/log_attribution/').set_needs_auth(False).add_posts(
+            adid=self._ig.advertising_id,
+        ).get_response(response.GenericResponse)
 
     def log_resurrect_attribution(self) -> response.GenericResponse:
         ...
@@ -127,14 +127,12 @@ class Internal(CollectionBase):
     def read_msisdn_header(self, usage: str, subno_key: Optional[str] = None) -> response.MsisdnHeaderResponse:
         request = self._ig.request('accounts/read_msisdn_header/').set_needs_auth(False).add_headers(**{
             'X-DEVICE-ID': self._ig.uuid,
-        }).add_posts(**{
-            'device_id': self._ig.uuid,
-            'mobile_subno_usage': usage,
-        })
+        }).add_posts(
+            device_id=self._ig.uuid,
+            mobile_subno_usage=usage,
+        )
         if subno_key is not None:
-            request = request.add_posts(**{
-                'subno_key': subno_key,
-            })
+            request = request.add_posts(subno_key=subno_key)
 
         return request.get_response(response.MsisdnHeaderResponse)
 
@@ -160,13 +158,13 @@ class Internal(CollectionBase):
             pass
 
     def fetch_zero_rating_token(self, reason: str = 'token_expired') -> response.TokenResultResponse:
-        request = self._ig.request('zr/token/result/').set_needs_auth(False).add_params(**{
-            'custom_device_id': self._ig.uuid,
-            'device_id': self._ig.device_id,
-            'fetch_reason': reason,
+        request = self._ig.request('zr/token/result/').set_needs_auth(False).add_params(
+            custom_device_id=self._ig.uuid,
+            device_id=self._ig.device_id,
+            fetch_reason=reason,
             # TODO: Если токена нет, None или ''???
-            'token_hash': self._ig.settings.get('zr_token', ''),
-        })
+            token_hash=self._ig.settings.get('zr_token', ''),
+        )
 
         result = request.get_response(response.TokenResultResponse)
         self._save_zero_rating_token(result.token)
@@ -180,16 +178,16 @@ class Internal(CollectionBase):
         ...
 
     def get_facebook_ota(self) -> response.FacebookOTAResponse:
-        return self._ig.request('facebook_ota/').add_params(**{
-            'fields': Constants.FACEBOOK_OTA_FIELDS,
-            'custom_user_id': self._ig.account_id,
-            'signed_body': Signatures.generate_signature('') + '.',
-            'ig_sig_key_version': Constants.SIG_KEY_VERSION,
-            'version_code': Constants.VERSOIN_CODE,
-            'version_name': Constants.IG_VERSION,
-            'custom_app_id': Constants.FACEBOOK_ORCA_APPLICATION_ID,
-            'custom_device_id': self._ig.uuid,
-        }).get_response(response.FacebookOTAResponse)
+        return self._ig.request('facebook_ota/').add_params(
+            fields=Constants.FACEBOOK_OTA_FIELDS,
+            custom_user_id=self._ig.account_id,
+            signed_body=Signatures.generate_signature('') + '.',
+            ig_sig_key_version=Constants.SIG_KEY_VERSION,
+            version_code=Constants.VERSOIN_CODE,
+            version_name=Constants.IG_VERSION,
+            custom_app_id=Constants.FACEBOOK_ORCA_APPLICATION_ID,
+            custom_device_id=self._ig.uuid,
+        ).get_response(response.FacebookOTAResponse)
 
     def get_loom_fetch_config(self) -> response.LoomFetchConfigResponse:
         return self._ig.request('loom/fetch_config/').get_response(response.LoomFetchConfigResponse)
@@ -217,18 +215,18 @@ class Internal(CollectionBase):
             ' {text},url,limit,dismiss_promotion},image.scale(<scale>) {uri,width,height}}}}}}'
         )
 
-        return self._ig.request('qp/batch_fetch/').add_posts(**{
-            'vc_policy': 'default',
-            '_csrftoken': self._ig.client.get_token(),
-            '_uid': self._ig.account_id,
-            '_uuid': self._ig.uuid,
-            'surfaces_to_queries': json.dumps({
+        return self._ig.request('qp/batch_fetch/').add_posts(
+            vc_policy='default',
+            _csrftoken=self._ig.client.get_token(),
+            _uid=self._ig.account_id,
+            _uuid=self._ig.uuid,
+            surfaces_to_queries=json.dumps({
                 Constants.SURFACE_PARAM[0]: query,
                 Constants.SURFACE_PARAM[1]: query,
             }),
-            'version': 1,
-            'scale': 2,
-        }).get_response(response.FetchQPDataResponse)
+            version=1,
+            scale=2,
+        ).get_response(response.FetchQPDataResponse)
 
     def get_qp_cooldowns(self) -> response.QPCooldownsResponse:
         ...

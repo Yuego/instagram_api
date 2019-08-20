@@ -33,89 +33,81 @@ class Timeline(CollectionBase):
             'X-Ads-Opt-Out': '0',
             'X-Google-AD-ID': self._ig.advertising_id,
             'X-DEVICE-ID': self._ig.uuid,
-        }).add_posts(**{
-            '_csrftoken': self._ig.client.get_token(),
-            '_uuid': self._ig.uuid,
-            'is_prefetch': '0',
-            'phone_id': self._ig.phone_id,
-            'device_id': self._ig.uuid,
-            'client_session_id': self._ig.session_id,
-            'battery_level': random.randrange(25, 100),
-            'is_charging': '0',
-            'will_sound_on': '1',
-            'is_on_screen': 'true',
-            'timezone_offset': time.timezone,
-            'is_async_ads_in_headload_enabled': async_ads and self._ig.is_experiment_enabled(
+        }).add_posts(
+            _csrftoken=self._ig.client.get_token(),
+            _uuid=self._ig.uuid,
+            is_prefetch='0',
+            phone_id=self._ig.phone_id,
+            device_id=self._ig.uuid,
+            client_session_id=self._ig.session_id,
+            battery_level=random.randrange(25, 100),
+            is_charging='0',
+            will_sound_on='1',
+            is_on_screen='true',
+            timezone_offset=time.timezone,
+            is_async_ads_in_headload_enabled=async_ads and self._ig.is_experiment_enabled(
                 'ig_android_ad_async_ads_universe',
                 'is_async_ads_in_headload_enabled',
             ),
-            'is_async_ads_double_request': async_ads and self._ig.is_experiment_enabled(
+            is_async_ads_double_request=async_ads and self._ig.is_experiment_enabled(
                 'ig_android_ad_async_ads_universe',
                 'is_double_request_enabled'
             ),
-            'is_async_ads_rti': async_ads and self._ig.is_experiment_enabled(
+            is_async_ads_rti=async_ads and self._ig.is_experiment_enabled(
                 'ig_android_ad_async_ads_universe',
                 'is_rti_enabled'
             ),
-            'rti_delivery_backend': async_ads and self._ig.get_experiment_param(
+            rti_delivery_backend=async_ads and self._ig.get_experiment_param(
                 'ig_android_ad_async_ads_universe',
                 'rti_delivery_backend'
             ),
-        })
+        )
 
         if 'latest_story_pk' in options:
-            request.add_posts(**{
-                'latest_story_pk': options['latest_story_pk'],
-            })
+            request.add_posts(
+                latest_story_pk=options['latest_story_pk'],
+            )
 
         if max_id is not None:
-            request.add_posts(**{
-                'reason': 'pagination',
-                'max_id': max_id,
-                'is_pull_to_refresh': '0',
-            })
+            request.add_posts(
+                reason='pagination',
+                max_id=max_id,
+                is_pull_to_refresh='0',
+            )
         elif options.get('is_pull_to_refresh', None):
-            request.add_posts(**{
-                'reason': 'pull_to_refresh',
-                'is_pull_to_refresh': '1',
-            })
+            request.add_posts(
+                reason='pull_to_refresh',
+                is_pull_to_refresh='1',
+            )
         elif 'is_pull_to_refresh' in options:
-            request.add_posts(**{
-                'reason': 'warm_start_fetch',
-                'is_pull_to_refresh': '0',
-            })
+            request.add_posts(
+                reason='warm_start_fetch',
+                is_pull_to_refresh='0',
+            )
         else:
-            request.add_posts(**{
-                'reason': 'cold_start_fetch',
-                'is_pull_to_refresh': '0',
-            })
+            request.add_posts(
+                reason='cold_start_fetch',
+                is_pull_to_refresh='0',
+            )
 
         if 'seen_posts' in options:
             seen_posts = options['seen_posts']
             if isinstance(seen_posts, (list, tuple, set)):
                 seen_posts = ','.join(seen_posts)
 
-            request.add_posts(**{
-                'seen_posts': seen_posts,
-            })
+            request.add_posts(seen_posts=seen_posts)
 
         elif max_id is None:
-            request.add_posts(**{
-                'seen_posts': '',
-            })
+            request.add_posts(seen_posts='')
 
         if 'unseen_posts' in options:
             unseen_posts = options['unseen_posts']
             if isinstance(unseen_posts, (list, tuple, set)):
                 unseen_posts = ','.join(unseen_posts)
 
-            request.add_posts(**{
-                'unseen_posts': unseen_posts,
-            })
+            request.add_posts(unseen_posts=unseen_posts)
         elif max_id is None:
-            request.add_posts(**{
-                'unseen_posts': '',
-            })
+            request.add_posts(unseen_posts='')
 
         if 'feed_view_info' in options:
             feed_view_info = options['feed_view_info']
@@ -125,23 +117,15 @@ class Timeline(CollectionBase):
             else:
                 feed_view_info = json.dumps([feed_view_info])
 
-            request.add_posts(**{
-                'feed_view_info': feed_view_info,
-            })
+            request.add_posts(feed_view_info=feed_view_info)
         elif max_id is None:
-            request.add_posts(**{
-                'feed_view_info': '',
-            })
+            request.add_posts(feed_view_info='')
 
         if options.get('push_disabled', None):
-            request.add_posts(**{
-                'push_disabled': 'true',
-            })
+            request.add_posts(push_disabled='true')
 
         if options.get('recovered_from_crash', None):
-            request.add_posts(**{
-                'recovered_from_crash': '1',
-            })
+            request.add_posts(recovered_from_crash='1')
 
         return request.get_response(response.TimelineFeedResponse)
 

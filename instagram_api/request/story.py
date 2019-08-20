@@ -26,12 +26,12 @@ class Story(CollectionBase):
                                    external_metadata: dict = None) -> response.ConfigureResponse: ...
 
     def get_reels_tray_feed(self) -> response.ReelsTrayFeedResponse:
-        return self._ig.request('feed/reels_tray/').set_signed_post(False).add_posts(**{
-            'supported_capabilities_new': json.dumps(Constants.SUPPORTED_CAPABILITIES),
-            'reason': 'pull_to_refresh',
-            '_csrftoken': self._ig.client.get_token(),
-            '_uuid': self._ig.uuid,
-        }).get_response(response.ReelsTrayFeedResponse)
+        return self._ig.request('feed/reels_tray/').set_signed_post(False).add_posts(
+            supported_capabilities_new=json.dumps(Constants.SUPPORTED_CAPABILITIES),
+            reason='pull_to_refresh',
+            _csrftoken=self._ig.client.get_token(),
+            _uuid=self._ig.uuid,
+        ).get_response(response.ReelsTrayFeedResponse)
 
     def get_user_reel_media_feed(self, user_id: int) -> response.UserReelMediaFeedResponse: ...
 

@@ -3,6 +3,8 @@ from typing import Optional, List, Union
 import json
 import re
 
+from pathlib import Path
+
 from instagram_api import response
 from instagram_api.constants import Constants
 from instagram_api.exceptions import ThrottledException
@@ -198,15 +200,17 @@ class Direct(CollectionBase):
     # TODO: write test !!!
     def _prepare_recipients(self,
                             users: List[int] = None,
-                            thread: int = None, use_quotes: bool = False) -> dict:
+                            thread: int = None,
+                            use_quotes: bool = False,
+                            limit: int = 32) -> dict:
         assert users or thread, 'Please provide at least one recipient (`users` or `thread`).'
         assert not (users and thread), 'You can not mix "users" and "thread".'
 
         result = {}
 
         if users:
-            if not isinstance(users, (list, tuple, set)):
-                raise ValueError('"users" must be a list instance')
+            assert isinstance(users, (list, tuple, set)), '"users" must be a list instance.'
+            assert len(users) <= limit, f'You can specify up to {limit} recipients.'
 
             users = self._check_numeric_identifiers(users, int)
 
@@ -215,7 +219,7 @@ class Direct(CollectionBase):
         if thread:
             threads = self._check_numeric_identifiers([thread], str if use_quotes else int)
 
-            result['thread_ids'] = json.dumps(threads, delimiters=(',', ':'))
+            result['thread_ids'] = json.dumps(threads, separators=(',', ':'))
 
         return result
 
@@ -230,8 +234,7 @@ class Direct(CollectionBase):
         signed_post = False
 
         if item_type == 'message':
-            if not options.get('text', None):
-                raise ValueError('No text message provided')
+            assert options.get('text', None), 'No text message provided'
 
             request = self._ig.request('direct_v2/threads/broadcast/text/').add_posts(
                 text=options['text']
@@ -241,8 +244,7 @@ class Direct(CollectionBase):
             request = self._ig.request('direct_v2/threads/broadcast/like/')
 
         elif item_type == 'hashtag':
-            if not options.get('text', None):
-                raise ValueError('No hashtag provided.')
+            assert options.get('text', None), 'No hashtag provided.'
 
             request = self._ig.request('direct_v2/threads/broadcast/hashtag/').add_posts(
                 hashtag=options['hashtag'],
@@ -252,8 +254,7 @@ class Direct(CollectionBase):
                 request.add_posts(text=options['text'])
 
         elif item_type == 'location':
-            if options.get('venue_id', None):
-                raise ValueError('No venue_id provided.')
+            assert options.get('venue_id', None), 'No venue_id provided.'
 
             request = self._ig.request('direct_v2/threads/broadcast/location/').add_posts(
                 venue_id=options['venue_id'],
@@ -263,8 +264,7 @@ class Direct(CollectionBase):
                 request.add_posts(text=options['text'])
 
         elif item_type == 'profile':
-            if not options.get('profile_user_id', None):
-                raise ValueError('No profile_user_id provided.')
+            assert options.get('profile_user_id', None), 'No profile_user_id provided.'
 
             request = self._ig.request('direct_v2/threads/broadcast/profile/').add_posts(
                 profile_user_id=options['profile_user_id'],
@@ -274,8 +274,7 @@ class Direct(CollectionBase):
                 request.add_posts(text=options['text'])
 
         elif item_type == 'photo':
-            if options.get('filepath', None):
-                raise ValueError('No filepath provided.')
+            assert options.get('filepath', None), 'No filepath provided.'
 
             request = self._ig.request('direct_v2/threads/broadcast/upload_photo/').add_file(
                 key='photo',
@@ -284,8 +283,7 @@ class Direct(CollectionBase):
             )
 
         elif item_type == 'video':
-            if options.get('upload_id', None):
-                raise ValueError('No upload_id provided.')
+            assert options.get('upload_id', None), 'No upload_id provided.'
 
             request = self._ig.request('direct_v2/threads/broadcast/configure_video/').add_posts(
                 upload_id=options['upload_id'],
@@ -297,11 +295,8 @@ class Direct(CollectionBase):
                 )
 
         elif item_type == 'links':
-            if not options.get('link_urls', None):
-                raise ValueError('No link_urls provided.')
-
-            if not options.get('link_text', None):
-                raise ValueError('No link_text provided.')
+            assert options.get('link_urls', None), 'No link_urls provided.'
+            assert options.get('link_text', None), 'No link_text provided.'
 
             request = self._ig.request('direct_v2/threads/broadcast/link/').add_posts(
                 link_urls=options['link_urls'],
@@ -311,15 +306,14 @@ class Direct(CollectionBase):
         elif item_type == 'reaction':
             params = {}
             for key in ['reaction_type', 'reaction_status', 'item_id', 'node_type']:
-                if not options.get(key, None):
-                    raise ValueError(f'No `{key}` provided.')
+                assert options.get(key, None), f'No `{key}` provided.'
+
                 params[key] = options[key]
 
             request = self._ig.request('direct_v2/threads/broadcast/reaction/').add_posts(**params)
 
         elif item_type == 'live':
-            if not options.get('broadcast_id', None):
-                raise ValueError('No broadcast_id provided.')
+            assert options.get('broadcast_id', None), 'No broadcast_id provided.'
 
             request = self._ig.request('direct_v2/threads/broadcast/live_viewer_invite/').add_posts(
                 broadcast_id=options['broadcast_id'],
@@ -329,7 +323,7 @@ class Direct(CollectionBase):
                 request.add_posts(text=options['text'])
 
         else:
-            raise ValueError('Unsupported _send_direct_item() type.')
+            raise AssertionError('Unsupported _send_direct_item() type.')
 
         recipients = self._prepare_recipients(users, thread, False)
         request.add_posts(**recipients)
@@ -337,7 +331,7 @@ class Direct(CollectionBase):
         if 'client_context' not in options:
             options['client_context'] = Signatures.generate_uuid(True)
         elif not Signatures.is_valid_uuid(options['client_context']):
-            raise ValueError('`%s` is not valid UUID.' % options['client_context'])
+            raise AssertionError('`%s` is not valid UUID.' % options['client_context'])
 
         if signed_post:
             request.add_posts(_uid=self._ig.account_id)
@@ -358,8 +352,7 @@ class Direct(CollectionBase):
         signed_post = False
 
         if items_type == 'media_share':
-            if not options.get('media_id', None):
-                raise ValueError('No media_id provided.')
+            assert options.get('media_id', None), 'No media_id provided.'
 
             request = self._ig.request('direct_v2/threads/broadcast/media_share/').add_posts(
                 media_id=options['media_id'],
@@ -374,8 +367,7 @@ class Direct(CollectionBase):
                 request.add_params(media_type='photo')
 
         elif items_type == 'story_share':
-            if not options.get('story_media_id', None):
-                raise ValueError('No media_id provided.')
+            assert options.get('story_media_id', None), 'No media_id provided.'
 
             request = self._ig.request('direct_v2/threads/broadcast/story_share/').add_posts(
                 story_media_id=options['story_media_id'],
@@ -393,7 +385,7 @@ class Direct(CollectionBase):
                 request.add_params(media_type='photo')
 
         else:
-            raise ValueError('Unsupported _send_direct_items() type.')
+            raise AssertionError('Unsupported _send_direct_items() type.')
 
         # TODO: refactor this lines (deduplicate, optimize)
         recipients = self._prepare_recipients(users, thread, False)
@@ -402,7 +394,7 @@ class Direct(CollectionBase):
         if 'client_context' not in options:
             options['client_context'] = Signatures.generate_uuid(True)
         elif not Signatures.is_valid_uuid(options['client_context']):
-            raise ValueError('`%s` is not valid UUID.' % options['client_context'])
+            raise AssertionError('`%s` is not valid UUID.' % options['client_context'])
 
         if signed_post:
             request.add_posts(_uid=self._ig.account_id)
@@ -421,11 +413,10 @@ class Direct(CollectionBase):
                          reaction_type: str,
                          reaction_status: str,
                          **options):
+        assert reaction_type in ['like'], f'`{reaction_type}` is not a supported reaction type'
+
         thread_id = self._check_numeric_identifiers([thread_id], int)[0]
         thread_item_id = self._check_numeric_identifiers([thread_item_id], int)[0]
-
-        if reaction_type not in ['like']:
-            raise ValueError(f'`{reaction_type}` is not a supported reaction type')
 
         return self._send_direct_item(
             item_type='reaction',
@@ -469,28 +460,71 @@ class Direct(CollectionBase):
                   users: List[int] = None,
                   thread: int = None,
                   **options) -> response.DirectSendItemsResponse:
-        ...
+        assert re.match(r'^\d+_\d+$', media_id), f'`{media_id}` is not a valid media ID.'
+        assert options.get('media_type', None), 'Please provide media_type in options.'
+        assert options['media_type'] in ['photo', 'video'], '`%s` is not a valid media_type.' % options['media_type']
+
+        options['media_id'] = media_id,
+
+        return self._send_direct_items(
+            items_type='media_share',
+            users=users,
+            thread=thread,
+            **options,
+        )
 
     def send_photo(self,
                    photo_filename: str,
                    users: List[int] = None,
                    thread: int = None,
                    **options) -> response.DirectSendItemResponse:
-        ...
+        assert photo_filename, 'Not `photo_filename` provided.'
+        photo_path = Path(photo_filename)
+        if not photo_path.exists() or not photo_path.is_file():
+            raise OSError(f'File {photo_filename} is not available for reading.')
+
+        options['filepath'] = photo_filename
+
+        return self._send_direct_item(
+            item_type='photo',
+            users=users,
+            thread=thread,
+            **options,
+        )
 
     def send_disappearing_photo(self,
                                 photo_filename: str,
                                 users: List[int] = None,
                                 thread: int = None,
                                 external_metadata: dict = None) -> response.ConfigureResponse:
-        ...
+
+        internal_metadata = InternalMetadata()
+        internal_metadata.set_direct_recipients(**self._prepare_recipients(users, thread, True))
+        internal_metadata.story_view_mode = Constants.STORY_VIEW_MODE_ONCE
+
+        return self._ig.internal.upload_single_photo(
+            target_feed=Constants.FEED_DIRECT_STORY,
+            photo_filename=photo_filename,
+            internal_metadata=internal_metadata,
+            external_metadata=external_metadata,
+        )
 
     def send_replayable_photo(self,
                               photo_filename: str,
                               users: List[int] = None,
                               thread: int = None,
                               external_metadata: dict = None) -> response.ConfigureResponse:
-        ...
+
+        internal_metadata = InternalMetadata()
+        internal_metadata.set_direct_recipients(**self._prepare_recipients(users, thread, True))
+        internal_metadata.story_view_mode = Constants.STORY_VIEW_MODE_REPLAYABLE
+
+        return self._ig.internal.upload_single_photo(
+            target_feed=Constants.FEED_DIRECT_STORY,
+            photo_filename=photo_filename,
+            internal_metadata=internal_metadata,
+            external_metadata=external_metadata,
+        )
 
     def send_video(self,
                    video_filename: str,
@@ -504,13 +538,24 @@ class Direct(CollectionBase):
                                 users: List[int] = None,
                                 thread: int = None,
                                 external_metadata: dict = None) -> response.ConfigureResponse:
-        ...
+
+        internal_metadata = InternalMetadata()
+        internal_metadata.set_direct_recipients(**self._prepare_recipients(users, thread, True))
+        internal_metadata.story_view_mode = Constants.STORY_VIEW_MODE_ONCE
+
+        return self._ig.internal.upload_single_video(
+            target_feed=Constants.FEED_DIRECT_STORY,
+            video_filename=video_filename,
+            internal_metadata=internal_metadata,
+            external_metadata=external_metadata,
+        )
 
     def send_replayable_video(self,
                               video_filename: str,
                               users: List[int] = None,
                               thread: int = None,
                               external_metadata: dict = None) -> response.ConfigureResponse:
+
         internal_metadata = InternalMetadata()
         internal_metadata.set_direct_recipients(**self._prepare_recipients(users, thread, True))
         internal_metadata.story_view_mode = Constants.STORY_VIEW_MODE_ONCE
@@ -605,8 +650,7 @@ class Direct(CollectionBase):
         assert media_type in ['photo', 'video'], f'`{media_type}` is not a valid media_type'
 
         if reel_id is not None:
-            if not re.match(r'^highlight:\d+$', reel_id):
-                raise ValueError(f'`{reel_id}` is not valid reel ID.')
+            assert re.match(r'^highlight:\d+$', reel_id), f'`{reel_id}` is not valid reel ID.'
 
             options['reel_id'] = reel_id
 
